@@ -53,15 +53,22 @@ export default function ResponsiveLocalStorageLayout(props: LayoutProps) {
       layout = originalLayouts[Object.keys(originalLayouts)[0]];
       setLayout(layout);
       setLayouts(JSON.parse(JSON.stringify(originalLayouts)));
-    }
+      const config = {};
+      layout.forEach(element => {
+        if (element.c) {
+          config[element.i] = element.c;
+        }
+      });
+      setConfig(config);
+    } else {
+      // init config
 
-    const config = {};
-    layout.forEach(element => {
-      if (element.c) {
-        config[element.i] = element.c;
+      if (appData.setAppData) {
+        const newAppData: IState = { ...appData, resetLayout: true };
+        console.log('setting newAppData', newAppData);
+        appData.setAppData(newAppData);
       }
-    });
-    setConfig(config);
+    }
 
     console.log('layout init', layout, layouts);
   }, []);
