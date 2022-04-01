@@ -34,7 +34,7 @@ export default function App() {
   }, [appData]);
 
   return (
-    <div className="App">
+    <div className="App flex flex-column">
       <Suspense fallback="loading">
         <AppContext.Provider value={{ ...appData, setAppData: v => setAppData(v) }}>
           <Theme />

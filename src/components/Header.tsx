@@ -88,6 +88,12 @@ function Header() {
             },
           },
           {
+            label: 'Toggle expert mode',
+            command: () => {
+              appData.setAppData({ ...appData, editingExpertMode: !appData.editingExpertMode });
+            },
+          },
+          {
             label: 'Reset layout',
             command: () => {
               appData.setAppData({ ...appData, resetLayout: true });
