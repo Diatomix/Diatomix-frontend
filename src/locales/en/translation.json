@@ -1,0 +1,33 @@
+{
+  "title": "Welcome to react using react-i18next",
+  "description": {
+    "part1": "To get started, edit <1>src/App.js</1> and save to reload.",
+    "part2": "Switch language between english and german using buttons above."
+  },
+  "Nav":{
+    "DiatomiX":"DiatomiX",
+    "Home":"Home",
+    "About":"About"
+  },
+  "About":{
+    "Title":"About DiatomiX",
+    "Text":"lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum "
+  },
+  "Timeline":{
+    "Title":"Project timeline",
+    "Start":"Start",
+    "StartText":"StartText lorem ipsum lorem ipsum lorem",
+    "MVP":"MVP",
+    "MVPText":"MVP lorem ipsum lorem ipsum lorem",
+    "Testnet":"Testnet",
+    "TestnetText":"Testnet lorem ipsum lorem ipsum lorem",
+    "Mainnet":"Mainnet",
+    "MainnetText":"Mainnet lorem ipsum lorem ipsum lorem"
+  },
+  "Layout":{
+    "EditProperties":"Edit properties",
+    "PropertyHeader":"Property header",
+    "PropertyContent":"Property content",
+    "NotConfigurable":"This panel is not configurable"
+  }
+}

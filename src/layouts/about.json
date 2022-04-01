@@ -1,0 +1,12 @@
+[
+  { 
+    "i": "MainText",
+    "w": 3, "h": 3, "x": 0, "y": 0, "minW": 1, "minH": 3,
+    "c": {"type":"Panel","header":"Nav.About","content":"About.Text"}
+  },
+  { 
+    "i": "Timeline",
+    "w": 9, "h": 10, "x": 4, "y": 0, "minW": 3, "minH": 10,
+    "c": {"type":"Timeline"}
+  }
+]
