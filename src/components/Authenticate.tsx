@@ -136,6 +136,7 @@ export default function Authenticate() {
   }
 
   function onHide() {
+    reset();
     setVisible(false);
     setCheckWallet(false);
   }
@@ -222,7 +223,6 @@ export default function Authenticate() {
             label="Show other options"
             onClick={() => {
               reset();
-              setMnemonicFormVisible(false);
             }}
             className="m-1 p-button-secondary"
           />
@@ -247,6 +247,7 @@ export default function Authenticate() {
     </button>
   );
   function reset() {
+    setMnemonicFormVisible(false);
     setKey('');
     setError('');
   }
