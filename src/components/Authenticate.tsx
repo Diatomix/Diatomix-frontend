@@ -6,13 +6,14 @@ import QRCodeModal from 'algorand-walletconnect-qrcode-modal';
 import algosdk from 'algosdk';
 import { formatJsonRpcRequest } from '@json-rpc-tools/utils';
 import { AppContext } from '../contexts/app-context';
+import MyAlgoConnect from '@randlabs/myalgo-connect';
 
 export default function Authenticate() {
   const appData = useContext(AppContext);
   const [visible, setVisible] = useState<boolean>(false);
   const [checkWallet, setCheckWallet] = useState<boolean>(false);
 
-  async function SignAuthTx(account: string, connector: WalletConnect) {
+  function getAuthTxToSign(account: string) {
     const suggestedParams: algosdk.SuggestedParams = {
       fee: 0,
       firstRound: 0,
@@ -29,7 +30,11 @@ export default function Authenticate() {
 
       suggestedParams,
     });
+    return txn;
+  }
 
+  async function SignAuthTx(account: string, connector: WalletConnect) {
+    const txn = getAuthTxToSign(account);
     console.log('txn', txn);
     const txns = [txn];
     const txnsToSign = txns.map(txn => {
@@ -127,10 +132,28 @@ export default function Authenticate() {
     setCheckWallet(false);
     setVisible(true);
   }
+  function myAlogAuth() {
+    const myAlgoWallet = new MyAlgoConnect();
+    myAlgoWallet.connect().then(accounts => {
+      const addresses = accounts.map(account => account.address);
+      const account = addresses[0];
+      const txn = getAuthTxToSign(account);
+      myAlgoWallet.signTransaction(txn.toByte()).then(signedTxn => {
+        const b64 = Buffer.from(signedTxn.blob).toString('base64');
+        const decoded = algosdk.decodeSignedTransaction(signedTxn.blob);
+        const addr = algosdk.encodeAddress(decoded.txn.from.publicKey);
+        // TODO .. validate signature
+        appData.setAppData({ ...appData, authToken: b64, authTx: decoded, authAddress: addr });
+        onHide();
+      });
+
+      console.log('addresses', addresses);
+    });
+  }
   const footer = (
     <div>
       <Button label="Use Pera Wallet" onClick={WalletConnectInit} />
-      <Button label="Use MyAlgo Wallet" onClick={onHide} />
+      <Button label="Use MyAlgo Wallet" onClick={myAlogAuth} />
       <Button label="Use Algo Signer" onClick={onHide} />
       <Button label="Cancel" icon="pi pi-times" onClick={onHide} />
     </div>

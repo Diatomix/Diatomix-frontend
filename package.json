@@ -6,6 +6,7 @@
     "@babel/core": "^7.16.0",
     "@json-rpc-tools/utils": "^1.7.6",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
+    "@randlabs/myalgo-connect": "^1.1.2",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
