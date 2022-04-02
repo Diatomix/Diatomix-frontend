@@ -4,10 +4,14 @@ import { Trans } from 'react-i18next';
 
 import { InputText } from 'primereact/inputtext';
 
+interface ConfigurablePanelConfig {
+  header: string;
+  content: string;
+}
 interface ConfigurablePanelProps {
   editingLayout: boolean;
   editingComponents: boolean;
-  config?: any;
+  config?: ConfigurablePanelConfig;
   header: string;
   content?: string;
   children?: React.ReactNode;

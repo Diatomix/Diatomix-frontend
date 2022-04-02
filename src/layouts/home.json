@@ -1,12 +1,1 @@
-[
-  { 
-    "i": "A",
-    "w": 2, "h": 3, "x": 0, "y": 0, "minW": 2, "minH": 3,
-    "c": {"type":"MyOrders"}
-  },
-  { 
-    "i": "B",
-    "w": 10, "h": 15, "x": 2, "y": 0, "minW": 2, "minH": 3,
-    "c": {"type":"Chart"}
-  }
-]
+[{"w":8,"h":5,"x":0,"y":15,"i":"A","minW":2,"minH":3,"moved":false,"static":false,"c":{"type":"MyOrders"}},{"w":8,"h":15,"x":0,"y":0,"i":"B","minW":2,"minH":3,"moved":false,"static":false,"c":{"type":"Chart","quote":"AAPL","theme":"light"}},{"w":2,"h":10,"x":8,"y":0,"i":"OrderBook_a21a4","minW":1,"minH":3,"moved":false,"static":false,"c":{"type":"OrderBook"}},{"w":2,"h":10,"x":8,"y":10,"i":"Trades_f68cc","minW":1,"minH":3,"moved":false,"static":false,"c":{"type":"Trades"}},{"w":2,"h":6,"x":10,"y":0,"i":"PlaceOrder_c73c1","minW":1,"minH":3,"moved":false,"static":false,"c":{"type":"PlaceOrder"}}]

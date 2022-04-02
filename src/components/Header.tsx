@@ -123,6 +123,24 @@ function Header() {
                   appData.setAppData({ ...appData, layoutAddNew: 'Chart' });
                 },
               },
+              {
+                label: 'Order Book',
+                command: () => {
+                  appData.setAppData({ ...appData, layoutAddNew: 'OrderBook' });
+                },
+              },
+              {
+                label: 'Place order',
+                command: () => {
+                  appData.setAppData({ ...appData, layoutAddNew: 'PlaceOrder' });
+                },
+              },
+              {
+                label: 'Trades',
+                command: () => {
+                  appData.setAppData({ ...appData, layoutAddNew: 'Trades' });
+                },
+              },
             ],
           },
         ],

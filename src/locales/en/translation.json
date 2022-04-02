@@ -32,5 +32,17 @@
   },
   "Common":{
     "ErrorOccured":"An error occurred"
+  },
+  "MyOrders":{
+    "Title":"My orders"
+  },
+  "OrderBook":{
+    "Title":"Order book"
+  },
+  "PlaceOrder":{
+    "Title":"Place order"
+  },
+  "Trades":{
+    "Title":"Trades"
   }
 }
