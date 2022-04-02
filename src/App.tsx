@@ -17,6 +17,8 @@ import CatchAll from './pages/404';
 import Theme from './components/Theme';
 import i18n from './i18n';
 
+import { Buffer } from 'buffer';
+declare const window: any;
 //import 'primereact/resources/themes/nova/theme.css'; //theme
 //import 'primereact/resources/themes/rhea/theme.css'; //theme
 //import 'primereact/resources/themes/lara-light-indigo/theme.css'; //theme
@@ -31,6 +33,8 @@ export default function App() {
       i18n.changeLanguage(language);
       setAppData({ ...appData, language: language });
     }
+
+    window.Buffer = window.Buffer || Buffer;
   }, [appData]);
 
   return (
