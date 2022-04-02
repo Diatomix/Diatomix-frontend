@@ -4,6 +4,8 @@ import { Trans } from 'react-i18next';
 
 import { InputText } from 'primereact/inputtext';
 import Authenticate from '../Authenticate';
+import { AppContext } from '../../contexts/app-context';
+import { useContext } from 'react';
 
 interface PlaceOrderConfig {
   quote: string;
@@ -17,6 +19,7 @@ interface PlaceOrderProps {
   onContentUpdate?: (data: any) => void;
 }
 export default function PlaceOrder(props: PlaceOrderProps) {
+  const appData = useContext(AppContext);
   function handleUpdate(newConfig) {
     props.onContentUpdate(newConfig);
   }
@@ -55,7 +58,7 @@ export default function PlaceOrder(props: PlaceOrderProps) {
       return (
         <Panel header={i18n.t('PlaceOrder.Title')}>
           <p>Todo</p>
-          <Authenticate />
+          {appData.authToken ? <p>{JSON.stringify(appData.authAddress)}</p> : <Authenticate />}
         </Panel>
       );
     } catch (error) {

@@ -18,6 +18,7 @@ import Theme from './components/Theme';
 import i18n from './i18n';
 
 import { Buffer } from 'buffer';
+declare const window: any;
 //import 'primereact/resources/themes/nova/theme.css'; //theme
 //import 'primereact/resources/themes/rhea/theme.css'; //theme
 //import 'primereact/resources/themes/lara-light-indigo/theme.css'; //theme
