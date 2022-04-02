@@ -29,6 +29,8 @@
     "PropertyHeader":"Nadpis panelu",
     "PropertyContent":"Textový obsah panelu",
     "NotConfigurable":"Tento panel nie je konfigurovateľný"
+  },
+  "Common":{
+    "ErrorOccured":"An error occurred"
   }
-
 }

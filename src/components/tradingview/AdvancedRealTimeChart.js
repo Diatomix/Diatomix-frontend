@@ -32,7 +32,7 @@ const AdvancedRealTimeChart = ({
   studies = undefined,
   container = `tradingview_${createId(5)}`,
 
-  copyrightStyles,
+  copyrightStyles = undefined,
 
   ...props
 }) => {

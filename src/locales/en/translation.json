@@ -29,5 +29,8 @@
     "PropertyHeader":"Property header",
     "PropertyContent":"Property content",
     "NotConfigurable":"This panel is not configurable"
+  },
+  "Common":{
+    "ErrorOccured":"An error occurred"
   }
 }
