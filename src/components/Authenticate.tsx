@@ -7,6 +7,10 @@ import algosdk from 'algosdk';
 import { formatJsonRpcRequest } from '@json-rpc-tools/utils';
 import { AppContext } from '../contexts/app-context';
 import MyAlgoConnect from '@randlabs/myalgo-connect';
+import { Password } from 'primereact/password';
+import i18n from 'i18next';
+import { Message } from 'primereact/message';
+
 declare global {
   interface Window {
     AlgoSigner: any;
@@ -16,6 +20,9 @@ export default function Authenticate() {
   const appData = useContext(AppContext);
   const [visible, setVisible] = useState<boolean>(false);
   const [checkWallet, setCheckWallet] = useState<boolean>(false);
+  const [mnemonicFormVisible, setMnemonicFormVisible] = useState<boolean>(false);
+  const [key, setKey] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
   function getAuthTxToSign(account: string) {
     const suggestedParams: algosdk.SuggestedParams = {
@@ -178,17 +185,59 @@ export default function Authenticate() {
             console.log('addr', addr);
             // TODO .. validate signature
             appData.setAppData({ ...appData, authToken: b64, authTx: decoded, authAddress: addr });
+            onHide();
           }
         });
       });
     });
   }
+  function authUsingMnemonics() {
+    try {
+      const address = algosdk.mnemonicToSecretKey(key);
+      const txn = getAuthTxToSign(address.addr);
+      const signed = txn.signTxn(address.sk);
+      const b64 = Buffer.from(signed).toString('base64');
+      const decoded = algosdk.decodeSignedTransaction(Buffer.from(b64, 'base64'));
+      const addr = algosdk.encodeAddress(decoded.txn.from.publicKey);
+      reset();
+      appData.setAppData({ ...appData, authToken: b64, authTx: decoded, authAddress: addr });
+      onHide();
+    } catch (e) {
+      console.error('authUsingMnemonics', e.message);
+      setError(e.message);
+    }
+  }
   const footer = (
     <div>
-      <Button label="Use Pera Wallet" onClick={WalletConnectInit} />
-      <Button label="Use MyAlgo Wallet" onClick={myAlogAuth} />
-      {!!window.AlgoSigner ? <Button label="Use Algo Signer" onClick={algoSignerAuth} /> : ''}
-      <Button label="Cancel" icon="pi pi-times" onClick={onHide} />
+      {mnemonicFormVisible ? (
+        <>
+          <Button
+            label="Authenticate"
+            onClick={() => {
+              authUsingMnemonics();
+            }}
+            className="m-1 p-button-primary"
+          />
+          <Button
+            label="Show other options"
+            onClick={() => {
+              reset();
+              setMnemonicFormVisible(false);
+            }}
+            className="m-1 p-button-secondary"
+          />
+          <Button label="Cancel" icon="pi pi-times" className="m-1 p-button-danger" onClick={onHide} />
+        </>
+      ) : (
+        <>
+          <Button label="Use Pera Wallet" className="m-1" onClick={WalletConnectInit} />
+          <Button label="Use MyAlgo Wallet" className="m-1" onClick={myAlogAuth} />
+          {!!window.AlgoSigner ? <Button label="Use Algo Signer" className="m-1" onClick={algoSignerAuth} /> : ''}
+          <Button label="Use mnemonics" className="m-1" onClick={() => setMnemonicFormVisible(true)} />
+
+          <Button label="Cancel" className="m-1 p-button-danger" icon="pi pi-times" onClick={onHide} />
+        </>
+      )}
     </div>
   );
 
@@ -197,13 +246,32 @@ export default function Authenticate() {
       <span className="pi pi-search"></span>
     </button>
   );
+  function reset() {
+    setKey('');
+    setError('');
+  }
   return (
     <>
       <Button label="Authenticate" icon="pi pi-external-link" onClick={() => onShow()} />
-
-      <Dialog header="Authenticate" footer={footer} icons={myIcon} visible={visible} style={{ width: '50vw' }} modal onHide={onHide}>
+      <Dialog header="Authenticate" className="flex flex-column" footer={footer} icons={myIcon} visible={visible} style={{ width: '50vw' }} modal onHide={onHide}>
         <p>Please authenticate using your algorand account. You will self sign the zero balance transaction.</p>
-        {checkWallet ? <p>Check your wallet</p> : <p>Select wallet</p>}
+        {!!error ? <Message className="flex flex-row flex-grow-0" severity="error" text={error} /> : ''}
+        {!!mnemonicFormVisible ? (
+          <>
+            <p>
+              Mnemonic is secret phrase to your account - 25 words. It contains public and private key. Be extra careful dealing with a mnemonic. Even partial disclosure may lead to compromising your
+              account.
+            </p>
+            <div className="field my-2 flex flex-column flex-grow-0">
+              <span className="p-float-label  flex-column flex flex-grow-0">
+                <Password className="flex-column flex flex-grow-0" value={key} onChange={e => setKey(e.target.value)} feedback={false} toggleMask />
+                <label htmlFor="name">{i18n.t('Authenticate.InputMnemonics')}</label>
+              </span>
+            </div>
+          </>
+        ) : (
+          <>{checkWallet ? <p>Check your wallet</p> : <p>Select wallet</p>}</>
+        )}
       </Dialog>
     </>
   );
