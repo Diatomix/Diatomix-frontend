@@ -7,7 +7,11 @@ import algosdk from 'algosdk';
 import { formatJsonRpcRequest } from '@json-rpc-tools/utils';
 import { AppContext } from '../contexts/app-context';
 import MyAlgoConnect from '@randlabs/myalgo-connect';
-
+declare global {
+  interface Window {
+    AlgoSigner: any;
+  }
+}
 export default function Authenticate() {
   const appData = useContext(AppContext);
   const [visible, setVisible] = useState<boolean>(false);
@@ -16,7 +20,7 @@ export default function Authenticate() {
   function getAuthTxToSign(account: string) {
     const suggestedParams: algosdk.SuggestedParams = {
       fee: 0,
-      firstRound: 0,
+      firstRound: 1,
       lastRound: 30000000,
       genesisID: 'mainnet-v1.0',
       genesisHash: 'wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8=',
@@ -150,11 +154,40 @@ export default function Authenticate() {
       console.log('addresses', addresses);
     });
   }
+  function algoSignerAuth() {
+    console.log('window.AlgoSigner', window.AlgoSigner);
+    const connectPromise: Promise<any> = window.AlgoSigner.connect();
+    connectPromise.then(conn => {
+      console.log('conn', conn);
+
+      window.AlgoSigner.accounts({ ledger: 'MainNet' }).then(accounts => {
+        const account = accounts[0].address;
+        const txn = getAuthTxToSign(account);
+        const b64Txn = Buffer.from(algosdk.encodeUnsignedTransaction(txn)).toString('base64');
+        console.log('b64Txn0', b64Txn);
+        window.AlgoSigner.signTxn([
+          {
+            txn: b64Txn,
+          },
+        ]).then(signedTxn => {
+          console.log('signedTxn', signedTxn);
+          if (signedTxn.length > 0) {
+            const b64 = signedTxn[0].blob;
+            const decoded = algosdk.decodeSignedTransaction(Buffer.from(b64, 'base64'));
+            const addr = algosdk.encodeAddress(decoded.txn.from.publicKey);
+            console.log('addr', addr);
+            // TODO .. validate signature
+            appData.setAppData({ ...appData, authToken: b64, authTx: decoded, authAddress: addr });
+          }
+        });
+      });
+    });
+  }
   const footer = (
     <div>
       <Button label="Use Pera Wallet" onClick={WalletConnectInit} />
       <Button label="Use MyAlgo Wallet" onClick={myAlogAuth} />
-      <Button label="Use Algo Signer" onClick={onHide} />
+      {!!window.AlgoSigner ? <Button label="Use Algo Signer" onClick={algoSignerAuth} /> : ''}
       <Button label="Cancel" icon="pi pi-times" onClick={onHide} />
     </div>
   );
