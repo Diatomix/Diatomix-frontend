@@ -3,6 +3,7 @@ import i18n from 'i18next';
 import { Trans } from 'react-i18next';
 
 import { InputText } from 'primereact/inputtext';
+import Authenticate from '../Authenticate';
 
 interface PlaceOrderConfig {
   quote: string;
@@ -54,6 +55,7 @@ export default function PlaceOrder(props: PlaceOrderProps) {
       return (
         <Panel header={i18n.t('PlaceOrder.Title')}>
           <p>Todo</p>
+          <Authenticate />
         </Panel>
       );
     } catch (error) {
