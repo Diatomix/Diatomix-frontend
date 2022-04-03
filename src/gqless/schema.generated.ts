@@ -296,6 +296,89 @@ export interface timestamptz_comparison_exp {
   _nin?: Maybe<Array<Scalars["timestamptz"]>>;
 }
 
+/** Boolean expression to filter rows from the table "trade". All fields are combined with a logical 'AND'. */
+export interface trade_bool_exp {
+  _and?: Maybe<Array<trade_bool_exp>>;
+  _not?: Maybe<trade_bool_exp>;
+  _or?: Maybe<Array<trade_bool_exp>>;
+  amount?: Maybe<numeric_comparison_exp>;
+  id?: Maybe<String_comparison_exp>;
+  price?: Maybe<numeric_comparison_exp>;
+  time?: Maybe<timestamptz_comparison_exp>;
+}
+
+/** unique or primary key constraints on table "trade" */
+export enum trade_constraint {
+  /** unique or primary key constraint */
+  trade_pkey = "trade_pkey",
+}
+
+/** input type for incrementing numeric columns in table "trade" */
+export interface trade_inc_input {
+  amount?: Maybe<Scalars["numeric"]>;
+  price?: Maybe<Scalars["numeric"]>;
+}
+
+/** input type for inserting data into table "trade" */
+export interface trade_insert_input {
+  amount?: Maybe<Scalars["numeric"]>;
+  id?: Maybe<Scalars["String"]>;
+  price?: Maybe<Scalars["numeric"]>;
+  time?: Maybe<Scalars["timestamptz"]>;
+}
+
+/** on_conflict condition type for table "trade" */
+export interface trade_on_conflict {
+  constraint: trade_constraint;
+  update_columns?: Array<trade_update_column>;
+  where?: Maybe<trade_bool_exp>;
+}
+
+/** Ordering options when selecting data from "trade". */
+export interface trade_order_by {
+  amount?: Maybe<order_by>;
+  id?: Maybe<order_by>;
+  price?: Maybe<order_by>;
+  time?: Maybe<order_by>;
+}
+
+/** primary key columns input for table: trade */
+export interface trade_pk_columns_input {
+  id: Scalars["String"];
+}
+
+/** select columns of table "trade" */
+export enum trade_select_column {
+  /** column name */
+  amount = "amount",
+  /** column name */
+  id = "id",
+  /** column name */
+  price = "price",
+  /** column name */
+  time = "time",
+}
+
+/** input type for updating data in table "trade" */
+export interface trade_set_input {
+  amount?: Maybe<Scalars["numeric"]>;
+  id?: Maybe<Scalars["String"]>;
+  price?: Maybe<Scalars["numeric"]>;
+  time?: Maybe<Scalars["timestamptz"]>;
+}
+
+/** update columns of table "trade" */
+export enum trade_update_column {
+  /** column name */
+  amount = "amount",
+  /** column name */
+  id = "id",
+  /** column name */
+  price = "price",
+  /** column name */
+  time = "time",
+}
+
 export const scalarsEnumsHash: import("gqless").ScalarsEnumsHash = {
   Boolean: true,
   Float: true,
@@ -310,6 +393,9 @@ export const scalarsEnumsHash: import("gqless").ScalarsEnumsHash = {
   offers_update_column: true,
   order_by: true,
   timestamptz: true,
+  trade_constraint: true,
+  trade_select_column: true,
+  trade_update_column: true,
 };
 export const generatedSchema = {
   query: {
@@ -356,6 +442,27 @@ export const generatedSchema = {
       },
     },
     offers_by_pk: { __type: "offers", __args: { id: "String!" } },
+    trade: {
+      __type: "[trade!]!",
+      __args: {
+        distinct_on: "[trade_select_column!]",
+        limit: "Int",
+        offset: "Int",
+        order_by: "[trade_order_by!]",
+        where: "trade_bool_exp",
+      },
+    },
+    trade_aggregate: {
+      __type: "trade_aggregate!",
+      __args: {
+        distinct_on: "[trade_select_column!]",
+        limit: "Int",
+        offset: "Int",
+        order_by: "[trade_order_by!]",
+        where: "trade_bool_exp",
+      },
+    },
+    trade_by_pk: { __type: "trade", __args: { id: "String!" } },
   },
   mutation: {
     __typename: { __type: "String!" },
@@ -369,6 +476,11 @@ export const generatedSchema = {
       __args: { where: "offers_bool_exp!" },
     },
     delete_offers_by_pk: { __type: "offers", __args: { id: "String!" } },
+    delete_trade: {
+      __type: "trade_mutation_response",
+      __args: { where: "trade_bool_exp!" },
+    },
+    delete_trade_by_pk: { __type: "trade", __args: { id: "String!" } },
     insert_bids: {
       __type: "bids_mutation_response",
       __args: {
@@ -392,6 +504,20 @@ export const generatedSchema = {
       __args: {
         object: "offers_insert_input!",
         on_conflict: "offers_on_conflict",
+      },
+    },
+    insert_trade: {
+      __type: "trade_mutation_response",
+      __args: {
+        objects: "[trade_insert_input!]!",
+        on_conflict: "trade_on_conflict",
+      },
+    },
+    insert_trade_one: {
+      __type: "trade",
+      __args: {
+        object: "trade_insert_input!",
+        on_conflict: "trade_on_conflict",
       },
     },
     update_bids: {
@@ -424,6 +550,22 @@ export const generatedSchema = {
         _inc: "offers_inc_input",
         _set: "offers_set_input",
         pk_columns: "offers_pk_columns_input!",
+      },
+    },
+    update_trade: {
+      __type: "trade_mutation_response",
+      __args: {
+        _inc: "trade_inc_input",
+        _set: "trade_set_input",
+        where: "trade_bool_exp!",
+      },
+    },
+    update_trade_by_pk: {
+      __type: "trade",
+      __args: {
+        _inc: "trade_inc_input",
+        _set: "trade_set_input",
+        pk_columns: "trade_pk_columns_input!",
       },
     },
   },
@@ -471,6 +613,27 @@ export const generatedSchema = {
       },
     },
     offers_by_pk: { __type: "offers", __args: { id: "String!" } },
+    trade: {
+      __type: "[trade!]!",
+      __args: {
+        distinct_on: "[trade_select_column!]",
+        limit: "Int",
+        offset: "Int",
+        order_by: "[trade_order_by!]",
+        where: "trade_bool_exp",
+      },
+    },
+    trade_aggregate: {
+      __type: "trade_aggregate!",
+      __args: {
+        distinct_on: "[trade_select_column!]",
+        limit: "Int",
+        offset: "Int",
+        order_by: "[trade_order_by!]",
+        where: "trade_bool_exp",
+      },
+    },
+    trade_by_pk: { __type: "trade", __args: { id: "String!" } },
   },
   String_comparison_exp: {
     _eq: { __type: "String" },
@@ -793,6 +956,131 @@ export const generatedSchema = {
     _neq: { __type: "timestamptz" },
     _nin: { __type: "[timestamptz!]" },
   },
+  trade: {
+    __typename: { __type: "String!" },
+    amount: { __type: "numeric!" },
+    id: { __type: "String!" },
+    price: { __type: "numeric!" },
+    time: { __type: "timestamptz!" },
+  },
+  trade_aggregate: {
+    __typename: { __type: "String!" },
+    aggregate: { __type: "trade_aggregate_fields" },
+    nodes: { __type: "[trade!]!" },
+  },
+  trade_aggregate_fields: {
+    __typename: { __type: "String!" },
+    avg: { __type: "trade_avg_fields" },
+    count: {
+      __type: "Int!",
+      __args: { columns: "[trade_select_column!]", distinct: "Boolean" },
+    },
+    max: { __type: "trade_max_fields" },
+    min: { __type: "trade_min_fields" },
+    stddev: { __type: "trade_stddev_fields" },
+    stddev_pop: { __type: "trade_stddev_pop_fields" },
+    stddev_samp: { __type: "trade_stddev_samp_fields" },
+    sum: { __type: "trade_sum_fields" },
+    var_pop: { __type: "trade_var_pop_fields" },
+    var_samp: { __type: "trade_var_samp_fields" },
+    variance: { __type: "trade_variance_fields" },
+  },
+  trade_avg_fields: {
+    __typename: { __type: "String!" },
+    amount: { __type: "Float" },
+    price: { __type: "Float" },
+  },
+  trade_bool_exp: {
+    _and: { __type: "[trade_bool_exp!]" },
+    _not: { __type: "trade_bool_exp" },
+    _or: { __type: "[trade_bool_exp!]" },
+    amount: { __type: "numeric_comparison_exp" },
+    id: { __type: "String_comparison_exp" },
+    price: { __type: "numeric_comparison_exp" },
+    time: { __type: "timestamptz_comparison_exp" },
+  },
+  trade_inc_input: {
+    amount: { __type: "numeric" },
+    price: { __type: "numeric" },
+  },
+  trade_insert_input: {
+    amount: { __type: "numeric" },
+    id: { __type: "String" },
+    price: { __type: "numeric" },
+    time: { __type: "timestamptz" },
+  },
+  trade_max_fields: {
+    __typename: { __type: "String!" },
+    amount: { __type: "numeric" },
+    id: { __type: "String" },
+    price: { __type: "numeric" },
+    time: { __type: "timestamptz" },
+  },
+  trade_min_fields: {
+    __typename: { __type: "String!" },
+    amount: { __type: "numeric" },
+    id: { __type: "String" },
+    price: { __type: "numeric" },
+    time: { __type: "timestamptz" },
+  },
+  trade_mutation_response: {
+    __typename: { __type: "String!" },
+    affected_rows: { __type: "Int!" },
+    returning: { __type: "[trade!]!" },
+  },
+  trade_on_conflict: {
+    constraint: { __type: "trade_constraint!" },
+    update_columns: { __type: "[trade_update_column!]!" },
+    where: { __type: "trade_bool_exp" },
+  },
+  trade_order_by: {
+    amount: { __type: "order_by" },
+    id: { __type: "order_by" },
+    price: { __type: "order_by" },
+    time: { __type: "order_by" },
+  },
+  trade_pk_columns_input: { id: { __type: "String!" } },
+  trade_set_input: {
+    amount: { __type: "numeric" },
+    id: { __type: "String" },
+    price: { __type: "numeric" },
+    time: { __type: "timestamptz" },
+  },
+  trade_stddev_fields: {
+    __typename: { __type: "String!" },
+    amount: { __type: "Float" },
+    price: { __type: "Float" },
+  },
+  trade_stddev_pop_fields: {
+    __typename: { __type: "String!" },
+    amount: { __type: "Float" },
+    price: { __type: "Float" },
+  },
+  trade_stddev_samp_fields: {
+    __typename: { __type: "String!" },
+    amount: { __type: "Float" },
+    price: { __type: "Float" },
+  },
+  trade_sum_fields: {
+    __typename: { __type: "String!" },
+    amount: { __type: "numeric" },
+    price: { __type: "numeric" },
+  },
+  trade_var_pop_fields: {
+    __typename: { __type: "String!" },
+    amount: { __type: "Float" },
+    price: { __type: "Float" },
+  },
+  trade_var_samp_fields: {
+    __typename: { __type: "String!" },
+    amount: { __type: "Float" },
+    price: { __type: "Float" },
+  },
+  trade_variance_fields: {
+    __typename: { __type: "String!" },
+    amount: { __type: "Float" },
+    price: { __type: "Float" },
+  },
 } as const;
 
 export interface Query {
@@ -827,6 +1115,21 @@ export interface Query {
     where?: Maybe<offers_bool_exp>;
   }) => offers_aggregate;
   offers_by_pk: (args: { id: Scalars["String"] }) => Maybe<offers>;
+  trade: (args?: {
+    distinct_on?: Maybe<Array<trade_select_column>>;
+    limit?: Maybe<Scalars["Int"]>;
+    offset?: Maybe<Scalars["Int"]>;
+    order_by?: Maybe<Array<trade_order_by>>;
+    where?: Maybe<trade_bool_exp>;
+  }) => Array<trade>;
+  trade_aggregate: (args?: {
+    distinct_on?: Maybe<Array<trade_select_column>>;
+    limit?: Maybe<Scalars["Int"]>;
+    offset?: Maybe<Scalars["Int"]>;
+    order_by?: Maybe<Array<trade_order_by>>;
+    where?: Maybe<trade_bool_exp>;
+  }) => trade_aggregate;
+  trade_by_pk: (args: { id: Scalars["String"] }) => Maybe<trade>;
 }
 
 export interface Mutation {
@@ -839,6 +1142,10 @@ export interface Mutation {
     where: offers_bool_exp;
   }) => Maybe<offers_mutation_response>;
   delete_offers_by_pk: (args: { id: Scalars["String"] }) => Maybe<offers>;
+  delete_trade: (args: {
+    where: trade_bool_exp;
+  }) => Maybe<trade_mutation_response>;
+  delete_trade_by_pk: (args: { id: Scalars["String"] }) => Maybe<trade>;
   insert_bids: (args: {
     objects: Array<bids_insert_input>;
     on_conflict?: Maybe<bids_on_conflict>;
@@ -855,6 +1162,14 @@ export interface Mutation {
     object: offers_insert_input;
     on_conflict?: Maybe<offers_on_conflict>;
   }) => Maybe<offers>;
+  insert_trade: (args: {
+    objects: Array<trade_insert_input>;
+    on_conflict?: Maybe<trade_on_conflict>;
+  }) => Maybe<trade_mutation_response>;
+  insert_trade_one: (args: {
+    object: trade_insert_input;
+    on_conflict?: Maybe<trade_on_conflict>;
+  }) => Maybe<trade>;
   update_bids: (args: {
     _inc?: Maybe<bids_inc_input>;
     _set?: Maybe<bids_set_input>;
@@ -875,6 +1190,16 @@ export interface Mutation {
     _set?: Maybe<offers_set_input>;
     pk_columns: offers_pk_columns_input;
   }) => Maybe<offers>;
+  update_trade: (args: {
+    _inc?: Maybe<trade_inc_input>;
+    _set?: Maybe<trade_set_input>;
+    where: trade_bool_exp;
+  }) => Maybe<trade_mutation_response>;
+  update_trade_by_pk: (args: {
+    _inc?: Maybe<trade_inc_input>;
+    _set?: Maybe<trade_set_input>;
+    pk_columns: trade_pk_columns_input;
+  }) => Maybe<trade>;
 }
 
 export interface Subscription {
@@ -909,6 +1234,21 @@ export interface Subscription {
     where?: Maybe<offers_bool_exp>;
   }) => offers_aggregate;
   offers_by_pk: (args: { id: Scalars["String"] }) => Maybe<offers>;
+  trade: (args?: {
+    distinct_on?: Maybe<Array<trade_select_column>>;
+    limit?: Maybe<Scalars["Int"]>;
+    offset?: Maybe<Scalars["Int"]>;
+    order_by?: Maybe<Array<trade_order_by>>;
+    where?: Maybe<trade_bool_exp>;
+  }) => Array<trade>;
+  trade_aggregate: (args?: {
+    distinct_on?: Maybe<Array<trade_select_column>>;
+    limit?: Maybe<Scalars["Int"]>;
+    offset?: Maybe<Scalars["Int"]>;
+    order_by?: Maybe<Array<trade_order_by>>;
+    where?: Maybe<trade_bool_exp>;
+  }) => trade_aggregate;
+  trade_by_pk: (args: { id: Scalars["String"] }) => Maybe<trade>;
 }
 
 /**
@@ -1223,6 +1563,156 @@ export interface offers_variance_fields {
   price?: Maybe<ScalarsEnums["Float"]>;
 }
 
+/**
+ * columns and relationships of "trade"
+ */
+export interface trade {
+  __typename: "trade" | undefined;
+  amount: ScalarsEnums["numeric"];
+  id: ScalarsEnums["String"];
+  price: ScalarsEnums["numeric"];
+  time: ScalarsEnums["timestamptz"];
+}
+
+/**
+ * aggregated selection of "trade"
+ */
+export interface trade_aggregate {
+  __typename: "trade_aggregate" | undefined;
+  aggregate?: Maybe<trade_aggregate_fields>;
+  nodes: Array<trade>;
+}
+
+/**
+ * aggregate fields of "trade"
+ */
+export interface trade_aggregate_fields {
+  __typename: "trade_aggregate_fields" | undefined;
+  avg?: Maybe<trade_avg_fields>;
+  count: (args?: {
+    columns?: Maybe<Array<trade_select_column>>;
+    distinct?: Maybe<Scalars["Boolean"]>;
+  }) => ScalarsEnums["Int"];
+  max?: Maybe<trade_max_fields>;
+  min?: Maybe<trade_min_fields>;
+  stddev?: Maybe<trade_stddev_fields>;
+  stddev_pop?: Maybe<trade_stddev_pop_fields>;
+  stddev_samp?: Maybe<trade_stddev_samp_fields>;
+  sum?: Maybe<trade_sum_fields>;
+  var_pop?: Maybe<trade_var_pop_fields>;
+  var_samp?: Maybe<trade_var_samp_fields>;
+  variance?: Maybe<trade_variance_fields>;
+}
+
+/**
+ * aggregate avg on columns
+ */
+export interface trade_avg_fields {
+  __typename: "trade_avg_fields" | undefined;
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
+/**
+ * aggregate max on columns
+ */
+export interface trade_max_fields {
+  __typename: "trade_max_fields" | undefined;
+  amount?: Maybe<ScalarsEnums["numeric"]>;
+  id?: Maybe<ScalarsEnums["String"]>;
+  price?: Maybe<ScalarsEnums["numeric"]>;
+  time?: Maybe<ScalarsEnums["timestamptz"]>;
+}
+
+/**
+ * aggregate min on columns
+ */
+export interface trade_min_fields {
+  __typename: "trade_min_fields" | undefined;
+  amount?: Maybe<ScalarsEnums["numeric"]>;
+  id?: Maybe<ScalarsEnums["String"]>;
+  price?: Maybe<ScalarsEnums["numeric"]>;
+  time?: Maybe<ScalarsEnums["timestamptz"]>;
+}
+
+/**
+ * response of any mutation on the table "trade"
+ */
+export interface trade_mutation_response {
+  __typename: "trade_mutation_response" | undefined;
+  /**
+   * number of rows affected by the mutation
+   */
+  affected_rows: ScalarsEnums["Int"];
+  /**
+   * data from the rows affected by the mutation
+   */
+  returning: Array<trade>;
+}
+
+/**
+ * aggregate stddev on columns
+ */
+export interface trade_stddev_fields {
+  __typename: "trade_stddev_fields" | undefined;
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
+/**
+ * aggregate stddev_pop on columns
+ */
+export interface trade_stddev_pop_fields {
+  __typename: "trade_stddev_pop_fields" | undefined;
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
+/**
+ * aggregate stddev_samp on columns
+ */
+export interface trade_stddev_samp_fields {
+  __typename: "trade_stddev_samp_fields" | undefined;
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
+/**
+ * aggregate sum on columns
+ */
+export interface trade_sum_fields {
+  __typename: "trade_sum_fields" | undefined;
+  amount?: Maybe<ScalarsEnums["numeric"]>;
+  price?: Maybe<ScalarsEnums["numeric"]>;
+}
+
+/**
+ * aggregate var_pop on columns
+ */
+export interface trade_var_pop_fields {
+  __typename: "trade_var_pop_fields" | undefined;
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
+/**
+ * aggregate var_samp on columns
+ */
+export interface trade_var_samp_fields {
+  __typename: "trade_var_samp_fields" | undefined;
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
+/**
+ * aggregate variance on columns
+ */
+export interface trade_variance_fields {
+  __typename: "trade_variance_fields" | undefined;
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
 export interface SchemaObjectTypes {
   Query: Query;
   Mutation: Mutation;
@@ -1255,6 +1745,20 @@ export interface SchemaObjectTypes {
   offers_var_pop_fields: offers_var_pop_fields;
   offers_var_samp_fields: offers_var_samp_fields;
   offers_variance_fields: offers_variance_fields;
+  trade: trade;
+  trade_aggregate: trade_aggregate;
+  trade_aggregate_fields: trade_aggregate_fields;
+  trade_avg_fields: trade_avg_fields;
+  trade_max_fields: trade_max_fields;
+  trade_min_fields: trade_min_fields;
+  trade_mutation_response: trade_mutation_response;
+  trade_stddev_fields: trade_stddev_fields;
+  trade_stddev_pop_fields: trade_stddev_pop_fields;
+  trade_stddev_samp_fields: trade_stddev_samp_fields;
+  trade_sum_fields: trade_sum_fields;
+  trade_var_pop_fields: trade_var_pop_fields;
+  trade_var_samp_fields: trade_var_samp_fields;
+  trade_variance_fields: trade_variance_fields;
 }
 export type SchemaObjectTypesNames =
   | "Query"
@@ -1287,7 +1791,21 @@ export type SchemaObjectTypesNames =
   | "offers_sum_fields"
   | "offers_var_pop_fields"
   | "offers_var_samp_fields"
-  | "offers_variance_fields";
+  | "offers_variance_fields"
+  | "trade"
+  | "trade_aggregate"
+  | "trade_aggregate_fields"
+  | "trade_avg_fields"
+  | "trade_max_fields"
+  | "trade_min_fields"
+  | "trade_mutation_response"
+  | "trade_stddev_fields"
+  | "trade_stddev_pop_fields"
+  | "trade_stddev_samp_fields"
+  | "trade_sum_fields"
+  | "trade_var_pop_fields"
+  | "trade_var_samp_fields"
+  | "trade_variance_fields";
 
 export interface GeneratedSchema {
   query: Query;
@@ -1307,4 +1825,7 @@ export interface ScalarsEnums extends MakeNullable<Scalars> {
   offers_select_column: offers_select_column | undefined;
   offers_update_column: offers_update_column | undefined;
   order_by: order_by | undefined;
+  trade_constraint: trade_constraint | undefined;
+  trade_select_column: trade_select_column | undefined;
+  trade_update_column: trade_update_column | undefined;
 }

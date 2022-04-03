@@ -3,6 +3,7 @@ import i18n from 'i18next';
 import { Trans } from 'react-i18next';
 
 import { InputText } from 'primereact/inputtext';
+import { order_by, useSubscription } from '../../gqty';
 
 interface TradesConfig {
   quote: string;
@@ -49,11 +50,31 @@ export default function Trades(props: TradesProps) {
       return <ErrorHandler error={error} />;
     }
   }
+
+  const { trade } = useSubscription();
+  const recentTrades = trade({ limit: 10, order_by: [{ time: order_by.desc }] }).map(({ id, time, price, amount }) => {
+    return (
+      <tr key={id}>
+        <td>{time}</td>
+        <td>{price}</td>
+        <td>{amount}</td>
+      </tr>
+    );
+  });
   function Content() {
     try {
       return (
         <Panel header={i18n.t('Trades.Title')}>
-          <p>Todo</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Price</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>{recentTrades}</tbody>
+          </table>
         </Panel>
       );
     } catch (error) {
