@@ -1,8 +1,9 @@
 /**
- * GQLESS AUTO-GENERATED CODE: PLEASE DO NOT MODIFY MANUALLY
+ * GQTY AUTO-GENERATED CODE: PLEASE DO NOT MODIFY MANUALLY
  */
 
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
@@ -25,48 +26,48 @@ export interface Scalars {
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 export interface String_comparison_exp {
-  _eq?: Maybe<Scalars["String"]>;
-  _gt?: Maybe<Scalars["String"]>;
-  _gte?: Maybe<Scalars["String"]>;
+  _eq?: InputMaybe<Scalars["String"]>;
+  _gt?: InputMaybe<Scalars["String"]>;
+  _gte?: InputMaybe<Scalars["String"]>;
   /** does the column match the given case-insensitive pattern */
-  _ilike?: Maybe<Scalars["String"]>;
-  _in?: Maybe<Array<Scalars["String"]>>;
+  _ilike?: InputMaybe<Scalars["String"]>;
+  _in?: InputMaybe<Array<Scalars["String"]>>;
   /** does the column match the given POSIX regular expression, case insensitive */
-  _iregex?: Maybe<Scalars["String"]>;
-  _is_null?: Maybe<Scalars["Boolean"]>;
+  _iregex?: InputMaybe<Scalars["String"]>;
+  _is_null?: InputMaybe<Scalars["Boolean"]>;
   /** does the column match the given pattern */
-  _like?: Maybe<Scalars["String"]>;
-  _lt?: Maybe<Scalars["String"]>;
-  _lte?: Maybe<Scalars["String"]>;
-  _neq?: Maybe<Scalars["String"]>;
+  _like?: InputMaybe<Scalars["String"]>;
+  _lt?: InputMaybe<Scalars["String"]>;
+  _lte?: InputMaybe<Scalars["String"]>;
+  _neq?: InputMaybe<Scalars["String"]>;
   /** does the column NOT match the given case-insensitive pattern */
-  _nilike?: Maybe<Scalars["String"]>;
-  _nin?: Maybe<Array<Scalars["String"]>>;
+  _nilike?: InputMaybe<Scalars["String"]>;
+  _nin?: InputMaybe<Array<Scalars["String"]>>;
   /** does the column NOT match the given POSIX regular expression, case insensitive */
-  _niregex?: Maybe<Scalars["String"]>;
+  _niregex?: InputMaybe<Scalars["String"]>;
   /** does the column NOT match the given pattern */
-  _nlike?: Maybe<Scalars["String"]>;
+  _nlike?: InputMaybe<Scalars["String"]>;
   /** does the column NOT match the given POSIX regular expression, case sensitive */
-  _nregex?: Maybe<Scalars["String"]>;
+  _nregex?: InputMaybe<Scalars["String"]>;
   /** does the column NOT match the given SQL regular expression */
-  _nsimilar?: Maybe<Scalars["String"]>;
+  _nsimilar?: InputMaybe<Scalars["String"]>;
   /** does the column match the given POSIX regular expression, case sensitive */
-  _regex?: Maybe<Scalars["String"]>;
+  _regex?: InputMaybe<Scalars["String"]>;
   /** does the column match the given SQL regular expression */
-  _similar?: Maybe<Scalars["String"]>;
+  _similar?: InputMaybe<Scalars["String"]>;
 }
 
 /** Boolean expression to filter rows from the table "bids". All fields are combined with a logical 'AND'. */
 export interface bids_bool_exp {
-  _and?: Maybe<Array<bids_bool_exp>>;
-  _not?: Maybe<bids_bool_exp>;
-  _or?: Maybe<Array<bids_bool_exp>>;
-  amount?: Maybe<numeric_comparison_exp>;
-  created_at?: Maybe<timestamptz_comparison_exp>;
-  id?: Maybe<String_comparison_exp>;
-  owner?: Maybe<String_comparison_exp>;
-  price?: Maybe<numeric_comparison_exp>;
-  updated_at?: Maybe<timestamptz_comparison_exp>;
+  _and?: InputMaybe<Array<bids_bool_exp>>;
+  _not?: InputMaybe<bids_bool_exp>;
+  _or?: InputMaybe<Array<bids_bool_exp>>;
+  amount?: InputMaybe<numeric_comparison_exp>;
+  created_at?: InputMaybe<timestamptz_comparison_exp>;
+  id?: InputMaybe<String_comparison_exp>;
+  owner?: InputMaybe<String_comparison_exp>;
+  price?: InputMaybe<numeric_comparison_exp>;
+  updated_at?: InputMaybe<timestamptz_comparison_exp>;
 }
 
 /** unique or primary key constraints on table "bids" */
@@ -77,35 +78,35 @@ export enum bids_constraint {
 
 /** input type for incrementing numeric columns in table "bids" */
 export interface bids_inc_input {
-  amount?: Maybe<Scalars["numeric"]>;
-  price?: Maybe<Scalars["numeric"]>;
+  amount?: InputMaybe<Scalars["numeric"]>;
+  price?: InputMaybe<Scalars["numeric"]>;
 }
 
 /** input type for inserting data into table "bids" */
 export interface bids_insert_input {
-  amount?: Maybe<Scalars["numeric"]>;
-  created_at?: Maybe<Scalars["timestamptz"]>;
-  id?: Maybe<Scalars["String"]>;
-  owner?: Maybe<Scalars["String"]>;
-  price?: Maybe<Scalars["numeric"]>;
-  updated_at?: Maybe<Scalars["timestamptz"]>;
+  amount?: InputMaybe<Scalars["numeric"]>;
+  created_at?: InputMaybe<Scalars["timestamptz"]>;
+  id?: InputMaybe<Scalars["String"]>;
+  owner?: InputMaybe<Scalars["String"]>;
+  price?: InputMaybe<Scalars["numeric"]>;
+  updated_at?: InputMaybe<Scalars["timestamptz"]>;
 }
 
 /** on_conflict condition type for table "bids" */
 export interface bids_on_conflict {
   constraint: bids_constraint;
   update_columns?: Array<bids_update_column>;
-  where?: Maybe<bids_bool_exp>;
+  where?: InputMaybe<bids_bool_exp>;
 }
 
 /** Ordering options when selecting data from "bids". */
 export interface bids_order_by {
-  amount?: Maybe<order_by>;
-  created_at?: Maybe<order_by>;
-  id?: Maybe<order_by>;
-  owner?: Maybe<order_by>;
-  price?: Maybe<order_by>;
-  updated_at?: Maybe<order_by>;
+  amount?: InputMaybe<order_by>;
+  created_at?: InputMaybe<order_by>;
+  id?: InputMaybe<order_by>;
+  owner?: InputMaybe<order_by>;
+  price?: InputMaybe<order_by>;
+  updated_at?: InputMaybe<order_by>;
 }
 
 /** primary key columns input for table: bids */
@@ -131,12 +132,12 @@ export enum bids_select_column {
 
 /** input type for updating data in table "bids" */
 export interface bids_set_input {
-  amount?: Maybe<Scalars["numeric"]>;
-  created_at?: Maybe<Scalars["timestamptz"]>;
-  id?: Maybe<Scalars["String"]>;
-  owner?: Maybe<Scalars["String"]>;
-  price?: Maybe<Scalars["numeric"]>;
-  updated_at?: Maybe<Scalars["timestamptz"]>;
+  amount?: InputMaybe<Scalars["numeric"]>;
+  created_at?: InputMaybe<Scalars["timestamptz"]>;
+  id?: InputMaybe<Scalars["String"]>;
+  owner?: InputMaybe<Scalars["String"]>;
+  price?: InputMaybe<Scalars["numeric"]>;
+  updated_at?: InputMaybe<Scalars["timestamptz"]>;
 }
 
 /** update columns of table "bids" */
@@ -157,28 +158,28 @@ export enum bids_update_column {
 
 /** Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'. */
 export interface numeric_comparison_exp {
-  _eq?: Maybe<Scalars["numeric"]>;
-  _gt?: Maybe<Scalars["numeric"]>;
-  _gte?: Maybe<Scalars["numeric"]>;
-  _in?: Maybe<Array<Scalars["numeric"]>>;
-  _is_null?: Maybe<Scalars["Boolean"]>;
-  _lt?: Maybe<Scalars["numeric"]>;
-  _lte?: Maybe<Scalars["numeric"]>;
-  _neq?: Maybe<Scalars["numeric"]>;
-  _nin?: Maybe<Array<Scalars["numeric"]>>;
+  _eq?: InputMaybe<Scalars["numeric"]>;
+  _gt?: InputMaybe<Scalars["numeric"]>;
+  _gte?: InputMaybe<Scalars["numeric"]>;
+  _in?: InputMaybe<Array<Scalars["numeric"]>>;
+  _is_null?: InputMaybe<Scalars["Boolean"]>;
+  _lt?: InputMaybe<Scalars["numeric"]>;
+  _lte?: InputMaybe<Scalars["numeric"]>;
+  _neq?: InputMaybe<Scalars["numeric"]>;
+  _nin?: InputMaybe<Array<Scalars["numeric"]>>;
 }
 
 /** Boolean expression to filter rows from the table "offers". All fields are combined with a logical 'AND'. */
 export interface offers_bool_exp {
-  _and?: Maybe<Array<offers_bool_exp>>;
-  _not?: Maybe<offers_bool_exp>;
-  _or?: Maybe<Array<offers_bool_exp>>;
-  amount?: Maybe<numeric_comparison_exp>;
-  created_at?: Maybe<timestamptz_comparison_exp>;
-  id?: Maybe<String_comparison_exp>;
-  owner?: Maybe<String_comparison_exp>;
-  price?: Maybe<numeric_comparison_exp>;
-  updated_at?: Maybe<timestamptz_comparison_exp>;
+  _and?: InputMaybe<Array<offers_bool_exp>>;
+  _not?: InputMaybe<offers_bool_exp>;
+  _or?: InputMaybe<Array<offers_bool_exp>>;
+  amount?: InputMaybe<numeric_comparison_exp>;
+  created_at?: InputMaybe<timestamptz_comparison_exp>;
+  id?: InputMaybe<String_comparison_exp>;
+  owner?: InputMaybe<String_comparison_exp>;
+  price?: InputMaybe<numeric_comparison_exp>;
+  updated_at?: InputMaybe<timestamptz_comparison_exp>;
 }
 
 /** unique or primary key constraints on table "offers" */
@@ -189,35 +190,35 @@ export enum offers_constraint {
 
 /** input type for incrementing numeric columns in table "offers" */
 export interface offers_inc_input {
-  amount?: Maybe<Scalars["numeric"]>;
-  price?: Maybe<Scalars["numeric"]>;
+  amount?: InputMaybe<Scalars["numeric"]>;
+  price?: InputMaybe<Scalars["numeric"]>;
 }
 
 /** input type for inserting data into table "offers" */
 export interface offers_insert_input {
-  amount?: Maybe<Scalars["numeric"]>;
-  created_at?: Maybe<Scalars["timestamptz"]>;
-  id?: Maybe<Scalars["String"]>;
-  owner?: Maybe<Scalars["String"]>;
-  price?: Maybe<Scalars["numeric"]>;
-  updated_at?: Maybe<Scalars["timestamptz"]>;
+  amount?: InputMaybe<Scalars["numeric"]>;
+  created_at?: InputMaybe<Scalars["timestamptz"]>;
+  id?: InputMaybe<Scalars["String"]>;
+  owner?: InputMaybe<Scalars["String"]>;
+  price?: InputMaybe<Scalars["numeric"]>;
+  updated_at?: InputMaybe<Scalars["timestamptz"]>;
 }
 
 /** on_conflict condition type for table "offers" */
 export interface offers_on_conflict {
   constraint: offers_constraint;
   update_columns?: Array<offers_update_column>;
-  where?: Maybe<offers_bool_exp>;
+  where?: InputMaybe<offers_bool_exp>;
 }
 
 /** Ordering options when selecting data from "offers". */
 export interface offers_order_by {
-  amount?: Maybe<order_by>;
-  created_at?: Maybe<order_by>;
-  id?: Maybe<order_by>;
-  owner?: Maybe<order_by>;
-  price?: Maybe<order_by>;
-  updated_at?: Maybe<order_by>;
+  amount?: InputMaybe<order_by>;
+  created_at?: InputMaybe<order_by>;
+  id?: InputMaybe<order_by>;
+  owner?: InputMaybe<order_by>;
+  price?: InputMaybe<order_by>;
+  updated_at?: InputMaybe<order_by>;
 }
 
 /** primary key columns input for table: offers */
@@ -243,12 +244,12 @@ export enum offers_select_column {
 
 /** input type for updating data in table "offers" */
 export interface offers_set_input {
-  amount?: Maybe<Scalars["numeric"]>;
-  created_at?: Maybe<Scalars["timestamptz"]>;
-  id?: Maybe<Scalars["String"]>;
-  owner?: Maybe<Scalars["String"]>;
-  price?: Maybe<Scalars["numeric"]>;
-  updated_at?: Maybe<Scalars["timestamptz"]>;
+  amount?: InputMaybe<Scalars["numeric"]>;
+  created_at?: InputMaybe<Scalars["timestamptz"]>;
+  id?: InputMaybe<Scalars["String"]>;
+  owner?: InputMaybe<Scalars["String"]>;
+  price?: InputMaybe<Scalars["numeric"]>;
+  updated_at?: InputMaybe<Scalars["timestamptz"]>;
 }
 
 /** update columns of table "offers" */
@@ -285,18 +286,18 @@ export enum order_by {
 
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
 export interface timestamptz_comparison_exp {
-  _eq?: Maybe<Scalars["timestamptz"]>;
-  _gt?: Maybe<Scalars["timestamptz"]>;
-  _gte?: Maybe<Scalars["timestamptz"]>;
-  _in?: Maybe<Array<Scalars["timestamptz"]>>;
-  _is_null?: Maybe<Scalars["Boolean"]>;
-  _lt?: Maybe<Scalars["timestamptz"]>;
-  _lte?: Maybe<Scalars["timestamptz"]>;
-  _neq?: Maybe<Scalars["timestamptz"]>;
-  _nin?: Maybe<Array<Scalars["timestamptz"]>>;
+  _eq?: InputMaybe<Scalars["timestamptz"]>;
+  _gt?: InputMaybe<Scalars["timestamptz"]>;
+  _gte?: InputMaybe<Scalars["timestamptz"]>;
+  _in?: InputMaybe<Array<Scalars["timestamptz"]>>;
+  _is_null?: InputMaybe<Scalars["Boolean"]>;
+  _lt?: InputMaybe<Scalars["timestamptz"]>;
+  _lte?: InputMaybe<Scalars["timestamptz"]>;
+  _neq?: InputMaybe<Scalars["timestamptz"]>;
+  _nin?: InputMaybe<Array<Scalars["timestamptz"]>>;
 }
 
-export const scalarsEnumsHash: import("gqless").ScalarsEnumsHash = {
+export const scalarsEnumsHash: import("gqty").ScalarsEnumsHash = {
   Boolean: true,
   Float: true,
   Int: true,
@@ -312,166 +313,6 @@ export const scalarsEnumsHash: import("gqless").ScalarsEnumsHash = {
   timestamptz: true,
 };
 export const generatedSchema = {
-  query: {
-    __typename: { __type: "String!" },
-    bids: {
-      __type: "[bids!]!",
-      __args: {
-        distinct_on: "[bids_select_column!]",
-        limit: "Int",
-        offset: "Int",
-        order_by: "[bids_order_by!]",
-        where: "bids_bool_exp",
-      },
-    },
-    bids_aggregate: {
-      __type: "bids_aggregate!",
-      __args: {
-        distinct_on: "[bids_select_column!]",
-        limit: "Int",
-        offset: "Int",
-        order_by: "[bids_order_by!]",
-        where: "bids_bool_exp",
-      },
-    },
-    bids_by_pk: { __type: "bids", __args: { id: "String!" } },
-    offers: {
-      __type: "[offers!]!",
-      __args: {
-        distinct_on: "[offers_select_column!]",
-        limit: "Int",
-        offset: "Int",
-        order_by: "[offers_order_by!]",
-        where: "offers_bool_exp",
-      },
-    },
-    offers_aggregate: {
-      __type: "offers_aggregate!",
-      __args: {
-        distinct_on: "[offers_select_column!]",
-        limit: "Int",
-        offset: "Int",
-        order_by: "[offers_order_by!]",
-        where: "offers_bool_exp",
-      },
-    },
-    offers_by_pk: { __type: "offers", __args: { id: "String!" } },
-  },
-  mutation: {
-    __typename: { __type: "String!" },
-    delete_bids: {
-      __type: "bids_mutation_response",
-      __args: { where: "bids_bool_exp!" },
-    },
-    delete_bids_by_pk: { __type: "bids", __args: { id: "String!" } },
-    delete_offers: {
-      __type: "offers_mutation_response",
-      __args: { where: "offers_bool_exp!" },
-    },
-    delete_offers_by_pk: { __type: "offers", __args: { id: "String!" } },
-    insert_bids: {
-      __type: "bids_mutation_response",
-      __args: {
-        objects: "[bids_insert_input!]!",
-        on_conflict: "bids_on_conflict",
-      },
-    },
-    insert_bids_one: {
-      __type: "bids",
-      __args: { object: "bids_insert_input!", on_conflict: "bids_on_conflict" },
-    },
-    insert_offers: {
-      __type: "offers_mutation_response",
-      __args: {
-        objects: "[offers_insert_input!]!",
-        on_conflict: "offers_on_conflict",
-      },
-    },
-    insert_offers_one: {
-      __type: "offers",
-      __args: {
-        object: "offers_insert_input!",
-        on_conflict: "offers_on_conflict",
-      },
-    },
-    update_bids: {
-      __type: "bids_mutation_response",
-      __args: {
-        _inc: "bids_inc_input",
-        _set: "bids_set_input",
-        where: "bids_bool_exp!",
-      },
-    },
-    update_bids_by_pk: {
-      __type: "bids",
-      __args: {
-        _inc: "bids_inc_input",
-        _set: "bids_set_input",
-        pk_columns: "bids_pk_columns_input!",
-      },
-    },
-    update_offers: {
-      __type: "offers_mutation_response",
-      __args: {
-        _inc: "offers_inc_input",
-        _set: "offers_set_input",
-        where: "offers_bool_exp!",
-      },
-    },
-    update_offers_by_pk: {
-      __type: "offers",
-      __args: {
-        _inc: "offers_inc_input",
-        _set: "offers_set_input",
-        pk_columns: "offers_pk_columns_input!",
-      },
-    },
-  },
-  subscription: {
-    __typename: { __type: "String!" },
-    bids: {
-      __type: "[bids!]!",
-      __args: {
-        distinct_on: "[bids_select_column!]",
-        limit: "Int",
-        offset: "Int",
-        order_by: "[bids_order_by!]",
-        where: "bids_bool_exp",
-      },
-    },
-    bids_aggregate: {
-      __type: "bids_aggregate!",
-      __args: {
-        distinct_on: "[bids_select_column!]",
-        limit: "Int",
-        offset: "Int",
-        order_by: "[bids_order_by!]",
-        where: "bids_bool_exp",
-      },
-    },
-    bids_by_pk: { __type: "bids", __args: { id: "String!" } },
-    offers: {
-      __type: "[offers!]!",
-      __args: {
-        distinct_on: "[offers_select_column!]",
-        limit: "Int",
-        offset: "Int",
-        order_by: "[offers_order_by!]",
-        where: "offers_bool_exp",
-      },
-    },
-    offers_aggregate: {
-      __type: "offers_aggregate!",
-      __args: {
-        distinct_on: "[offers_select_column!]",
-        limit: "Int",
-        offset: "Int",
-        order_by: "[offers_order_by!]",
-        where: "offers_bool_exp",
-      },
-    },
-    offers_by_pk: { __type: "offers", __args: { id: "String!" } },
-  },
   String_comparison_exp: {
     _eq: { __type: "String" },
     _gt: { __type: "String" },
@@ -632,6 +473,76 @@ export const generatedSchema = {
     amount: { __type: "Float" },
     price: { __type: "Float" },
   },
+  mutation: {
+    __typename: { __type: "String!" },
+    delete_bids: {
+      __type: "bids_mutation_response",
+      __args: { where: "bids_bool_exp!" },
+    },
+    delete_bids_by_pk: { __type: "bids", __args: { id: "String!" } },
+    delete_offers: {
+      __type: "offers_mutation_response",
+      __args: { where: "offers_bool_exp!" },
+    },
+    delete_offers_by_pk: { __type: "offers", __args: { id: "String!" } },
+    insert_bids: {
+      __type: "bids_mutation_response",
+      __args: {
+        objects: "[bids_insert_input!]!",
+        on_conflict: "bids_on_conflict",
+      },
+    },
+    insert_bids_one: {
+      __type: "bids",
+      __args: { object: "bids_insert_input!", on_conflict: "bids_on_conflict" },
+    },
+    insert_offers: {
+      __type: "offers_mutation_response",
+      __args: {
+        objects: "[offers_insert_input!]!",
+        on_conflict: "offers_on_conflict",
+      },
+    },
+    insert_offers_one: {
+      __type: "offers",
+      __args: {
+        object: "offers_insert_input!",
+        on_conflict: "offers_on_conflict",
+      },
+    },
+    update_bids: {
+      __type: "bids_mutation_response",
+      __args: {
+        _inc: "bids_inc_input",
+        _set: "bids_set_input",
+        where: "bids_bool_exp!",
+      },
+    },
+    update_bids_by_pk: {
+      __type: "bids",
+      __args: {
+        _inc: "bids_inc_input",
+        _set: "bids_set_input",
+        pk_columns: "bids_pk_columns_input!",
+      },
+    },
+    update_offers: {
+      __type: "offers_mutation_response",
+      __args: {
+        _inc: "offers_inc_input",
+        _set: "offers_set_input",
+        where: "offers_bool_exp!",
+      },
+    },
+    update_offers_by_pk: {
+      __type: "offers",
+      __args: {
+        _inc: "offers_inc_input",
+        _set: "offers_set_input",
+        pk_columns: "offers_pk_columns_input!",
+      },
+    },
+  },
   numeric_comparison_exp: {
     _eq: { __type: "numeric" },
     _gt: { __type: "numeric" },
@@ -782,6 +693,96 @@ export const generatedSchema = {
     amount: { __type: "Float" },
     price: { __type: "Float" },
   },
+  query: {
+    __typename: { __type: "String!" },
+    bids: {
+      __type: "[bids!]!",
+      __args: {
+        distinct_on: "[bids_select_column!]",
+        limit: "Int",
+        offset: "Int",
+        order_by: "[bids_order_by!]",
+        where: "bids_bool_exp",
+      },
+    },
+    bids_aggregate: {
+      __type: "bids_aggregate!",
+      __args: {
+        distinct_on: "[bids_select_column!]",
+        limit: "Int",
+        offset: "Int",
+        order_by: "[bids_order_by!]",
+        where: "bids_bool_exp",
+      },
+    },
+    bids_by_pk: { __type: "bids", __args: { id: "String!" } },
+    offers: {
+      __type: "[offers!]!",
+      __args: {
+        distinct_on: "[offers_select_column!]",
+        limit: "Int",
+        offset: "Int",
+        order_by: "[offers_order_by!]",
+        where: "offers_bool_exp",
+      },
+    },
+    offers_aggregate: {
+      __type: "offers_aggregate!",
+      __args: {
+        distinct_on: "[offers_select_column!]",
+        limit: "Int",
+        offset: "Int",
+        order_by: "[offers_order_by!]",
+        where: "offers_bool_exp",
+      },
+    },
+    offers_by_pk: { __type: "offers", __args: { id: "String!" } },
+  },
+  subscription: {
+    __typename: { __type: "String!" },
+    bids: {
+      __type: "[bids!]!",
+      __args: {
+        distinct_on: "[bids_select_column!]",
+        limit: "Int",
+        offset: "Int",
+        order_by: "[bids_order_by!]",
+        where: "bids_bool_exp",
+      },
+    },
+    bids_aggregate: {
+      __type: "bids_aggregate!",
+      __args: {
+        distinct_on: "[bids_select_column!]",
+        limit: "Int",
+        offset: "Int",
+        order_by: "[bids_order_by!]",
+        where: "bids_bool_exp",
+      },
+    },
+    bids_by_pk: { __type: "bids", __args: { id: "String!" } },
+    offers: {
+      __type: "[offers!]!",
+      __args: {
+        distinct_on: "[offers_select_column!]",
+        limit: "Int",
+        offset: "Int",
+        order_by: "[offers_order_by!]",
+        where: "offers_bool_exp",
+      },
+    },
+    offers_aggregate: {
+      __type: "offers_aggregate!",
+      __args: {
+        distinct_on: "[offers_select_column!]",
+        limit: "Int",
+        offset: "Int",
+        order_by: "[offers_order_by!]",
+        where: "offers_bool_exp",
+      },
+    },
+    offers_by_pk: { __type: "offers", __args: { id: "String!" } },
+  },
   timestamptz_comparison_exp: {
     _eq: { __type: "timestamptz" },
     _gt: { __type: "timestamptz" },
@@ -795,42 +796,164 @@ export const generatedSchema = {
   },
 } as const;
 
-export interface Query {
-  __typename: "Query" | undefined;
-  bids: (args?: {
-    distinct_on?: Maybe<Array<bids_select_column>>;
-    limit?: Maybe<Scalars["Int"]>;
-    offset?: Maybe<Scalars["Int"]>;
-    order_by?: Maybe<Array<bids_order_by>>;
-    where?: Maybe<bids_bool_exp>;
-  }) => Array<bids>;
-  bids_aggregate: (args?: {
-    distinct_on?: Maybe<Array<bids_select_column>>;
-    limit?: Maybe<Scalars["Int"]>;
-    offset?: Maybe<Scalars["Int"]>;
-    order_by?: Maybe<Array<bids_order_by>>;
-    where?: Maybe<bids_bool_exp>;
-  }) => bids_aggregate;
-  bids_by_pk: (args: { id: Scalars["String"] }) => Maybe<bids>;
-  offers: (args?: {
-    distinct_on?: Maybe<Array<offers_select_column>>;
-    limit?: Maybe<Scalars["Int"]>;
-    offset?: Maybe<Scalars["Int"]>;
-    order_by?: Maybe<Array<offers_order_by>>;
-    where?: Maybe<offers_bool_exp>;
-  }) => Array<offers>;
-  offers_aggregate: (args?: {
-    distinct_on?: Maybe<Array<offers_select_column>>;
-    limit?: Maybe<Scalars["Int"]>;
-    offset?: Maybe<Scalars["Int"]>;
-    order_by?: Maybe<Array<offers_order_by>>;
-    where?: Maybe<offers_bool_exp>;
-  }) => offers_aggregate;
-  offers_by_pk: (args: { id: Scalars["String"] }) => Maybe<offers>;
+/**
+ * columns and relationships of "bids"
+ */
+export interface bids {
+  __typename?: "bids";
+  amount: ScalarsEnums["numeric"];
+  created_at: ScalarsEnums["timestamptz"];
+  id: ScalarsEnums["String"];
+  owner: ScalarsEnums["String"];
+  price: ScalarsEnums["numeric"];
+  updated_at: ScalarsEnums["timestamptz"];
+}
+
+/**
+ * aggregated selection of "bids"
+ */
+export interface bids_aggregate {
+  __typename?: "bids_aggregate";
+  aggregate?: Maybe<bids_aggregate_fields>;
+  nodes: Array<bids>;
+}
+
+/**
+ * aggregate fields of "bids"
+ */
+export interface bids_aggregate_fields {
+  __typename?: "bids_aggregate_fields";
+  avg?: Maybe<bids_avg_fields>;
+  count: (args?: {
+    columns?: Maybe<Array<bids_select_column>>;
+    distinct?: Maybe<Scalars["Boolean"]>;
+  }) => ScalarsEnums["Int"];
+  max?: Maybe<bids_max_fields>;
+  min?: Maybe<bids_min_fields>;
+  stddev?: Maybe<bids_stddev_fields>;
+  stddev_pop?: Maybe<bids_stddev_pop_fields>;
+  stddev_samp?: Maybe<bids_stddev_samp_fields>;
+  sum?: Maybe<bids_sum_fields>;
+  var_pop?: Maybe<bids_var_pop_fields>;
+  var_samp?: Maybe<bids_var_samp_fields>;
+  variance?: Maybe<bids_variance_fields>;
+}
+
+/**
+ * aggregate avg on columns
+ */
+export interface bids_avg_fields {
+  __typename?: "bids_avg_fields";
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
+/**
+ * aggregate max on columns
+ */
+export interface bids_max_fields {
+  __typename?: "bids_max_fields";
+  amount?: Maybe<ScalarsEnums["numeric"]>;
+  created_at?: Maybe<ScalarsEnums["timestamptz"]>;
+  id?: Maybe<ScalarsEnums["String"]>;
+  owner?: Maybe<ScalarsEnums["String"]>;
+  price?: Maybe<ScalarsEnums["numeric"]>;
+  updated_at?: Maybe<ScalarsEnums["timestamptz"]>;
+}
+
+/**
+ * aggregate min on columns
+ */
+export interface bids_min_fields {
+  __typename?: "bids_min_fields";
+  amount?: Maybe<ScalarsEnums["numeric"]>;
+  created_at?: Maybe<ScalarsEnums["timestamptz"]>;
+  id?: Maybe<ScalarsEnums["String"]>;
+  owner?: Maybe<ScalarsEnums["String"]>;
+  price?: Maybe<ScalarsEnums["numeric"]>;
+  updated_at?: Maybe<ScalarsEnums["timestamptz"]>;
+}
+
+/**
+ * response of any mutation on the table "bids"
+ */
+export interface bids_mutation_response {
+  __typename?: "bids_mutation_response";
+  /**
+   * number of rows affected by the mutation
+   */
+  affected_rows: ScalarsEnums["Int"];
+  /**
+   * data from the rows affected by the mutation
+   */
+  returning: Array<bids>;
+}
+
+/**
+ * aggregate stddev on columns
+ */
+export interface bids_stddev_fields {
+  __typename?: "bids_stddev_fields";
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
+/**
+ * aggregate stddev_pop on columns
+ */
+export interface bids_stddev_pop_fields {
+  __typename?: "bids_stddev_pop_fields";
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
+/**
+ * aggregate stddev_samp on columns
+ */
+export interface bids_stddev_samp_fields {
+  __typename?: "bids_stddev_samp_fields";
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
+/**
+ * aggregate sum on columns
+ */
+export interface bids_sum_fields {
+  __typename?: "bids_sum_fields";
+  amount?: Maybe<ScalarsEnums["numeric"]>;
+  price?: Maybe<ScalarsEnums["numeric"]>;
+}
+
+/**
+ * aggregate var_pop on columns
+ */
+export interface bids_var_pop_fields {
+  __typename?: "bids_var_pop_fields";
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
+/**
+ * aggregate var_samp on columns
+ */
+export interface bids_var_samp_fields {
+  __typename?: "bids_var_samp_fields";
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
+/**
+ * aggregate variance on columns
+ */
+export interface bids_variance_fields {
+  __typename?: "bids_variance_fields";
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
 }
 
 export interface Mutation {
-  __typename: "Mutation" | undefined;
+  __typename?: "Mutation";
   delete_bids: (args: {
     where: bids_bool_exp;
   }) => Maybe<bids_mutation_response>;
@@ -877,8 +1000,164 @@ export interface Mutation {
   }) => Maybe<offers>;
 }
 
-export interface Subscription {
-  __typename: "Subscription" | undefined;
+/**
+ * columns and relationships of "offers"
+ */
+export interface offers {
+  __typename?: "offers";
+  amount: ScalarsEnums["numeric"];
+  created_at: ScalarsEnums["timestamptz"];
+  id: ScalarsEnums["String"];
+  owner: ScalarsEnums["String"];
+  price: ScalarsEnums["numeric"];
+  updated_at: ScalarsEnums["timestamptz"];
+}
+
+/**
+ * aggregated selection of "offers"
+ */
+export interface offers_aggregate {
+  __typename?: "offers_aggregate";
+  aggregate?: Maybe<offers_aggregate_fields>;
+  nodes: Array<offers>;
+}
+
+/**
+ * aggregate fields of "offers"
+ */
+export interface offers_aggregate_fields {
+  __typename?: "offers_aggregate_fields";
+  avg?: Maybe<offers_avg_fields>;
+  count: (args?: {
+    columns?: Maybe<Array<offers_select_column>>;
+    distinct?: Maybe<Scalars["Boolean"]>;
+  }) => ScalarsEnums["Int"];
+  max?: Maybe<offers_max_fields>;
+  min?: Maybe<offers_min_fields>;
+  stddev?: Maybe<offers_stddev_fields>;
+  stddev_pop?: Maybe<offers_stddev_pop_fields>;
+  stddev_samp?: Maybe<offers_stddev_samp_fields>;
+  sum?: Maybe<offers_sum_fields>;
+  var_pop?: Maybe<offers_var_pop_fields>;
+  var_samp?: Maybe<offers_var_samp_fields>;
+  variance?: Maybe<offers_variance_fields>;
+}
+
+/**
+ * aggregate avg on columns
+ */
+export interface offers_avg_fields {
+  __typename?: "offers_avg_fields";
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
+/**
+ * aggregate max on columns
+ */
+export interface offers_max_fields {
+  __typename?: "offers_max_fields";
+  amount?: Maybe<ScalarsEnums["numeric"]>;
+  created_at?: Maybe<ScalarsEnums["timestamptz"]>;
+  id?: Maybe<ScalarsEnums["String"]>;
+  owner?: Maybe<ScalarsEnums["String"]>;
+  price?: Maybe<ScalarsEnums["numeric"]>;
+  updated_at?: Maybe<ScalarsEnums["timestamptz"]>;
+}
+
+/**
+ * aggregate min on columns
+ */
+export interface offers_min_fields {
+  __typename?: "offers_min_fields";
+  amount?: Maybe<ScalarsEnums["numeric"]>;
+  created_at?: Maybe<ScalarsEnums["timestamptz"]>;
+  id?: Maybe<ScalarsEnums["String"]>;
+  owner?: Maybe<ScalarsEnums["String"]>;
+  price?: Maybe<ScalarsEnums["numeric"]>;
+  updated_at?: Maybe<ScalarsEnums["timestamptz"]>;
+}
+
+/**
+ * response of any mutation on the table "offers"
+ */
+export interface offers_mutation_response {
+  __typename?: "offers_mutation_response";
+  /**
+   * number of rows affected by the mutation
+   */
+  affected_rows: ScalarsEnums["Int"];
+  /**
+   * data from the rows affected by the mutation
+   */
+  returning: Array<offers>;
+}
+
+/**
+ * aggregate stddev on columns
+ */
+export interface offers_stddev_fields {
+  __typename?: "offers_stddev_fields";
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
+/**
+ * aggregate stddev_pop on columns
+ */
+export interface offers_stddev_pop_fields {
+  __typename?: "offers_stddev_pop_fields";
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
+/**
+ * aggregate stddev_samp on columns
+ */
+export interface offers_stddev_samp_fields {
+  __typename?: "offers_stddev_samp_fields";
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
+/**
+ * aggregate sum on columns
+ */
+export interface offers_sum_fields {
+  __typename?: "offers_sum_fields";
+  amount?: Maybe<ScalarsEnums["numeric"]>;
+  price?: Maybe<ScalarsEnums["numeric"]>;
+}
+
+/**
+ * aggregate var_pop on columns
+ */
+export interface offers_var_pop_fields {
+  __typename?: "offers_var_pop_fields";
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
+/**
+ * aggregate var_samp on columns
+ */
+export interface offers_var_samp_fields {
+  __typename?: "offers_var_samp_fields";
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
+/**
+ * aggregate variance on columns
+ */
+export interface offers_variance_fields {
+  __typename?: "offers_variance_fields";
+  amount?: Maybe<ScalarsEnums["Float"]>;
+  price?: Maybe<ScalarsEnums["Float"]>;
+}
+
+export interface Query {
+  __typename?: "Query";
   bids: (args?: {
     distinct_on?: Maybe<Array<bids_select_column>>;
     limit?: Maybe<Scalars["Int"]>;
@@ -911,321 +1190,43 @@ export interface Subscription {
   offers_by_pk: (args: { id: Scalars["String"] }) => Maybe<offers>;
 }
 
-/**
- * columns and relationships of "bids"
- */
-export interface bids {
-  __typename: "bids" | undefined;
-  amount: ScalarsEnums["numeric"];
-  created_at: ScalarsEnums["timestamptz"];
-  id: ScalarsEnums["String"];
-  owner: ScalarsEnums["String"];
-  price: ScalarsEnums["numeric"];
-  updated_at: ScalarsEnums["timestamptz"];
-}
-
-/**
- * aggregated selection of "bids"
- */
-export interface bids_aggregate {
-  __typename: "bids_aggregate" | undefined;
-  aggregate?: Maybe<bids_aggregate_fields>;
-  nodes: Array<bids>;
-}
-
-/**
- * aggregate fields of "bids"
- */
-export interface bids_aggregate_fields {
-  __typename: "bids_aggregate_fields" | undefined;
-  avg?: Maybe<bids_avg_fields>;
-  count: (args?: {
-    columns?: Maybe<Array<bids_select_column>>;
-    distinct?: Maybe<Scalars["Boolean"]>;
-  }) => ScalarsEnums["Int"];
-  max?: Maybe<bids_max_fields>;
-  min?: Maybe<bids_min_fields>;
-  stddev?: Maybe<bids_stddev_fields>;
-  stddev_pop?: Maybe<bids_stddev_pop_fields>;
-  stddev_samp?: Maybe<bids_stddev_samp_fields>;
-  sum?: Maybe<bids_sum_fields>;
-  var_pop?: Maybe<bids_var_pop_fields>;
-  var_samp?: Maybe<bids_var_samp_fields>;
-  variance?: Maybe<bids_variance_fields>;
-}
-
-/**
- * aggregate avg on columns
- */
-export interface bids_avg_fields {
-  __typename: "bids_avg_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["Float"]>;
-  price?: Maybe<ScalarsEnums["Float"]>;
-}
-
-/**
- * aggregate max on columns
- */
-export interface bids_max_fields {
-  __typename: "bids_max_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["numeric"]>;
-  created_at?: Maybe<ScalarsEnums["timestamptz"]>;
-  id?: Maybe<ScalarsEnums["String"]>;
-  owner?: Maybe<ScalarsEnums["String"]>;
-  price?: Maybe<ScalarsEnums["numeric"]>;
-  updated_at?: Maybe<ScalarsEnums["timestamptz"]>;
-}
-
-/**
- * aggregate min on columns
- */
-export interface bids_min_fields {
-  __typename: "bids_min_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["numeric"]>;
-  created_at?: Maybe<ScalarsEnums["timestamptz"]>;
-  id?: Maybe<ScalarsEnums["String"]>;
-  owner?: Maybe<ScalarsEnums["String"]>;
-  price?: Maybe<ScalarsEnums["numeric"]>;
-  updated_at?: Maybe<ScalarsEnums["timestamptz"]>;
-}
-
-/**
- * response of any mutation on the table "bids"
- */
-export interface bids_mutation_response {
-  __typename: "bids_mutation_response" | undefined;
-  /**
-   * number of rows affected by the mutation
-   */
-  affected_rows: ScalarsEnums["Int"];
-  /**
-   * data from the rows affected by the mutation
-   */
-  returning: Array<bids>;
-}
-
-/**
- * aggregate stddev on columns
- */
-export interface bids_stddev_fields {
-  __typename: "bids_stddev_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["Float"]>;
-  price?: Maybe<ScalarsEnums["Float"]>;
-}
-
-/**
- * aggregate stddev_pop on columns
- */
-export interface bids_stddev_pop_fields {
-  __typename: "bids_stddev_pop_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["Float"]>;
-  price?: Maybe<ScalarsEnums["Float"]>;
-}
-
-/**
- * aggregate stddev_samp on columns
- */
-export interface bids_stddev_samp_fields {
-  __typename: "bids_stddev_samp_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["Float"]>;
-  price?: Maybe<ScalarsEnums["Float"]>;
-}
-
-/**
- * aggregate sum on columns
- */
-export interface bids_sum_fields {
-  __typename: "bids_sum_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["numeric"]>;
-  price?: Maybe<ScalarsEnums["numeric"]>;
-}
-
-/**
- * aggregate var_pop on columns
- */
-export interface bids_var_pop_fields {
-  __typename: "bids_var_pop_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["Float"]>;
-  price?: Maybe<ScalarsEnums["Float"]>;
-}
-
-/**
- * aggregate var_samp on columns
- */
-export interface bids_var_samp_fields {
-  __typename: "bids_var_samp_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["Float"]>;
-  price?: Maybe<ScalarsEnums["Float"]>;
-}
-
-/**
- * aggregate variance on columns
- */
-export interface bids_variance_fields {
-  __typename: "bids_variance_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["Float"]>;
-  price?: Maybe<ScalarsEnums["Float"]>;
-}
-
-/**
- * columns and relationships of "offers"
- */
-export interface offers {
-  __typename: "offers" | undefined;
-  amount: ScalarsEnums["numeric"];
-  created_at: ScalarsEnums["timestamptz"];
-  id: ScalarsEnums["String"];
-  owner: ScalarsEnums["String"];
-  price: ScalarsEnums["numeric"];
-  updated_at: ScalarsEnums["timestamptz"];
-}
-
-/**
- * aggregated selection of "offers"
- */
-export interface offers_aggregate {
-  __typename: "offers_aggregate" | undefined;
-  aggregate?: Maybe<offers_aggregate_fields>;
-  nodes: Array<offers>;
-}
-
-/**
- * aggregate fields of "offers"
- */
-export interface offers_aggregate_fields {
-  __typename: "offers_aggregate_fields" | undefined;
-  avg?: Maybe<offers_avg_fields>;
-  count: (args?: {
-    columns?: Maybe<Array<offers_select_column>>;
-    distinct?: Maybe<Scalars["Boolean"]>;
-  }) => ScalarsEnums["Int"];
-  max?: Maybe<offers_max_fields>;
-  min?: Maybe<offers_min_fields>;
-  stddev?: Maybe<offers_stddev_fields>;
-  stddev_pop?: Maybe<offers_stddev_pop_fields>;
-  stddev_samp?: Maybe<offers_stddev_samp_fields>;
-  sum?: Maybe<offers_sum_fields>;
-  var_pop?: Maybe<offers_var_pop_fields>;
-  var_samp?: Maybe<offers_var_samp_fields>;
-  variance?: Maybe<offers_variance_fields>;
-}
-
-/**
- * aggregate avg on columns
- */
-export interface offers_avg_fields {
-  __typename: "offers_avg_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["Float"]>;
-  price?: Maybe<ScalarsEnums["Float"]>;
-}
-
-/**
- * aggregate max on columns
- */
-export interface offers_max_fields {
-  __typename: "offers_max_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["numeric"]>;
-  created_at?: Maybe<ScalarsEnums["timestamptz"]>;
-  id?: Maybe<ScalarsEnums["String"]>;
-  owner?: Maybe<ScalarsEnums["String"]>;
-  price?: Maybe<ScalarsEnums["numeric"]>;
-  updated_at?: Maybe<ScalarsEnums["timestamptz"]>;
-}
-
-/**
- * aggregate min on columns
- */
-export interface offers_min_fields {
-  __typename: "offers_min_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["numeric"]>;
-  created_at?: Maybe<ScalarsEnums["timestamptz"]>;
-  id?: Maybe<ScalarsEnums["String"]>;
-  owner?: Maybe<ScalarsEnums["String"]>;
-  price?: Maybe<ScalarsEnums["numeric"]>;
-  updated_at?: Maybe<ScalarsEnums["timestamptz"]>;
-}
-
-/**
- * response of any mutation on the table "offers"
- */
-export interface offers_mutation_response {
-  __typename: "offers_mutation_response" | undefined;
-  /**
-   * number of rows affected by the mutation
-   */
-  affected_rows: ScalarsEnums["Int"];
-  /**
-   * data from the rows affected by the mutation
-   */
-  returning: Array<offers>;
-}
-
-/**
- * aggregate stddev on columns
- */
-export interface offers_stddev_fields {
-  __typename: "offers_stddev_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["Float"]>;
-  price?: Maybe<ScalarsEnums["Float"]>;
-}
-
-/**
- * aggregate stddev_pop on columns
- */
-export interface offers_stddev_pop_fields {
-  __typename: "offers_stddev_pop_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["Float"]>;
-  price?: Maybe<ScalarsEnums["Float"]>;
-}
-
-/**
- * aggregate stddev_samp on columns
- */
-export interface offers_stddev_samp_fields {
-  __typename: "offers_stddev_samp_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["Float"]>;
-  price?: Maybe<ScalarsEnums["Float"]>;
-}
-
-/**
- * aggregate sum on columns
- */
-export interface offers_sum_fields {
-  __typename: "offers_sum_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["numeric"]>;
-  price?: Maybe<ScalarsEnums["numeric"]>;
-}
-
-/**
- * aggregate var_pop on columns
- */
-export interface offers_var_pop_fields {
-  __typename: "offers_var_pop_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["Float"]>;
-  price?: Maybe<ScalarsEnums["Float"]>;
-}
-
-/**
- * aggregate var_samp on columns
- */
-export interface offers_var_samp_fields {
-  __typename: "offers_var_samp_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["Float"]>;
-  price?: Maybe<ScalarsEnums["Float"]>;
-}
-
-/**
- * aggregate variance on columns
- */
-export interface offers_variance_fields {
-  __typename: "offers_variance_fields" | undefined;
-  amount?: Maybe<ScalarsEnums["Float"]>;
-  price?: Maybe<ScalarsEnums["Float"]>;
+export interface Subscription {
+  __typename?: "Subscription";
+  bids: (args?: {
+    distinct_on?: Maybe<Array<bids_select_column>>;
+    limit?: Maybe<Scalars["Int"]>;
+    offset?: Maybe<Scalars["Int"]>;
+    order_by?: Maybe<Array<bids_order_by>>;
+    where?: Maybe<bids_bool_exp>;
+  }) => Array<bids>;
+  bids_aggregate: (args?: {
+    distinct_on?: Maybe<Array<bids_select_column>>;
+    limit?: Maybe<Scalars["Int"]>;
+    offset?: Maybe<Scalars["Int"]>;
+    order_by?: Maybe<Array<bids_order_by>>;
+    where?: Maybe<bids_bool_exp>;
+  }) => bids_aggregate;
+  bids_by_pk: (args: { id: Scalars["String"] }) => Maybe<bids>;
+  offers: (args?: {
+    distinct_on?: Maybe<Array<offers_select_column>>;
+    limit?: Maybe<Scalars["Int"]>;
+    offset?: Maybe<Scalars["Int"]>;
+    order_by?: Maybe<Array<offers_order_by>>;
+    where?: Maybe<offers_bool_exp>;
+  }) => Array<offers>;
+  offers_aggregate: (args?: {
+    distinct_on?: Maybe<Array<offers_select_column>>;
+    limit?: Maybe<Scalars["Int"]>;
+    offset?: Maybe<Scalars["Int"]>;
+    order_by?: Maybe<Array<offers_order_by>>;
+    where?: Maybe<offers_bool_exp>;
+  }) => offers_aggregate;
+  offers_by_pk: (args: { id: Scalars["String"] }) => Maybe<offers>;
 }
 
 export interface SchemaObjectTypes {
-  Query: Query;
   Mutation: Mutation;
+  Query: Query;
   Subscription: Subscription;
   bids: bids;
   bids_aggregate: bids_aggregate;
@@ -1257,8 +1258,8 @@ export interface SchemaObjectTypes {
   offers_variance_fields: offers_variance_fields;
 }
 export type SchemaObjectTypesNames =
-  | "Query"
   | "Mutation"
+  | "Query"
   | "Subscription"
   | "bids"
   | "bids_aggregate"

@@ -1,5 +1,5 @@
 /**
- * @type {import("@gqless/cli").GQlessConfig}
+ * @type {import("@gqty/cli").GQtyConfig}
  */
 const config = {
   react: true,
@@ -8,7 +8,7 @@ const config = {
     endpoint: 'https://hasura.k8s.aramid.finance/v1/graphql',
     headers: {},
   },
-  destination: './src/gqless/index.ts',
+  destination: './src/gqty/index.ts',
   subscriptions: true,
   javascriptOutput: false,
 };

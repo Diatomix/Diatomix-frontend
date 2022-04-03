@@ -3,8 +3,9 @@ import i18n from 'i18next';
 import { Trans } from 'react-i18next';
 
 import { InputText } from 'primereact/inputtext';
-import { order_by, useTransactionQuery } from '../../gqless';
+import { order_by, useTransactionQuery } from '../../gqty';
 import { Suspense, useState } from 'react';
+import { useSubscription, useQuery } from '../../gqty';
 
 interface OrderBookConfig {
   quote: string;
@@ -54,65 +55,27 @@ export default function OrderBook(props: OrderBookProps) {
       return <ErrorHandler error={error} />;
     }
   }
-  const { data, error, isLoading } = useTransactionQuery(
-    (query, args: string) => {
-      return query.bids({ limit: 10, order_by: [{ price: order_by.desc }] }).map(({ id, price, amount }) => {
-        return (
-          <tr key={id}>
-            <td>{price}</td>
-            <td>{amount}</td>
-          </tr>
-        );
-      });
-    },
-    {
-      variables: 'John',
-      // By default is 'cache-first'
-      fetchPolicy: 'cache-and-network',
-      // Polling every 5 seconds
-      pollInterval: 5000,
-      // By default is `true`
-      notifyOnNetworkStatusChange: true,
-      onCompleted(data) {
-        setLiveBids(data);
-      },
-      onError(error) {},
-      suspense: false,
-      // By default is `false`
-      skip: false,
-    }
-  );
-  const x = useTransactionQuery(
-    (query, args: string) => {
-      return query.offers({ limit: 10, order_by: [{ price: order_by.asc }] }).map(({ id, price, amount }) => {
-        return (
-          <tr key={id}>
-            <td>{price}</td>
-            <td>{amount}</td>
-          </tr>
-        );
-      });
-    },
-    {
-      variables: 'John',
-      // By default is 'cache-first'
-      fetchPolicy: 'cache-and-network',
-      // Polling every 5 seconds
-      pollInterval: 5000,
-      // By default is `true`
-      notifyOnNetworkStatusChange: true,
-      onCompleted(data) {
-        setLiveOffers(data);
-      },
-      onError(error) {},
-      suspense: false,
-      // By default is `false`
-      skip: false,
-    }
-  );
-  if (error) {
-    return <p>Error! {error.message}</p>;
-  }
+
+  const query = useQuery();
+  const { bids } = useSubscription();
+  const bestBids = bids({ limit: 10, order_by: [{ price: order_by.desc }] }).map(({ id, price, amount }) => {
+    return (
+      <tr key={id}>
+        <td>{price}</td>
+        <td>{amount}</td>
+      </tr>
+    );
+  });
+
+  const { offers } = useSubscription();
+  const bestOffers = offers({ limit: 10, order_by: [{ price: order_by.desc }] }).map(({ id, price, amount }) => {
+    return (
+      <tr key={id}>
+        <td>{price}</td>
+        <td>{amount}</td>
+      </tr>
+    );
+  });
 
   function Content() {
     try {
@@ -125,14 +88,14 @@ export default function OrderBook(props: OrderBookProps) {
                 <th>Amount</th>
               </tr>
             </thead>
-            <tbody>{liveOffers}</tbody>
+            <tbody>{bestOffers}</tbody>
             <thead>
               <tr>
                 <th>Curr price</th>
                 <th>Amount</th>
               </tr>
             </thead>
-            <tbody>{liveBids}</tbody>
+            <tbody>{bestBids}</tbody>
             <thead>
               <tr>
                 <th>Price</th>

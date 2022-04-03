@@ -1,20 +1,24 @@
 /**
- * GQLESS: You can safely modify this file and Query Fetcher based on your needs
+ * GQTY: You can safely modify this file and Query Fetcher based on your needs
  */
 
-import { createReactClient } from "@gqless/react";
-import { createSubscriptionsClient } from "@gqless/subscriptions";
-import { createClient, QueryFetcher } from "gqless";
-import {
-  generatedSchema,
-  scalarsEnumsHash,
+import { createReactClient } from "@gqty/react";
+import { createSubscriptionsClient } from "@gqty/subscriptions";
+import type { QueryFetcher } from "gqty";
+import { createClient } from "gqty";
+import type {
   GeneratedSchema,
   SchemaObjectTypes,
   SchemaObjectTypesNames,
 } from "./schema.generated";
+import { generatedSchema, scalarsEnumsHash } from "./schema.generated";
 
-const queryFetcher: QueryFetcher = async function (query, variables) {
-  // Modify "https://hasura.k8s.aramid.finance/v1/graphql" if needed
+const queryFetcher: QueryFetcher = async function (
+  query,
+  variables,
+  fetchOptions
+) {
+  // Modify "/api/graphql" if needed
   const response = await fetch("https://hasura.k8s.aramid.finance/v1/graphql", {
     method: "POST",
     headers: {
@@ -25,6 +29,7 @@ const queryFetcher: QueryFetcher = async function (query, variables) {
       variables,
     }),
     mode: "cors",
+    ...fetchOptions,
   });
 
   const json = await response.json();
@@ -37,10 +42,7 @@ const subscriptionsClient =
     ? createSubscriptionsClient({
         wsEndpoint: () => {
           // Modify if needed
-          const url = new URL(
-            "https://hasura.k8s.aramid.finance/v1/graphql",
-            window.location.href
-          );
+          const url = new URL("https://hasura.k8s.aramid.finance/v1/graphql", window.location.href);
           url.protocol = url.protocol.replace("http", "ws");
           return url.href;
         },
@@ -58,10 +60,12 @@ export const client = createClient<
   subscriptionsClient,
 });
 
-export const { query, mutation, mutate, subscription, resolved, refetch } =
+const { query, mutation, mutate, subscription, resolved, refetch, track } =
   client;
 
-export const {
+export { query, mutation, mutate, subscription, resolved, refetch, track };
+
+const {
   graphql,
   useQuery,
   usePaginatedQuery,
@@ -84,5 +88,20 @@ export const {
     staleWhileRevalidate: false,
   },
 });
+
+export {
+  graphql,
+  useQuery,
+  usePaginatedQuery,
+  useTransactionQuery,
+  useLazyQuery,
+  useRefetch,
+  useMutation,
+  useMetaState,
+  prepareReactRender,
+  useHydrateCache,
+  prepareQuery,
+  useSubscription,
+};
 
 export * from "./schema.generated";
