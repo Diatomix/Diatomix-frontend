@@ -4,6 +4,7 @@ import { Trans } from 'react-i18next';
 
 import { InputText } from 'primereact/inputtext';
 import { order_by, useSubscription } from '../../gqty';
+import { Suspense } from 'react';
 
 interface TradesConfig {
   quote: string;
@@ -81,5 +82,9 @@ export default function Trades(props: TradesProps) {
       return <ErrorHandler error={error} />;
     }
   }
-  return <>{props.editingComponents ? <Config /> : <Content />}</>;
+  return (
+    <>
+      <Suspense fallback="Loading...">{props.editingComponents ? <Config /> : <Content />}</Suspense>
+    </>
+  );
 }

@@ -3,9 +3,9 @@ import i18n from 'i18next';
 import { Trans } from 'react-i18next';
 
 import { InputText } from 'primereact/inputtext';
-import { order_by, useTransactionQuery } from '../../gqty';
-import { Suspense, useState } from 'react';
-import { useSubscription, useQuery } from '../../gqty';
+import { order_by } from '../../gqty';
+import { Suspense } from 'react';
+import { useSubscription } from '../../gqty';
 
 interface OrderBookConfig {
   quote: string;
@@ -19,9 +19,6 @@ interface OrderBookProps {
   onContentUpdate?: (data: any) => void;
 }
 export default function OrderBook(props: OrderBookProps) {
-  const [liveBids, setLiveBids] = useState<JSX.Element[]>([]);
-  const [liveOffers, setLiveOffers] = useState<JSX.Element[]>([]);
-
   function handleUpdate(newConfig) {
     props.onContentUpdate(newConfig);
   }
@@ -55,8 +52,6 @@ export default function OrderBook(props: OrderBookProps) {
       return <ErrorHandler error={error} />;
     }
   }
-
-  const query = useQuery();
   const { bids } = useSubscription();
   const bestBids = bids({ limit: 10, order_by: [{ price: order_by.desc }] }).map(({ id, price, amount }) => {
     return (
