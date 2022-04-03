@@ -44,7 +44,7 @@ export default function ConfigurablePanel(props: ConfigurablePanelProps) {
             <Panel header={i18n.t('Layout.EditProperties')}>
               <div className="field my-2">
                 <span className="p-float-label">
-                  <InputText id="header" name="header" value={props.config.header} onChange={event => handleUpdate({ ...props.config, header: event.target.value })} autoFocus />
+                  <InputText id="header" name="header" value={props.config.header} onChange={event => handleUpdate({ ...props.config, header: event.target.value })} />
                   <label htmlFor="header">{i18n.t('Layout.PropertyHeader')}</label>
                 </span>
               </div>

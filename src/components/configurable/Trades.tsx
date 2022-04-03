@@ -3,11 +3,14 @@ import i18n from 'i18next';
 import { Trans } from 'react-i18next';
 
 import { InputText } from 'primereact/inputtext';
-import { order_by, useSubscription } from '../../gqty';
-import { Suspense } from 'react';
+import { Checkbox } from 'primereact/checkbox';
+import { order_by, useSubscription } from '../../gqless';
+import { Suspense, useEffect } from 'react';
 
 interface TradesConfig {
+  type: string;
   quote: string;
+  aggregated: boolean;
 }
 interface TradesProps {
   editingLayout: boolean;
@@ -21,6 +24,35 @@ export default function Trades(props: TradesProps) {
   function handleUpdate(newConfig) {
     props.onContentUpdate(newConfig);
   }
+  // set default values
+  useEffect(() => {
+    let newConfig = { ...props.config };
+    let updated = false;
+    if (!newConfig) {
+      newConfig = { type: 'Trades', quote: '', aggregated: true };
+      updated = true;
+      console.log('trades updating init');
+    }
+    if (newConfig.type !== 'Trades') {
+      console.log('trades updating newConfig.type', newConfig);
+      newConfig.type = 'Trades';
+      updated = true;
+    }
+    if (newConfig.quote === undefined) {
+      console.log('trades updating newConfig.quote', newConfig);
+      newConfig.quote = '';
+      updated = true;
+    }
+    if (newConfig.aggregated === undefined) {
+      console.log('trades updating newConfig.aggregated', newConfig);
+      newConfig.aggregated = true;
+      updated = true;
+    }
+    console.log('trades newConfig,updated', newConfig, updated);
+    if (updated && props.onContentUpdate) {
+      props.onContentUpdate(newConfig);
+    }
+  }, [props]);
 
   function ErrorHandler({ error }) {
     return (
@@ -40,8 +72,14 @@ export default function Trades(props: TradesProps) {
           <Panel header={i18n.t('Layout.EditProperties')}>
             <div className="field my-2">
               <span className="p-float-label">
-                <InputText id="header" name="header" value={props.config.quote} onChange={event => handleUpdate({ ...props.config, quote: event.target.value })} autoFocus />
-                <label htmlFor="header">{i18n.t('Layout.PropertyHeader')}</label>
+                <InputText id="header" name="header" value={props.config.quote} onChange={event => handleUpdate({ ...props.config, quote: event.target.value })} />
+                <label htmlFor="header">{i18n.t('Trade.Quote')}</label>
+              </span>
+            </div>
+            <div className="field my-2">
+              <span className="">
+                <Checkbox id="aggregated" name="aggregated" checked={props.config.aggregated} onChange={event => handleUpdate({ ...props.config, aggregated: !!event.target.checked })}></Checkbox>
+                <label htmlFor="aggregated">{i18n.t('Trade.Aggregated')}</label>
               </span>
             </div>
           </Panel>

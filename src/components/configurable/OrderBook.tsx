@@ -3,9 +3,9 @@ import i18n from 'i18next';
 import { Trans } from 'react-i18next';
 
 import { InputText } from 'primereact/inputtext';
-import { order_by } from '../../gqty';
+import { order_by } from '../../gqless';
 import { Suspense } from 'react';
-import { useSubscription } from '../../gqty';
+import { useSubscription } from '../../gqless';
 
 interface OrderBookConfig {
   quote: string;
@@ -41,7 +41,7 @@ export default function OrderBook(props: OrderBookProps) {
           <Panel header={i18n.t('Layout.EditProperties')}>
             <div className="field my-2">
               <span className="p-float-label">
-                <InputText id="header" name="header" value={props.config.quote} onChange={event => handleUpdate({ ...props.config, quote: event.target.value })} autoFocus />
+                <InputText id="header" name="header" value={props.config.quote} onChange={event => handleUpdate({ ...props.config, quote: event.target.value })} />
                 <label htmlFor="header">{i18n.t('Layout.PropertyHeader')}</label>
               </span>
             </div>

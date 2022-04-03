@@ -38,7 +38,7 @@ export default function MyOrders(props: MyOrdersProps) {
           <Panel header={i18n.t('Layout.EditProperties')}>
             <div className="field my-2">
               <span className="p-float-label">
-                <InputText id="header" name="header" value={props.config.quote} onChange={event => handleUpdate({ ...props.config, quote: event.target.value })} autoFocus />
+                <InputText id="header" name="header" value={props.config.quote} onChange={event => handleUpdate({ ...props.config, quote: event.target.value })} />
                 <label htmlFor="header">{i18n.t('Layout.PropertyHeader')}</label>
               </span>
             </div>

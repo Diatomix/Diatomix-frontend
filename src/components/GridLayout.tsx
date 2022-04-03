@@ -323,7 +323,7 @@ export default function ResponsiveLocalStorageLayout(props: LayoutProps) {
                         onContentUpdate={value => handleContentUpdate(v, value)}
                       ></PlaceOrder>
                     ) : v.c.type === 'Trades' ? (
-                      <Trades editingLayout={appData.editingLayout} editingComponents={appData.editingComponents}></Trades>
+                      <Trades editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></Trades>
                     ) : (
                       <Panel editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} className="flex-grow-0 flex-grow-1 flex flex-column" header="Header 1">
                         {v.i} {JSON.stringify(v)} {JSON.stringify(v.c.type === 'MyOrders')}

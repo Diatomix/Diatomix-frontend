@@ -65,13 +65,13 @@ export default function Chart(props: ChartProps) {
           <Panel header={i18n.t('Layout.EditProperties')}>
             <div className="field">
               <span className="p-float-label">
-                <InputText id="name" name="name" value={props.config.quote} onChange={event => handleUpdate({ ...props.config, quote: event.target.value })} autoFocus />
+                <InputText id="name" name="name" value={props.config.quote} onChange={event => handleUpdate({ ...props.config, quote: event.target.value })} />
                 <label htmlFor="name">Quote name</label>
               </span>
             </div>
             <div className="field">
               <span className="p-float-label">
-                <InputText id="name" name="name" value={props.config.theme} onChange={event => handleUpdate({ ...props.config, theme: event.target.value })} autoFocus />
+                <InputText id="name" name="name" value={props.config.theme} onChange={event => handleUpdate({ ...props.config, theme: event.target.value })} />
                 <label htmlFor="name">Theme - light | dark</label>
               </span>
             </div>
