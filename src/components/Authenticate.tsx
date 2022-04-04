@@ -10,6 +10,7 @@ import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { Password } from 'primereact/password';
 import i18n from 'i18next';
 import { Message } from 'primereact/message';
+import { setAuthorizationToken } from '../gqty';
 
 declare global {
   interface Window {
@@ -29,16 +30,20 @@ export default function Authenticate() {
       fee: 0,
       firstRound: 1,
       lastRound: 30000000,
-      genesisID: 'mainnet-v1.0',
-      genesisHash: 'wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8=',
+      genesisID: 'testnet-v1.0',
+      genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+      //genesisID: 'mainnet-v1.0',
+      //genesisHash: 'wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8=',
       flatFee: true,
     };
     console.log('suggestedParams', suggestedParams);
+    const note = Buffer.from('DiatomiX Web', 'ascii');
+    console.log('note', note);
     const txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
       from: account,
       to: account,
       amount: 0,
-
+      note: new Uint8Array(note),
       suggestedParams,
     });
     return txn;
@@ -201,6 +206,8 @@ export default function Authenticate() {
       const decoded = algosdk.decodeSignedTransaction(Buffer.from(b64, 'base64'));
       const addr = algosdk.encodeAddress(decoded.txn.from.publicKey);
       reset();
+      setAuthorizationToken('SigTx ' + b64);
+
       appData.setAppData({ ...appData, authToken: b64, authTx: decoded, authAddress: addr });
       onHide();
     } catch (e) {

@@ -13,6 +13,23 @@ import type {
 } from "./schema.generated";
 import { generatedSchema, scalarsEnumsHash } from "./schema.generated";
 
+const headers = {
+  'Content-Type': 'application/json',
+  'Authorization':
+    typeof window !== 'undefined'
+      ? localStorage.getItem('auth-token') || ''
+      : '',
+};
+
+export function setAuthorizationToken(token: string | null | undefined) {
+  token = token || '';
+  localStorage.setItem('auth-token', token);
+  console.log("AUTH TOKEN",token)
+  subscriptionsClient.setConnectionParams({headers: headers})
+  subscriptionsClient.close()
+  return (headers['Authorization'] = token);
+}
+
 const queryFetcher: QueryFetcher = async function (
   query,
   variables,
@@ -21,9 +38,7 @@ const queryFetcher: QueryFetcher = async function (
   // Modify "/api/graphql" if needed
   const response = await fetch("https://hasura.k8s.aramid.finance/v1/graphql", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
     body: JSON.stringify({
       query,
       variables,
@@ -37,6 +52,7 @@ const queryFetcher: QueryFetcher = async function (
   return json;
 };
 
+console.log("init headers", headers);
 const subscriptionsClient =
   typeof window !== "undefined"
     ? createSubscriptionsClient({
@@ -46,8 +62,17 @@ const subscriptionsClient =
           url.protocol = url.protocol.replace("http", "ws");
           return url.href;
         },
+        connectionCallback: () =>{
+          console.log("connection to ws up and running");
+        },
+        connectionInitPayload: ()=>{
+          return headers
+        },
+        headers
+        
       })
     : undefined;
+subscriptionsClient.setConnectionParams({headers: headers})
 
 export const client = createClient<
   GeneratedSchema,
@@ -58,8 +83,8 @@ export const client = createClient<
   scalarsEnumsHash,
   queryFetcher,
   subscriptionsClient,
+  
 });
-
 const { query, mutation, mutate, subscription, resolved, refetch, track } =
   client;
 

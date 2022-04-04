@@ -4,7 +4,7 @@ import { Trans } from 'react-i18next';
 
 import { InputText } from 'primereact/inputtext';
 import { Checkbox } from 'primereact/checkbox';
-import { order_by, useSubscription } from '../../gqless';
+import { order_by, useSubscription } from '../../gqty';
 import { Suspense, useEffect } from 'react';
 
 interface TradesConfig {

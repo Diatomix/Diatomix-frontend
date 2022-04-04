@@ -3,9 +3,9 @@ import i18n from 'i18next';
 import { Trans } from 'react-i18next';
 
 import { InputText } from 'primereact/inputtext';
-import { order_by } from '../../gqless';
+import { order_by } from '../../gqty';
 import { Suspense } from 'react';
-import { useSubscription } from '../../gqless';
+import { useSubscription } from '../../gqty';
 
 interface OrderBookConfig {
   quote: string;

@@ -21,7 +21,7 @@ const Widget: React.FC<WidgetProps> = ({ scriptHTML, scriptSRC, container, type 
       script.src = scriptSRC;
       script.async = true;
       script.type = 'text/javascript';
-      scriptHTML.datafeed = new Datafeeds.UDFCompatibleDatafeed('https://demo-feed-data.tradingview.com');
+      scriptHTML.datafeed = new Datafeeds.GraphQLDatafeed('https://demo-feed-data.tradingview.com');
 
       if (type === 'Widget' || type === 'MediumWidget') {
         if (!!TradingView) {
