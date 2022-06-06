@@ -1,5 +1,8 @@
 import React, { Suspense, useState, useEffect } from 'react';
 
+import 'primereact/resources/themes/nova/theme.css'; //theme
+import 'primereact/resources/themes/rhea/theme.css'; //theme
+import 'primereact/resources/themes/lara-light-indigo/theme.css'; //theme
 import 'react-grid-layout/css/styles.css';
 import 'primereact/styleclass/';
 import { Routes, Route } from 'react-router-dom';
@@ -10,18 +13,19 @@ import 'primereact/resources/primereact.min.css'; //core css
 import 'primeicons/primeicons.css'; //icons
 
 import 'primeflex/primeflex.css';
+import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import Home from './pages/home';
 import About from './pages/about';
 import CatchAll from './pages/404';
+import Authenticate from './components/Authenticate';
 import Theme from './components/Theme';
 import i18n from './i18n';
 
 import { Buffer } from 'buffer';
 declare const window: any;
-//import 'primereact/resources/themes/nova/theme.css'; //theme
-//import 'primereact/resources/themes/rhea/theme.css'; //theme
-//import 'primereact/resources/themes/lara-light-indigo/theme.css'; //theme
 export default function App() {
   const [appData, setAppData] = useState<IState>(defaultAppData);
 
@@ -46,6 +50,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="about" element={<About />} />
             <Route path="*" element={<CatchAll />} />
+            <Route path="/Authenticate" element={<Authenticate />} />
           </Routes>
         </AppContext.Provider>
       </Suspense>
