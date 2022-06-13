@@ -52,8 +52,8 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="about" element={<About />} />
-            <Route path="trade" element={<Trade />} />
-            <Route path="trading" element={<Trading />} />
+            <Route path="/trade" element={<Trade />} />
+            <Route path="/trading" element={<Trading />} />
             <Route path="*" element={<CatchAll />} />
             <Route path="/authenticate" element={<Authenticate />} />
             <Route path="/dashboard" element={<Dashboard />} />
