@@ -21,6 +21,7 @@ import Home from './pages/home';
 import About from './pages/about';
 import CatchAll from './pages/404';
 import Authenticate from './components/Authenticate';
+import Dashboard from './pages/dashboard';
 import Theme from './components/Theme';
 import i18n from './i18n';
 
@@ -50,7 +51,8 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="about" element={<About />} />
             <Route path="*" element={<CatchAll />} />
-            <Route path="/Authenticate" element={<Authenticate />} />
+            <Route path="/authenticate" element={<Authenticate />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </AppContext.Provider>
       </Suspense>

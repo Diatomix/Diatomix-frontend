@@ -295,7 +295,7 @@ export default function ResponsiveLocalStorageLayout(props: LayoutProps) {
                 {layout.map(v => (
                   <div className="flex flex-column" key={v.i} data-grid={v}>
                     {!v.c ? (
-                      <Panel editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} className="flex-grow-0 flex-grow-1 flex flex-column" header="Header 1">
+                      <Panel editingLayout={appData.editingLayout} key={v.i} editingComponents={appData.editingComponents} className="flex-grow-0 flex-grow-1 flex flex-column" header="Header 1">
                         {v.i} {JSON.stringify(v)}
                       </Panel>
                     ) : v.c.type === 'Panel' ? (
@@ -306,26 +306,27 @@ export default function ResponsiveLocalStorageLayout(props: LayoutProps) {
                         header={v.c.header}
                         content={v.c.content}
                         onContentUpdate={value => handleContentUpdate(v, value)}
+                        key={v.i}
                       ></Panel>
                     ) : v.c.type === 'Chart' ? (
-                      <Chart editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></Chart>
+                      <Chart key={v.i} editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></Chart>
                     ) : v.c.type === 'Timeline' ? (
-                      <Timeline editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></Timeline>
+                      <Timeline key={v.i} editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></Timeline>
                     ) : v.c.type === 'MyOrders' ? (
-                      <MyOrders editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></MyOrders>
+                      <MyOrders key={v.i} editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></MyOrders>
                     ) : v.c.type === 'OrderBook' ? (
-                      <OrderBook editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></OrderBook>
+                      <OrderBook key={v.i} editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></OrderBook>
                     ) : v.c.type === 'PlaceOrder' ? (
-                      <PlaceOrder
+                      <PlaceOrder key={v.i}
                         editingLayout={appData.editingLayout}
                         editingComponents={appData.editingComponents}
                         config={v.c}
                         onContentUpdate={value => handleContentUpdate(v, value)}
                       ></PlaceOrder>
                     ) : v.c.type === 'Trades' ? (
-                      <Trades editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></Trades>
+                      <Trades key={v.i} editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></Trades>
                     ) : (
-                      <Panel editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} className="flex-grow-0 flex-grow-1 flex flex-column" header="Header 1">
+                      <Panel key={v.i} editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} className="flex-grow-0 flex-grow-1 flex flex-column" header="Header 1">
                         {v.i} {JSON.stringify(v)} {JSON.stringify(v.c.type === 'MyOrders')}
                       </Panel>
                     )}

@@ -16,9 +16,6 @@ export default function LandingPage(){
           <Link to="/Authenticate">
             <button type="button" className="btn btn-primary btn-lg px-4 me-md-2">Connect Your Wallet!</button>
           </Link>
-          {/* <Link to="/registration"> */}
-            {/* <button type="button" className="btn btn-primary btn-lg px-4">Personal</button> */}
-          {/* </Link> */}
         </div>
       </div>
     </div>
