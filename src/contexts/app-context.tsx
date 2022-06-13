@@ -1,7 +1,13 @@
 import { createContext } from 'react';
 import { SignedTransaction } from 'algosdk';
+import AppConfiguration from '../scripts/interface/configuration/AppConfiguration';
 
 export interface IState {
+  appConfiguration?: AppConfiguration;
+
+  price?: number;
+  quantity?: number;
+
   editingLayout: boolean;
   editingComponents: boolean;
   editingExpertMode: boolean;
@@ -11,6 +17,8 @@ export interface IState {
   authToken: string;
   authAddress: string;
   authTx?: SignedTransaction;
+  asa1?: number;
+  asa2?: number;
   setAppData?: (data: IState) => void;
 }
 

@@ -1,0 +1,4 @@
+{
+  "environment":"testnet",
+  "assetList":[{"asa1":37074699,"asa2":94115664,"name":"USDc/USDt"},{"asa1":37074699,"asa2":76238324,"name":"USDc/AramidUSD"}]
+}

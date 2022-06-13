@@ -5,7 +5,7 @@ import { Trans } from 'react-i18next';
 import { InputText } from 'primereact/inputtext';
 import Authenticate from '../Authenticate';
 import { AppContext } from '../../contexts/app-context';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
 
@@ -26,7 +26,14 @@ export default function PlaceOrder(props: PlaceOrderProps) {
   function handleUpdate(newConfig) {
     props.onContentUpdate(newConfig);
   }
-
+  useEffect(() => {
+    appData.quantity = quantity;
+    appData.setAppData({ ...appData });
+  }, [quantity]);
+  useEffect(() => {
+    appData.price = price;
+    appData.setAppData({ ...appData });
+  }, [price]);
   function ErrorHandler({ error }) {
     return (
       <div role="alert">
@@ -60,7 +67,9 @@ export default function PlaceOrder(props: PlaceOrderProps) {
       <Panel header={i18n.t('PlaceOrder.Title')} className={className}>
         <div className="grid p-fluid">
           <div className=" col-12 md:col-3">
-            <label htmlFor="price">Price</label>
+            <label htmlFor="price">
+              Price {appData.asa1}/{appData.asa2}
+            </label>
             <InputNumber
               inputId="price"
               value={price}

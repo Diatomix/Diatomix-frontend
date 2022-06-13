@@ -23,37 +23,26 @@ import CatchAll from './pages/404';
 import Authenticate from './components/Authenticate';
 import Dashboard from './pages/dashboard';
 import Theme from './components/Theme';
-import i18n from './i18n';
-
-import { Buffer } from 'buffer';
-import Trade from './pages/trade';
 import Trading from './pages/trading';
+import LoadInitDataEffect from './effects/global/LoadInitDataEffect';
+import SelectAsset from './pages/SelectAsset';
+import Trade from './pages/trade';
 declare const window: any;
 export default function App() {
   const [appData, setAppData] = useState<IState>(defaultAppData);
-
-  useEffect(() => {
-    let language = localStorage.getItem('language');
-    if (!language) language = 'en';
-    if (language !== appData.language) {
-      console.log('App.componentDidMount', language);
-      i18n.changeLanguage(language);
-      setAppData({ ...appData, language: language });
-    }
-
-    window.Buffer = window.Buffer || Buffer;
-  }, [appData]);
 
   return (
     <div className="App flex flex-column">
       <Suspense fallback="loading">
         <AppContext.Provider value={{ ...appData, setAppData: v => setAppData(v) }}>
+          <LoadInitDataEffect />
           <Theme />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="trade" element={<Trade />} />
-            <Route path="trading" element={<Trading />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/trade" element={<SelectAsset />} />
+            <Route path="/trade/:asa1/:asa2" element={<Trade />} />
+            <Route path="/trading" element={<Trading />} />
             <Route path="*" element={<CatchAll />} />
             <Route path="/authenticate" element={<Authenticate />} />
             <Route path="/dashboard" element={<Dashboard />} />
