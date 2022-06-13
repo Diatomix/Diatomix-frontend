@@ -317,12 +317,7 @@ export default function ResponsiveLocalStorageLayout(props: LayoutProps) {
                     ) : v.c.type === 'OrderBook' ? (
                       <OrderBook key={v.i} editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></OrderBook>
                     ) : v.c.type === 'PlaceOrder' ? (
-                      <PlaceOrder key={v.i}
-                        editingLayout={appData.editingLayout}
-                        editingComponents={appData.editingComponents}
-                        config={v.c}
-                        onContentUpdate={value => handleContentUpdate(v, value)}
-                      ></PlaceOrder>
+                      <PlaceOrder config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></PlaceOrder>
                     ) : v.c.type === 'Trades' ? (
                       <Trades key={v.i} editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></Trades>
                     ) : (

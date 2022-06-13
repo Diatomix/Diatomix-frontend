@@ -26,6 +26,8 @@ import Theme from './components/Theme';
 import i18n from './i18n';
 
 import { Buffer } from 'buffer';
+import Trade from './pages/trade';
+import Trading from './pages/trading';
 declare const window: any;
 export default function App() {
   const [appData, setAppData] = useState<IState>(defaultAppData);
@@ -50,6 +52,8 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="about" element={<About />} />
+            <Route path="trade" element={<Trade />} />
+            <Route path="trading" element={<Trading />} />
             <Route path="*" element={<CatchAll />} />
             <Route path="/authenticate" element={<Authenticate />} />
             <Route path="/dashboard" element={<Dashboard />} />

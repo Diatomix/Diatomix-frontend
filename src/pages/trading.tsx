@@ -7,12 +7,12 @@ import { AppContext } from '../contexts/app-context';
 import GridLayout from '../components/GridLayout';
 import Header from '../components/Header';
 
-export default function Home() {
+export default function Trading() {
   const appData = useContext(AppContext);
   return (
     <>
-      <NavBar />
-      <LandingPage />
+      <Header />
+      <GridLayout layout="trading"></GridLayout>
     </>
   );
 }
