@@ -4,6 +4,7 @@ import React, { Suspense } from 'react';
 import { AppContext, IState } from '../contexts/app-context';
 import { useNavigate } from 'react-router-dom';
 import Authenticate from './Authenticate';
+import { Button } from 'primereact/button';
 
 function Header() {
   let navigate = useNavigate();
@@ -38,6 +39,12 @@ function Header() {
             label: i18n.t('Nav.Trade'),
             command: () => {
               routeTo('/trade');
+            },
+          },
+          {
+            label: i18n.t('Nav.Trading'),
+            command: () => {
+              routeTo('/trading');
             },
           },
           {
@@ -171,6 +178,12 @@ function Header() {
       },
     ];
   }
+  const logout = (appData: IState) => {
+    appData.authAddress = null;
+    appData.authToken = null;
+    appData.authTx = null;
+    appData.setAppData({ ...appData });
+  };
   return (
     <Suspense fallback="loading">
       <AppContext.Consumer>
@@ -178,7 +191,13 @@ function Header() {
           <>
             <div className="flex flex-row">
               <Menubar className="m-2 flex-grow-1" model={getItems(appData)} />
-              <Authenticate buttonIcon="pi pi-external-link" buttonClassName="m-2" />
+              {appData.authAddress ? (
+                <Button onClick={() => logout(appData)} className="m-2">
+                  Logout
+                </Button>
+              ) : (
+                <Authenticate buttonIcon="pi pi-external-link" buttonClassName="m-2" />
+              )}
             </div>
           </>
         )}

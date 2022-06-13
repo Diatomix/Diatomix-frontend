@@ -6,18 +6,13 @@ import NavBar from '../components/NavBar';
 import { AppContext } from '../contexts/app-context';
 import GridLayout from '../components/GridLayout';
 import Header from '../components/Header';
-import PlaceOrder from '../components/configurable/PlaceOrder';
 
-export default function Home() {
+export default function Trading() {
   const appData = useContext(AppContext);
   return (
     <>
       <Header />
-      <div className="flex flex-row">
-        <PlaceOrder className="col m-2"></PlaceOrder>
-        <div className="col m-2">&nbsp;</div>
-        <div className="col m-2">&nbsp;</div>
-      </div>
+      <GridLayout layout="trading"></GridLayout>
     </>
   );
 }

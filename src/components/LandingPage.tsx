@@ -19,6 +19,11 @@ export default function LandingPage() {
           </Card>
           <div className="d-grid gap-2 d-md-flex justify-content-md-start mt-5">
             <Authenticate></Authenticate>
+            <Link to="/trade">
+              <button type="button" className="btn btn-primary btn-lg px-4">
+                See the market
+              </button>
+            </Link>
             {/* <Link to="/registration"> */}
             {/* <button type="button" className="btn btn-primary btn-lg px-4">Personal</button> */}
             {/* </Link> */}

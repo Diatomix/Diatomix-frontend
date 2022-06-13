@@ -11,26 +11,8 @@ export default function Home() {
   const appData = useContext(AppContext);
   return (
     <>
-      {appData.authAddress ? (
-        <>
-          <Header />
-          <GridLayout layout="home" />
-        </>
-      ) : (
-        /*
-        <>
-          <NavBar />
-          <LandingPage />
-        </>
-        */
-        <>
-          <Header />
-          <GridLayout layout="home" />
-        </>
-      )}
-
-      {/* <Header />
-      <BoundedLayout layout="home" /> */}
+      <NavBar />
+      <LandingPage />
     </>
   );
 }
