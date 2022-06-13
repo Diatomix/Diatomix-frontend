@@ -5,7 +5,8 @@ import { Trans } from 'react-i18next';
 import { InputText } from 'primereact/inputtext';
 import Authenticate from '../Authenticate';
 import { AppContext } from '../../contexts/app-context';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+import { InputNumber } from 'primereact/inputnumber';
 
 interface PlaceOrderConfig {
   quote: string;
@@ -20,6 +21,7 @@ interface PlaceOrderProps {
 }
 export default function PlaceOrder(props: PlaceOrderProps) {
   const appData = useContext(AppContext);
+  const [price, setPrice] = useState<number>(1);
   function handleUpdate(newConfig) {
     props.onContentUpdate(newConfig);
   }
@@ -42,7 +44,6 @@ export default function PlaceOrder(props: PlaceOrderProps) {
           <Panel header={i18n.t('Layout.EditProperties')}>
             <div className="field my-2">
               <span className="p-float-label">
-                <InputText id="header" name="header" value={props.config.quote} onChange={event => handleUpdate({ ...props.config, quote: event.target.value })} />
                 <label htmlFor="header">{i18n.t('Layout.PropertyHeader')}</label>
               </span>
             </div>
@@ -57,7 +58,8 @@ export default function PlaceOrder(props: PlaceOrderProps) {
     try {
       return (
         <Panel header={i18n.t('PlaceOrder.Title')}>
-          <p>Todo</p>
+          <input type={'number'} min={0} max={100} step={0.1} value={price} onChange={e => setPrice(e.target.valueAsNumber)} />
+
           {appData.authToken ? <p>{JSON.stringify(appData.authAddress)}</p> : <Authenticate />}
         </Panel>
       );

@@ -3,6 +3,7 @@ import { Menubar } from 'primereact/menubar';
 import React, { Suspense } from 'react';
 import { AppContext, IState } from '../contexts/app-context';
 import { useNavigate } from 'react-router-dom';
+import Authenticate from './Authenticate';
 
 function Header() {
   let navigate = useNavigate();
@@ -31,6 +32,12 @@ function Header() {
             label: i18n.t('Nav.Home'),
             command: () => {
               routeTo('/');
+            },
+          },
+          {
+            label: i18n.t('Nav.Trade'),
+            command: () => {
+              routeTo('/trade');
             },
           },
           {
@@ -169,7 +176,10 @@ function Header() {
       <AppContext.Consumer>
         {appData => (
           <>
-            <Menubar className="m-2" model={getItems(appData)} />
+            <div className="flex flex-row">
+              <Menubar className="m-2 flex-grow-1" model={getItems(appData)} />
+              <Authenticate buttonIcon="pi pi-external-link" buttonClassName="m-2" />
+            </div>
           </>
         )}
       </AppContext.Consumer>

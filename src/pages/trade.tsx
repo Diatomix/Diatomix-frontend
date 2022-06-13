@@ -14,23 +14,14 @@ export default function Home() {
       {appData.authAddress ? (
         <>
           <Header />
-          <GridLayout layout="home" />
+          <p>Trade auth</p>
         </>
       ) : (
-        /*
         <>
           <NavBar />
           <LandingPage />
         </>
-        */
-        <>
-          <Header />
-          <GridLayout layout="home" />
-        </>
       )}
-
-      {/* <Header />
-      <BoundedLayout layout="home" /> */}
     </>
   );
 }

@@ -17,7 +17,12 @@ declare global {
     AlgoSigner: any;
   }
 }
-export default function Authenticate() {
+interface AuthenticateProps {
+  buttonClassName?: string;
+  buttonIcon?: string;
+}
+export default function Authenticate(props: AuthenticateProps) {
+  const { buttonClassName, buttonIcon } = props;
   const appData = useContext(AppContext);
   const [visible, setVisible] = useState<boolean>(false);
   const [checkWallet, setCheckWallet] = useState<boolean>(false);
@@ -30,10 +35,10 @@ export default function Authenticate() {
       fee: 0,
       firstRound: 1,
       lastRound: 30000000,
-      genesisID: 'testnet-v1.0',
-      genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
-      //genesisID: 'mainnet-v1.0',
-      //genesisHash: 'wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8=',
+      //genesisID: 'testnet-v1.0',
+      //genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+      genesisID: 'mainnet-v1.0',
+      genesisHash: 'wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8=',
       flatFee: true,
     };
     console.log('suggestedParams', suggestedParams);
@@ -248,11 +253,6 @@ export default function Authenticate() {
     </div>
   );
 
-  const myIcon = (
-    <button className="p-dialog-titlebar-icon p-link">
-      <span className="pi pi-search"></span>
-    </button>
-  );
   function reset() {
     setMnemonicFormVisible(false);
     setKey('');
@@ -260,8 +260,8 @@ export default function Authenticate() {
   }
   return (
     <>
-      <Button label="Authenticate" icon="pi pi-external-link" onClick={() => onShow()} />
-      <Dialog header="Authenticate" className="flex flex-column" footer={footer} icons={myIcon} visible={visible} style={{ width: '50vw' }} modal onHide={onHide}>
+      <Button className={buttonClassName} label="Authenticate" icon={buttonIcon} onClick={() => onShow()} />
+      <Dialog header="Authenticate" className="flex flex-column" footer={footer} visible={visible} style={{ width: '50vw' }} modal onHide={onHide}>
         <p>Please authenticate using your algorand account. You will self sign the zero balance transaction.</p>
         {!!error ? <Message className="flex flex-row flex-grow-0" severity="error" text={error} /> : ''}
         {!!mnemonicFormVisible ? (
