@@ -1,8 +1,12 @@
 import Panel from '../Panel';
 import i18n from 'i18next';
 import { Trans } from 'react-i18next';
+import { order_by } from '../../gqty';
+import { useSubscription } from '../../gqty';
 
 import { InputText } from 'primereact/inputtext';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 
 interface MyOrdersConfig {
   quote: string;
@@ -49,11 +53,73 @@ export default function MyOrders(props: MyOrdersProps) {
       return <ErrorHandler error={error} />;
     }
   }
+
+  // const { bids } = useSubscription();
+  // const bestBids = bids({ limit: 10, order_by: [{ price: order_by.desc }] }).map(({ id, price, amount }) => {
+  //   return (
+  //     <div>
+  //           <div className="card">
+  //               <DataTable key={id} scrollable scrollHeight="flex">
+  //                   <Column field="Price" header="Price">{price}</Column>
+  //                   <Column field="price.amount" header="Amount">{amount}</Column>
+  //               </DataTable>
+  //           </div>
+  //       </div>
+  //     // <tr key={id}>
+  //     //   <td>{price}</td>
+  //     //   <td>{amount}</td>
+  //     // </tr>
+  //   );
+  // });
+
+
+  const { offers } = useSubscription();
+  const bestOffers = offers({ limit: 10, order_by: [{ price: order_by.desc }] }).map(({ id, price, amount }) => {
+    return (
+    <div>
+      <div className="card" >
+          <DataTable key={id} scrollable scrollHeight="flex">
+              {/* <Column field="Time" header="Time">{time}</Column> */}
+              <Column field="Price" header="Price">{price}</Column>
+              <Column field="price.amount" header="Amount">{amount}</Column>
+          </DataTable>
+      </div>
+  </div>
+
+      // <tr key={id}>
+      //   <td>{price}</td>
+      //   <td>{amount}</td>
+      // </tr>
+    );
+  });
+
   function Content() {
     try {
       return (
         <Panel header={i18n.t('MyOrders.Title')}>
-          <p>Todo</p>
+           <table>
+            {/* <thead>
+              <tr>
+                <th>Price</th>
+                <th>Amount</th>
+              </tr>
+            </thead> */}
+            <tbody>{bestOffers}</tbody>
+            {/* <thead>
+              <tr>
+                <th>Curr price</th>
+                <th>Amount</th>
+              </tr>
+            </thead> */}
+            {/* <tbody>{bestBids}</tbody> */}
+            {/* <thead>
+              <tr>
+                <th>Price</th>
+                <th>Amount</th>
+              </tr>
+            </thead> */}
+          </table>
+          {/* <p>Todo</p> */}
         </Panel>
       );
     } catch (error) {
