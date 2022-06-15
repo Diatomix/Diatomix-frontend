@@ -1,0 +1,10 @@
+.tobuy .p-inputswitch-slider{
+  background-color: green !important;
+}
+.tosell .p-inputswitch-slider{
+  background-color: red !important;
+}
+
+.clickable{
+  cursor: pointer;
+}

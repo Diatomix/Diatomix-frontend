@@ -32,8 +32,8 @@ export default function Home() {
       <Header />
       <div className="flex flex-row">
         <PlaceOrder className="col m-1"></PlaceOrder>
-        <textarea className="col m-2" value={arc0017Contract(appData)}></textarea>
-        <div className="col m-2">&nbsp;</div>
+        <textarea className="col m-2" value={appData.orderTeal}></textarea>
+        <textarea className="col m-2" value={JSON.stringify(appData.orderCompiled)}></textarea>
       </div>
     </>
   );
