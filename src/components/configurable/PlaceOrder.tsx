@@ -2,10 +2,8 @@ import Panel from '../Panel';
 import i18n from 'i18next';
 import { Trans } from 'react-i18next';
 
-import { InputText } from 'primereact/inputtext';
-import Authenticate from '../Authenticate';
 import { AppContext } from '../../contexts/app-context';
-import { AuthContext } from '../../contexts/AuthContext';
+import { AuthContext, IProvider, ProvidersEnum } from '../../contexts/AuthContext';
 import { useContext, useEffect, useState } from 'react';
 import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
@@ -15,7 +13,9 @@ import UpdateBalanceEffect from '../../effects/order/UpdateBalanceEffect';
 import compileApprovalProgram from '../../scripts/algo/compileApprovalProgram';
 import arc0017CreateOrderGetRawTxs from '../../scripts/algo/arc0017CreateOrderGetRawTxs';
 import getAlgodClient from '../../scripts/algo/getAlgod';
-
+import BigNumber from 'bignumber.js';
+import algosdk, { LogicSigAccount } from 'algosdk';
+import signTxsWithProviders from '../../scripts/algo/signTxsWithProviders';
 interface PlaceOrderConfig {
   quote: string;
 }
@@ -37,8 +37,13 @@ export default function PlaceOrder(props: PlaceOrderProps) {
   }
   useEffect(() => {
     appData.quantity = quantity;
+    if (sideIsSell) {
+      appData.asa1SellBigInt = new BigNumber(quantity).multipliedBy(100).toFixed(0, 1);
+    } else {
+      appData.asa2SellBigInt = new BigNumber(quantity).multipliedBy(100).toFixed(0, 1);
+    }
     appData.setAppData({ ...appData });
-  }, [quantity]);
+  }, [quantity, sideIsSell]);
 
   useEffect(() => {
     appData.price = price;
@@ -82,17 +87,45 @@ export default function PlaceOrder(props: PlaceOrderProps) {
   const compile = () => {
     compileApprovalProgram(appData.orderTeal).then(ret => {
       appData.orderCompiled = ret;
+      console.log('appData.orderCompiled', appData.orderCompiled);
       getAlgodClient(appData.appConfiguration)
         .getTransactionParams()
         .do()
         .then(suggestedParams => {
           const txs = arc0017CreateOrderGetRawTxs(appData, authContext, suggestedParams);
+          const program = new Uint8Array(Buffer.from(appData.orderCompiled.result, 'base64'));
+          const lsig = new LogicSigAccount(program);
+          const tealProvider: IProvider = {
+            address: lsig.address(),
+            provider: appData.orderCompiled,
+            type: ProvidersEnum.ApprovalProgram,
+          };
+          const providers = [authContext.provider, tealProvider];
+          console.log(
+            'before sign',
+            txs.map(t => {
+              return {
+                id: t.txID(),
+                t,
+              };
+            }),
+            providers
+          );
 
-          console.log('txs', txs);
+          signTxsWithProviders(txs, providers).then(r => {
+            console.log('signed txs', r);
+            const algodClient = getAlgodClient(appData.appConfiguration);
+
+            algodClient
+              .sendRawTransaction(r)
+              .do()
+              .then(sent => {
+                console.log('sent', sent);
+              });
+          });
         });
     });
   };
-
   return (
     <>
       <UpdateContractEffect />
@@ -156,6 +189,12 @@ export default function PlaceOrder(props: PlaceOrderProps) {
             Balance {appData.asa2}: {appData.asa2Balance}
           </p>
         )}
+        <p>
+          asa1SellBigInt {appData.asa2}: {appData.asa1SellBigInt}
+        </p>
+        <p>
+          asa2SellBigInt {appData.asa2}: {appData.asa2SellBigInt}
+        </p>
 
         <Button onClick={() => compile()}>Place order</Button>
       </Panel>

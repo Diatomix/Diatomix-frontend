@@ -11,7 +11,7 @@ interface addr2txs {
 }
 
 const signTxsWithProviders = async (txns: algosdk.Transaction[], providers: IProvider[]) => {
-  const ret: Array<algosdk.SignedTransaction> = [];
+  const ret: Array<Uint8Array> = [];
   const order = {};
   const addresses = {};
   const addr2txs: addr2txs = {};
@@ -56,10 +56,12 @@ const signTxsWithProviders = async (txns: algosdk.Transaction[], providers: IPro
         break;
     }
   }
-  const out: Array<algosdk.SignedTransaction> = [];
+  const out: Array<Uint8Array> = [];
   if (ret.length != txns.length) throw Error(`Some of the transactions has not been signed ${ret.length}/${txns.length}`);
   for (const tx of txns) {
-    const signed = ret.find(signedTx => signedTx.txn.txID() == tx.txID());
+    const signed = ret.find(signedTx => {
+      return algosdk.decodeSignedTransaction(signedTx).txn.txID() == tx.txID();
+    });
     if (!signed) throw Error(`Tx not signed ${tx.txID()}`);
     out.push(signed);
   }

@@ -2,7 +2,7 @@ import { formatJsonRpcRequest } from '@json-rpc-tools/utils';
 import WalletConnect from '@walletconnect/client';
 import algosdk, { LogicSigAccount } from 'algosdk';
 
-const signTxWithWalletConnect = async (txs: algosdk.Transaction[], signer: WalletConnect): Promise<algosdk.SignedTransaction[]> => {
+const signTxWithWalletConnect = async (txs: algosdk.Transaction[], signer: WalletConnect): Promise<Uint8Array[]> => {
   const toSend = txs.map(tx => tx.toByte());
 
   const txnsToSign = txs.map(txn => {
@@ -18,11 +18,8 @@ const signTxWithWalletConnect = async (txs: algosdk.Transaction[], signer: Walle
   const request = formatJsonRpcRequest('algo_signTxn', requestParams);
 
   const result: Array<string | null> = await signer.sendCustomRequest(request);
-  const decodedResult = result.map(element => {
+  return result.map(element => {
     return element ? new Uint8Array(Buffer.from(element, 'base64')) : null;
-  });
-  return decodedResult.map(res => {
-    return algosdk.decodeSignedTransaction(res);
   });
 };
 export default signTxWithWalletConnect;

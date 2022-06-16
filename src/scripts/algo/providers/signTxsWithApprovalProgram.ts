@@ -1,16 +1,15 @@
 import algosdk, { LogicSigAccount } from 'algosdk';
 
-interface ApprovalProgramProvider {
+export interface ApprovalProgramProvider {
   hash: string;
   result: string;
 }
 
-const signTxWithAlgoSigner = (txs: algosdk.Transaction[], signer: ApprovalProgramProvider): algosdk.SignedTransaction[] => {
+const signTxWithAlgoSigner = (txs: algosdk.Transaction[], signer: ApprovalProgramProvider): Uint8Array[] => {
   const program = new Uint8Array(Buffer.from(signer.result, 'base64'));
   const lsig = new LogicSigAccount(program);
   return txs.map(tx => {
-    const uint8 = algosdk.signLogicSigTransactionObject(tx, lsig).blob;
-    return algosdk.decodeSignedTransaction(uint8);
+    return algosdk.signLogicSigTransactionObject(tx, lsig).blob;
   });
 };
 export default signTxWithAlgoSigner;

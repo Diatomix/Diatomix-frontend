@@ -18,6 +18,7 @@ const getBalanceAtAccount = async (account: string, asa: number): Promise<number
       const appConfiguration = await getAppConfiguration();
       const indexer = getIndexerClient(appConfiguration);
       accountData = await indexer.lookupAccountByID(account).do();
+      localStorage.setItem(cacheKey, JSON.stringify({ time: moment().toISOString(), value: accountData }));
     }
     if (!accountData || !accountData.account || !accountData.account.assets) return 0;
     const asset = accountData.account.assets.find(a => a['asset-id'] == asa);
