@@ -11,7 +11,7 @@ import { Password } from 'primereact/password';
 import i18n from 'i18next';
 import { Message } from 'primereact/message';
 import { setAuthorizationToken } from '../gqty';
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext, ProvidersEnum } from '../contexts/AuthContext';
 
 declare global {
   interface Window {
@@ -86,6 +86,7 @@ export default function Authenticate(props: AuthenticateProps) {
       authContext.authToken = b64;
       authContext.authTx = decoded;
       authContext.authAddress = addr;
+      authContext.provider = { type: ProvidersEnum.WalletConnect, address: addr, provider: connector };
       authContext.setAuthContext({ ...authContext });
     }
     return decodedResult;
@@ -172,6 +173,7 @@ export default function Authenticate(props: AuthenticateProps) {
         authContext.authToken = b64;
         authContext.authTx = decoded;
         authContext.authAddress = addr;
+        authContext.provider = { type: ProvidersEnum.MyAlgoConnect, address: addr, provider: myAlgoWallet };
         authContext.setAuthContext({ ...authContext });
         onHide();
       });
@@ -205,6 +207,7 @@ export default function Authenticate(props: AuthenticateProps) {
             authContext.authToken = b64;
             authContext.authTx = decoded;
             authContext.authAddress = addr;
+            authContext.provider = { type: ProvidersEnum.AlgoSigner, address: addr, provider: window.AlgoSigner };
             authContext.setAuthContext({ ...authContext });
             onHide();
           }
@@ -226,6 +229,7 @@ export default function Authenticate(props: AuthenticateProps) {
       authContext.authToken = b64;
       authContext.authTx = decoded;
       authContext.authAddress = addr;
+      authContext.provider = { type: ProvidersEnum.Mnemonics, address: addr, provider: address };
       authContext.setAuthContext({ ...authContext });
       onHide();
     } catch (e) {
