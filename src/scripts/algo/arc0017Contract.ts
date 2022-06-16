@@ -3,9 +3,10 @@ import asa2asaV1 from '../data/arc0017.asa2asa.v1.hbl';
 import algosdk from 'algosdk';
 import { IState } from '../../contexts/app-context';
 import * as base32 from 'hi-base32';
+import { IAuthState } from '../../contexts/AuthContext';
 
-const arc0017Contract = (appData: IState): string => {
-  if (!appData.authAddress) {
+const arc0017Contract = (appData: IState, authContext: IAuthState): string => {
+  if (!authContext.authAddress) {
     return '';
   }
 
@@ -16,7 +17,7 @@ const arc0017Contract = (appData: IState): string => {
     return '';
   }
 
-  const addrbuffer = Buffer.from(base32.decode.asBytes(appData.authAddress));
+  const addrbuffer = Buffer.from(base32.decode.asBytes(authContext.authAddress));
   const trimAddr = Buffer.from(addrbuffer.subarray(0, -4));
   let addrHex = trimAddr.toString('hex');
   addrHex = '0x' + addrHex;

@@ -5,6 +5,7 @@ import { AppContext, IState } from '../contexts/app-context';
 import { useNavigate } from 'react-router-dom';
 import Authenticate from './Authenticate';
 import { Button } from 'primereact/button';
+import { AuthContext, IAuthState } from '../contexts/AuthContext';
 
 function Header() {
   let navigate = useNavigate();
@@ -178,28 +179,32 @@ function Header() {
       },
     ];
   }
-  const logout = (appData: IState) => {
-    appData.authAddress = null;
-    appData.authToken = null;
-    appData.authTx = null;
-    appData.setAppData({ ...appData });
+  const logout = (authContext: IAuthState) => {
+    authContext.authAddress = null;
+    authContext.authToken = null;
+    authContext.authTx = null;
+    authContext.setAuthContext({ ...authContext });
   };
   return (
     <Suspense fallback="loading">
       <AppContext.Consumer>
         {appData => (
-          <>
-            <div className="flex flex-row">
-              <Menubar className="m-2 flex-grow-1" model={getItems(appData)} />
-              {appData.authAddress ? (
-                <Button onClick={() => logout(appData)} className="m-2">
-                  Logout
-                </Button>
-              ) : (
-                <Authenticate buttonIcon="pi pi-external-link" buttonClassName="m-2" />
-              )}
-            </div>
-          </>
+          <AuthContext.Consumer>
+            {authContext => (
+              <>
+                <div className="flex flex-row">
+                  <Menubar className="m-2 flex-grow-1" model={getItems(appData)} />
+                  {authContext.authAddress ? (
+                    <Button onClick={() => logout(authContext)} className="m-2">
+                      Logout
+                    </Button>
+                  ) : (
+                    <Authenticate buttonIcon="pi pi-external-link" buttonClassName="m-2" />
+                  )}
+                </div>
+              </>
+            )}
+          </AuthContext.Consumer>
         )}
       </AppContext.Consumer>
     </Suspense>

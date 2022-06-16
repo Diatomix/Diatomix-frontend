@@ -5,6 +5,7 @@ import { Trans } from 'react-i18next';
 import { InputText } from 'primereact/inputtext';
 import Authenticate from '../Authenticate';
 import { AppContext } from '../../contexts/app-context';
+import { AuthContext } from '../../contexts/AuthContext';
 import { useContext, useEffect, useState } from 'react';
 import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
@@ -27,6 +28,7 @@ interface PlaceOrderProps {
 export default function PlaceOrder(props: PlaceOrderProps) {
   const { config, children, className } = props;
   const appData = useContext(AppContext);
+  const authContext = useContext(AuthContext);
   const [sideIsSell, setSideIsSell] = useState<boolean>(false);
   const [price, setPrice] = useState<number>(1);
   const [quantity, setQuantity] = useState<number>(1);
@@ -84,7 +86,7 @@ export default function PlaceOrder(props: PlaceOrderProps) {
         .getTransactionParams()
         .do()
         .then(suggestedParams => {
-          const txs = arc0017CreateOrderGetRawTxs(appData, suggestedParams);
+          const txs = arc0017CreateOrderGetRawTxs(appData, authContext, suggestedParams);
 
           console.log('txs', txs);
         });
@@ -142,7 +144,7 @@ export default function PlaceOrder(props: PlaceOrderProps) {
             />
           </div>
         </div>
-        {appData.authToken && <p>{appData.authAddress.substring(0, 10) + '..'}</p>}
+        {authContext.authToken && <p>{authContext.authAddress.substring(0, 10) + '..'}</p>}
 
         {appData.asa1Balance && (
           <p>

@@ -11,6 +11,7 @@ import { Password } from 'primereact/password';
 import i18n from 'i18next';
 import { Message } from 'primereact/message';
 import { setAuthorizationToken } from '../gqty';
+import { AuthContext } from '../contexts/AuthContext';
 
 declare global {
   interface Window {
@@ -23,7 +24,7 @@ interface AuthenticateProps {
 }
 export default function Authenticate(props: AuthenticateProps) {
   const { buttonClassName, buttonIcon } = props;
-  const appData = useContext(AppContext);
+  const authContext = useContext(AuthContext);
   const [visible, setVisible] = useState<boolean>(false);
   const [checkWallet, setCheckWallet] = useState<boolean>(false);
   const [mnemonicFormVisible, setMnemonicFormVisible] = useState<boolean>(false);
@@ -82,7 +83,10 @@ export default function Authenticate(props: AuthenticateProps) {
       const decoded = algosdk.decodeSignedTransaction(decodedResult[0]);
       const addr = algosdk.encodeAddress(decoded.txn.from.publicKey);
       // TODO .. validate signature
-      appData.setAppData({ ...appData, authToken: b64, authTx: decoded, authAddress: addr });
+      authContext.authToken = b64;
+      authContext.authTx = decoded;
+      authContext.authAddress = addr;
+      authContext.setAuthContext({ ...authContext });
     }
     return decodedResult;
   }
@@ -165,7 +169,10 @@ export default function Authenticate(props: AuthenticateProps) {
         const decoded = algosdk.decodeSignedTransaction(signedTxn.blob);
         const addr = algosdk.encodeAddress(decoded.txn.from.publicKey);
         // TODO .. validate signature
-        appData.setAppData({ ...appData, authToken: b64, authTx: decoded, authAddress: addr });
+        authContext.authToken = b64;
+        authContext.authTx = decoded;
+        authContext.authAddress = addr;
+        authContext.setAuthContext({ ...authContext });
         onHide();
       });
 
@@ -195,7 +202,10 @@ export default function Authenticate(props: AuthenticateProps) {
             const addr = algosdk.encodeAddress(decoded.txn.from.publicKey);
             console.log('addr', addr);
             // TODO .. validate signature
-            appData.setAppData({ ...appData, authToken: b64, authTx: decoded, authAddress: addr });
+            authContext.authToken = b64;
+            authContext.authTx = decoded;
+            authContext.authAddress = addr;
+            authContext.setAuthContext({ ...authContext });
             onHide();
           }
         });
@@ -213,7 +223,10 @@ export default function Authenticate(props: AuthenticateProps) {
       reset();
       setAuthorizationToken('SigTx ' + b64);
 
-      appData.setAppData({ ...appData, authToken: b64, authTx: decoded, authAddress: addr });
+      authContext.authToken = b64;
+      authContext.authTx = decoded;
+      authContext.authAddress = addr;
+      authContext.setAuthContext({ ...authContext });
       onHide();
     } catch (e) {
       console.error('authUsingMnemonics', e.message);

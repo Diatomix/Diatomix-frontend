@@ -4,11 +4,12 @@ import algosdk from 'algosdk';
 import { IState } from '../../contexts/app-context';
 import * as base32 from 'hi-base32';
 import getAlgodClient from './getAlgod';
+import { IAuthState } from '../../contexts/AuthContext';
 
-const arc0017CreateOrderGetRawTxs = (appData: IState, suggestedParams: algosdk.SuggestedParams): algosdk.Transaction[] => {
+const arc0017CreateOrderGetRawTxs = (appData: IState, authContext: IAuthState, suggestedParams: algosdk.SuggestedParams): algosdk.Transaction[] => {
   const tx1 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
     amount: 200000, // 3 assets to opt in min balance (asa to sell, algo)
-    from: appData.authAddress,
+    from: authContext.authAddress,
     to: appData.orderCompiled.hash,
     suggestedParams,
   });

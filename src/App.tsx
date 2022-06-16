@@ -7,7 +7,7 @@ import 'react-grid-layout/css/styles.css';
 import 'primereact/styleclass/';
 import { Routes, Route } from 'react-router-dom';
 
-import { AppContext, appData as defaultAppData, IState } from './contexts/app-context';
+import { AppContext, defaultAppData, IState } from './contexts/app-context';
 
 import 'primereact/resources/primereact.min.css'; //core css
 import 'primeicons/primeicons.css'; //icons
@@ -27,26 +27,30 @@ import Trading from './pages/trading';
 import LoadInitDataEffect from './effects/global/LoadInitDataEffect';
 import SelectAsset from './pages/SelectAsset';
 import Trade from './pages/trade';
+import { AuthContext, IAuthState, defaultAuthContext } from './contexts/AuthContext';
 declare const window: any;
 export default function App() {
   const [appData, setAppData] = useState<IState>(defaultAppData);
+  const [authContext, setAuthContext] = useState<IAuthState>(defaultAuthContext);
 
   return (
     <div className="App flex flex-column">
       <Suspense fallback="loading">
         <AppContext.Provider value={{ ...appData, setAppData: v => setAppData(v) }}>
-          <LoadInitDataEffect />
-          <Theme />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/trade" element={<SelectAsset />} />
-            <Route path="/trade/:asa1/:asa2" element={<Trade />} />
-            <Route path="/trading" element={<Trading />} />
-            <Route path="*" element={<CatchAll />} />
-            <Route path="/authenticate" element={<Authenticate />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Routes>
+          <AuthContext.Provider value={{ ...authContext, setAuthContext: v => setAuthContext(v) }}>
+            <LoadInitDataEffect />
+            <Theme />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/trade" element={<SelectAsset />} />
+              <Route path="/trade/:asa1/:asa2" element={<Trade />} />
+              <Route path="/trading" element={<Trading />} />
+              <Route path="*" element={<CatchAll />} />
+              <Route path="/authenticate" element={<Authenticate />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Routes>
+          </AuthContext.Provider>
         </AppContext.Provider>
       </Suspense>
     </div>
