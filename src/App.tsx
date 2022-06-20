@@ -22,6 +22,7 @@ import About from './pages/about';
 import CatchAll from './pages/404';
 import Authenticate from './components/Authenticate';
 import Dashboard from './pages/dashboard';
+import Assets from './pages/assets';
 import Theme from './components/Theme';
 import Trading from './pages/trading';
 import LoadInitDataEffect from './effects/global/LoadInitDataEffect';
@@ -42,6 +43,7 @@ export default function App() {
             <Theme />
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/assets" element={<Assets />} />
               <Route path="/about" element={<About />} />
               <Route path="/trade" element={<SelectAsset />} />
               <Route path="/trade/:asa1/:asa2" element={<Trade />} />

@@ -37,6 +37,12 @@ function Header() {
             },
           },
           {
+            label: i18n.t('Nav.Assets'),
+            command: () => {
+              routeTo('/assets');
+            },
+          },
+          {
             label: i18n.t('Nav.Trade'),
             command: () => {
               routeTo('/trade');
