@@ -77,14 +77,14 @@ export default function MyOrders(props: MyOrdersProps) {
   const bestOffers = offers({ limit: 10, order_by: [{ price: order_by.desc }] }).map(({ id, price, amount }) => {
     return (
     <div>
-      <div className="card" >
+      <div className="card">
           <DataTable key={id} scrollable scrollHeight="flex">
               {/* <Column field="Time" header="Time">{time}</Column> */}
               <Column field="Price" header="Price">{price}</Column>
               <Column field="price.amount" header="Amount">{amount}</Column>
           </DataTable>
       </div>
-  </div>
+    </div>
 
       // <tr key={id}>
       //   <td>{price}</td>
