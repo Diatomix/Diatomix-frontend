@@ -59,7 +59,7 @@ const subscriptionsClient =
         wsEndpoint: () => {
           // Modify if needed
           const url = new URL("https://hasura.k8s.aramid.finance/v1/graphql", window.location.href);
-          url.protocol = url.protocol.replace("http", "ws");
+          url.protocol = url.protocol.replace("http", "wss");
           return url.href;
         },
         connectionCallback: () =>{
@@ -69,7 +69,7 @@ const subscriptionsClient =
           return headers
         },
         headers
-        
+
       })
     : undefined;
 subscriptionsClient.setConnectionParams({headers: headers})
@@ -83,7 +83,7 @@ export const client = createClient<
   scalarsEnumsHash,
   queryFetcher,
   subscriptionsClient,
-  
+
 });
 const { query, mutation, mutate, subscription, resolved, refetch, track } =
   client;

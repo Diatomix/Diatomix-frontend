@@ -74,7 +74,7 @@ export default function MyOrders(props: MyOrdersProps) {
 
 
   const { offers } = useSubscription();
-  const bestOffers = offers({ limit: 10, order_by: [{ price: order_by.desc }] }).map(({ id, price, amount }) => {
+  const bestOffers = offers({ limit: 10, order_by: [{ price: order_by.desc }] }).map(({ id, price, amount, created_at }) => {
     return (
     <div>
       <div className="card">
@@ -82,6 +82,7 @@ export default function MyOrders(props: MyOrdersProps) {
               {/* <Column field="Time" header="Time">{time}</Column> */}
               <Column field="Price" header="Price">{price}</Column>
               <Column field="price.amount" header="Amount">{amount}</Column>
+              <Column field="price.created_at" header="Date">{created_at}</Column>
           </DataTable>
       </div>
     </div>

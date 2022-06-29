@@ -71,12 +71,12 @@ const [lightOptions] = useState({
             $6000
           </Card>
         </TabPanel>
-        <TabPanel header="Withdrawal">
+        {/* <TabPanel header="Withdrawal">
           Withdrawal
         </TabPanel>
         <TabPanel header="Deposit">
           Wallet Addresses
-        </TabPanel>
+        </TabPanel> */}
       </TabView>
 
       <div>
