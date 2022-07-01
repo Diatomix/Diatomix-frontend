@@ -118,8 +118,8 @@ export default function MyOrders(props: MyOrdersProps) {
            <table>
              <thead>
               <tr>
-                <th scope="col">Price</th>
-                <th scope="col">Amount</th>
+                <th>Price</th>
+                <th>Amount</th>
               </tr>
             </thead> 
             <tbody>{bestOffers}</tbody>
