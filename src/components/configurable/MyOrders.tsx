@@ -76,21 +76,38 @@ export default function MyOrders(props: MyOrdersProps) {
   const { offers } = useSubscription();
   const bestOffers = offers({ limit: 10, order_by: [{ price: order_by.desc }] }).map(({ id, price, amount, created_at }) => {
     return (
-    <div>
-      <div className="card">
-          <DataTable key={id} scrollable scrollHeight="flex">
+    //<div>
+     // <div className="card">
+     //     <DataTable key={id} scrollable scrollHeight="flex">
               {/* <Column field="Time" header="Time">{time}</Column> */}
-              <Column field="Price" header="Price">{price}</Column>
-              <Column field="price.amount" header="Amount">{amount}</Column>
-              <Column field="price.created_at" header="Date">{created_at}</Column>
-          </DataTable>
-      </div>
-    </div>
+       //       <Column field="Price" header="Price">{price}</Column>
+        //      <Column field="price.amount" header="Amount">{amount}</Column>
+      //        <Column field="price.created_at" header="Date">{created_at}</Column>
+     //     </DataTable>
+     // </div>
+   // </div>
 
-      // <tr key={id}>
-      //   <td>{price}</td>
-      //   <td>{amount}</td>
-      // </tr>
+  <table class="table">
+  <thead>
+    <tr>
+     // <th scope="col">Time</th>
+      <th scope="col">Price</th>
+      <th scope="col">Amount</th>
+    //  <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr key={id}>
+       <td>{price}</td>
+       <td>{amount}</td>
+    </tr>
+  </tbody>
+</table>
+
+    //   <tr key={id}>
+     //    <td>{price}</td>
+     //    <td>{amount}</td>
+   //    </tr>
     );
   });
 
