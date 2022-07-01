@@ -36,7 +36,7 @@ const queryFetcher: QueryFetcher = async function (
   fetchOptions
 ) {
   // Modify "/api/graphql" if needed
-  const response = await fetch("https://hasura.k8s.aramid.finance/v1/graphql", {
+  const response = await fetch("https://graphql.k8s.diatomix.xyz/v1/graphql", {
     method: "POST",
     headers,
     body: JSON.stringify({
@@ -58,7 +58,7 @@ const subscriptionsClient =
     ? createSubscriptionsClient({
         wsEndpoint: () => {
           // Modify if needed
-          const url = new URL("https://hasura.k8s.aramid.finance/v1/graphql", window.location.href);
+          const url = new URL("https://graphql.k8s.diatomix.xyz/v1/graphql", window.location.href);
           url.protocol = url.protocol.replace("http", "wss");
           return url.href;
         },
