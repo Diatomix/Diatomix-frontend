@@ -87,22 +87,22 @@ export default function MyOrders(props: MyOrdersProps) {
      // </div>
    // </div>
 
-  <table class="table">
-  <thead>
-    <tr>
+ // <table class="table">
+//  <thead>
+ //   <tr>
      // <th scope="col">Time</th>
-      <th scope="col">Price</th>
-      <th scope="col">Amount</th>
+  //    <th scope="col">Price</th>
+ //     <th scope="col">Amount</th>
     //  <th scope="col">Date</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr key={id}>
-       <td>{price}</td>
-       <td>{amount}</td>
-    </tr>
-  </tbody>
-</table>
+ //   </tr>
+ // </thead>
+ // <tbody>
+//    <tr key={id}>
+  //     <td>{price}</td>
+   //    <td>{amount}</td>
+ //   </tr>
+ // </tbody>
+//</table>
 
     //   <tr key={id}>
      //    <td>{price}</td>
@@ -116,15 +116,15 @@ export default function MyOrders(props: MyOrdersProps) {
       return (
         <Panel header={i18n.t('MyOrders.Title')}>
            <table>
-            {/* <thead>
+             <thead>
               <tr>
-                <th>Price</th>
-                <th>Amount</th>
+                <th scope="col">Price</th>
+                <th scope="col">Amount</th>
               </tr>
-            </thead> */}
+            </thead> 
             <tbody>{bestOffers}</tbody>
-            {/* <thead>
-              <tr>
+             <thead>
+             {/* <tr>
                 <th>Curr price</th>
                 <th>Amount</th>
               </tr>
