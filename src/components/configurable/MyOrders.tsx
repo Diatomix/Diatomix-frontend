@@ -104,10 +104,10 @@ export default function MyOrders(props: MyOrdersProps) {
  // </tbody>
 //</table>
 
-    //   <tr key={id}>
-     //    <td>{price}</td>
-     //    <td>{amount}</td>
-   //    </tr>
+      <tr key={id}>
+        <td>{price}</td>
+        <td>{amount}</td>
+      </tr>
     );
   });
 
