@@ -36,7 +36,7 @@ export default function Home() {
       <Header />
       <div className="flex flex-row">
         <LoadAssetInfoEffect />
-        <PlaceOrder className="col m-1"></PlaceOrder>
+        <PlaceOrder className="m-2"></PlaceOrder>
         <textarea className="col m-2" value={appData.orderTeal}></textarea>
         <textarea className="col m-2" value={JSON.stringify(appData.asa2Config)}></textarea>
         <div className="col m-2">{appData.asa1 && appData.asa2 && <Bid assetBuy={appData.asa1} assetSell={appData.asa2}></Bid>}</div>

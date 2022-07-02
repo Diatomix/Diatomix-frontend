@@ -22,7 +22,7 @@ const arc0017Contract = (appData: IState, authContext: IAuthState): string => {
   let addrHex = trimAddr.toString('hex');
   addrHex = '0x' + addrHex;
 
-  let price = appData.isSellOrder ?  appData.price : parseFloat((1 / appData.price).toFixed(6));
+  let price = appData.price;
   let multiplier = 1;
   while (multiplier < 10 ** 10) {
     if (price % 10 == 0) break;

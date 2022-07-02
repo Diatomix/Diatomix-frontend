@@ -4,6 +4,7 @@ import { Trans } from 'react-i18next';
 
 import { order_by } from '../../gqty';
 import { gql, useSubscription } from '@apollo/client';
+import BigNumber from 'bignumber.js';
 interface OfferProps {
   assetBuy: number;
   assetSell: number;
@@ -42,7 +43,7 @@ export default function Offer(props: OfferProps) {
     return (
       <tr key={id}>
         <td>{price}</td>
-        <td>{volume}</td>
+        <td>{new BigNumber(volume).dividedBy(1000000).toFixed(6, 0)}</td>{' '}
       </tr>
     );
   });

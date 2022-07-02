@@ -18,6 +18,10 @@ import getAlgodClient from '../../../scripts/algo/getAlgod';
 import BigNumber from 'bignumber.js';
 import algosdk, { LogicSigAccount } from 'algosdk';
 import signTxsWithProviders from '../../../scripts/algo/signTxsWithProviders';
+import { Tooltip } from 'primereact/tooltip';
+
+import { BigNumbify } from '../../../helpers/BigNum';
+
 interface PlaceOrderConfig {
   quote: string;
 }
@@ -29,23 +33,25 @@ interface PlaceOrderProps {
 }
 export default function PlaceOrder(props: PlaceOrderProps) {
   const { config, children, className } = props;
+  const buttonOptions = ['BUY', 'SELL'];
   const appData = useContext(AppContext);
   const authContext = useContext(AuthContext);
   const [sideIsSell, setSideIsSell] = useState<boolean>(false);
   const [price, setPrice] = useState<number>(1);
   const [quantity, setQuantity] = useState<number>(1);
+  const [buttonState, setButtonState] = useState<string>(buttonOptions[0]);
   function handleUpdate(newConfig) {
     props.onContentUpdate(newConfig);
   }
   useEffect(() => {
     appData.quantity = quantity;
     if (sideIsSell) {
-      appData.asa1SellBigInt = new BigNumber(quantity).multipliedBy(100).toFixed(0, 1);
+      appData.asa2SellBigInt = new BigNumber(quantity).multipliedBy(1000000).toFixed(0, 1);
     } else {
-      appData.asa2SellBigInt = new BigNumber(quantity).multipliedBy(100).toFixed(0, 1);
+      appData.asa1SellBigInt = new BigNumber(quantity).multipliedBy(appData.price * 1000000).toFixed(0, 1);
     }
     appData.setAppData({ ...appData });
-  }, [quantity, sideIsSell]);
+  }, [quantity, sideIsSell, price]);
 
   useEffect(() => {
     appData.price = price;
@@ -150,6 +156,81 @@ export default function PlaceOrder(props: PlaceOrderProps) {
       <UpdateContractEffect />
       <UpdateBalanceEffect />
       <Panel header={i18n.t('PlaceOrder.Title')} className={className}>
+        <div className="button-container">
+          <button
+            className="buy-button"
+            style={sideIsSell ? { backgroundColor: 'gray' } : { backgroundColor: 'green', border: '3px solid darkgreen', borderRadius: '6px' }}
+            onClick={() => setSideIsSell(false)}
+          >
+            <b>BUY</b>
+          </button>
+          <button
+            className="sell-button"
+            style={sideIsSell ? { backgroundColor: 'red', border: '3px solid darkred', borderRadius: '6px' } : { backgroundColor: 'gray' }}
+            onClick={() => setSideIsSell(true)}
+          >
+            <b>SELL</b>
+          </button>
+        </div>
+        <div style={{ display: 'flex', marginBottom: '1.5rem' }}>
+          <p className="custom-text">AVAILABLE BALANCE</p> <Tooltip target=".custom-target-icon" />
+          <i
+            className="custom-target-icon pi pi-info-circle p-text-secondary p-overlay-badge"
+            data-pr-tooltip="This section shows your account's available balances"
+            data-pr-position="right"
+            data-pr-at="right+5 center"
+            data-pr-my="left center-2"
+            style={{ fontSize: '0.75rem', cursor: 'pointer', paddingLeft: '0.5rem' }}
+          />
+        </div>
+        <div className="asa-balance-container">
+          <p className="asa-name">{getAsa1UnitName()}</p>
+          <p className="asa-value">{BigNumbify(appData.asa1Balance)}</p>
+        </div>
+        <div className="asa-balance-container mb-3">
+          <p className="asa-name">{getAsa2UnitName()}</p>
+          <p className="asa-value">{BigNumbify(appData.asa2Balance)}</p>
+        </div>
+        <div className="divider mb-4" />
+        <label htmlFor="price">Price {getAsasName()}</label>
+        <InputNumber
+          inputId="price"
+          value={price}
+          onValueChange={e => setPrice(e.value)}
+          showButtons
+          buttonLayout="horizontal"
+          step={0.25}
+          decrementButtonClassName="p-button-danger"
+          incrementButtonClassName="p-button-success"
+          incrementButtonIcon="pi pi-plus"
+          decrementButtonIcon="pi pi-minus"
+          suffix={' ' + getAsasName()}
+        />
+        <div className="quantity-input">
+          <label htmlFor="quantity">Quantity</label>
+          <InputNumber
+            className=""
+            inputId="quantity"
+            value={quantity}
+            onValueChange={e => setQuantity(e.value)}
+            showButtons
+            buttonLayout="horizontal"
+            step={0.25}
+            decrementButtonClassName="p-button-danger"
+            incrementButtonClassName="p-button-success"
+            incrementButtonIcon="pi pi-plus"
+            decrementButtonIcon="pi pi-minus"
+            suffix={' ' + getAsa2UnitName()}
+          />
+        </div>
+
+        <button className="place-order-button mt-5" style={sideIsSell ? { backgroundColor: 'red' } : { backgroundColor: 'green' }}>
+          <b>
+            {sideIsSell ? 'SELL' : 'BUY'} {getAsa2UnitName()}
+          </b>
+        </button>
+      </Panel>
+      {/* <Panel header={i18n.t('PlaceOrder.Title')} className={className}>
         <div className="grid p-fluid">
           <div className="flex flex-row flex-grow-1 w-100">
             <div className="m-2 clickable" style={sideIsSell ? { color: 'gray' } : { color: 'green' }} onClick={() => setSideIsSell(false)}>
@@ -214,7 +295,7 @@ export default function PlaceOrder(props: PlaceOrderProps) {
         </p>
 
         <Button onClick={() => compile()}>Place order</Button>
-      </Panel>
+      </Panel> */}
     </>
   );
 }
