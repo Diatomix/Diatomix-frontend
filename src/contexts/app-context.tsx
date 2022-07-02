@@ -4,6 +4,7 @@ import AppConfiguration from '../scripts/interface/configuration/AppConfiguratio
 import { BigNumber } from 'bignumber.js';
 import { ApprovalProgramProvider } from '../scripts/algo/providers/signTxsWithApprovalProgram';
 export interface IState {
+  environment: string;
   appConfiguration?: AppConfiguration;
 
   isSellOrder?: boolean;
@@ -36,6 +37,7 @@ export const defaultAppData: IState = {
   language: 'en',
   layoutAddNew: '',
   isDark: false,
+  environment: 'testnet-v1.0',
 };
 
 export const AppContext = createContext<IState>(defaultAppData);

@@ -29,7 +29,11 @@ import LoadInitDataEffect from './effects/global/LoadInitDataEffect';
 import SelectAsset from './pages/SelectAsset';
 import Trade from './pages/trade';
 import { AuthContext, IAuthState, defaultAuthContext } from './contexts/AuthContext';
+import { ApolloClient, ApolloProvider, InMemoryCache, HttpLink } from '@apollo/client';
+import getApolloClient from './components/getApolloClient';
+
 declare const window: any;
+
 export default function App() {
   const [appData, setAppData] = useState<IState>(defaultAppData);
   const [authContext, setAuthContext] = useState<IAuthState>(defaultAuthContext);
@@ -39,19 +43,21 @@ export default function App() {
       <Suspense fallback="loading">
         <AppContext.Provider value={{ ...appData, setAppData: v => setAppData(v) }}>
           <AuthContext.Provider value={{ ...authContext, setAuthContext: v => setAuthContext(v) }}>
-            <LoadInitDataEffect />
-            <Theme />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/assets" element={<Assets />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/trade" element={<SelectAsset />} />
-              <Route path="/trade/:asa1/:asa2" element={<Trade />} />
-              <Route path="/trading" element={<Trading />} />
-              <Route path="*" element={<CatchAll />} />
-              <Route path="/authenticate" element={<Authenticate />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-            </Routes>
+            <ApolloProvider client={getApolloClient(authContext)}>
+              <LoadInitDataEffect />
+              <Theme />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/assets" element={<Assets />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/trade" element={<SelectAsset />} />
+                <Route path="/trade/:asa1/:asa2" element={<Trade />} />
+                <Route path="/trading" element={<Trading />} />
+                <Route path="*" element={<CatchAll />} />
+                <Route path="/authenticate" element={<Authenticate />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+              </Routes>
+            </ApolloProvider>
           </AuthContext.Provider>
         </AppContext.Provider>
       </Suspense>

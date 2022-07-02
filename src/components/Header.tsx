@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import Authenticate from './Authenticate';
 import { Button } from 'primereact/button';
 import { AuthContext, IAuthState } from '../contexts/AuthContext';
+import RoundComponent from './basic/RoundComponent';
+import { Tag } from 'primereact/tag';
 
 function Header() {
   let navigate = useNavigate();
@@ -200,6 +202,9 @@ function Header() {
               <>
                 <div className="flex flex-row">
                   <Menubar className="m-2 flex-grow-1" model={getItems(appData)} />
+                  <Tag severity="warning" className="m-2">
+                    <RoundComponent></RoundComponent>
+                  </Tag>
                   {authContext.authAddress ? (
                     <Button onClick={() => logout(authContext)} className="m-2">
                       Logout
