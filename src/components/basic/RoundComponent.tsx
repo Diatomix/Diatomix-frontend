@@ -22,7 +22,7 @@ export default function RoundComponent() {
     return <div>Loading...</div>;
   }
   if (error || !data) {
-    return <div>Error... {error}</div>;
+    return <div>Error... {JSON.stringify(error)}</div>;
   }
 
   if (data.indexer.length <= 0) {

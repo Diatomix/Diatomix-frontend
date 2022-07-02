@@ -8,7 +8,7 @@ const getApolloClient = (appData: IAuthState) => {
   if (client != null) return client;
   client = new ApolloClient({
     link: new WebSocketLink({
-      uri: 'wss://graphql.vote-coin.com/v1/graphql',
+      uri: 'wss://graphql.k8s.diatomix.xyz/v1/graphql',
       options: {
         reconnect: true,
         connectionParams: {

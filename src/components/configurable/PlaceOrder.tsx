@@ -92,6 +92,7 @@ export default function PlaceOrder(props: PlaceOrderProps) {
         .getTransactionParams()
         .do()
         .then(suggestedParams => {
+          console.log('suggestedParams', suggestedParams);
           const txs = arc0017CreateOrderGetRawTxs(appData, authContext, suggestedParams);
           const program = new Uint8Array(Buffer.from(appData.orderCompiled.result, 'base64'));
           const lsig = new LogicSigAccount(program);
