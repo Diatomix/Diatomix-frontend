@@ -67,15 +67,15 @@ export default function OrderBook(props: OrderBookProps) {
       //       </div>
       //   </div>
       <tr key={id}>
-        <td>{price}</td>
-        <td>{amount}</td>
+        <td style={{ color: 'white' }}>{price}</td>
+        <td style={{ color: 'white' }}>{amount}</td>
       </tr>
     );
   });
 
-  // const { offers } = useSubscription();
-  // const bestOffers = offers({ limit: 10, order_by: [{ price: order_by.desc }] }).map(({ id, price, amount }) => {
-  //   return (
+  const { offers } = useSubscription();
+  const bestOffers = offers({ limit: 10, order_by: [{ price: order_by.desc }] }).map(({ id, price, amount }) => {
+    return (
   //   <div>
   //     <div className="card" >
   //         <DataTable key={id} scrollable scrollHeight="flex">
@@ -85,25 +85,25 @@ export default function OrderBook(props: OrderBookProps) {
   //     </div>
   // </div>
 
-  //     // <tr key={id}>
-  //     //   <td>{price}</td>
-  //     //   <td>{amount}</td>
-  //     // </tr>
-  //   );
-  // });
+      <tr key={id}>
+        <td style={{ color: 'white' }}>{price}</td>
+        <td style={{ color: 'white' }}>{amount}</td>
+      </tr>
+    );
+  });
 
   function Content() {
     try {
       return (
         <Panel header={i18n.t('OrderBook.Title')}>
-          <table>
+          <table className="table  table-borderless table-hover" data-bs-spy="scroll">
             <thead>
               <tr>
-              <th scope='col'>Price</th>
-              <th scope='col'>Amount</th>
+              <th scope='col' style={{ color: 'white' }}>Price</th>
+              <th scope='col' style={{ color: 'white' }}>Amount</th>
               </tr>
             </thead>
-            {/* <tbody>{bestOffers}</tbody> */}
+            <tbody>{bestOffers}</tbody>
             {/* <thead>
               <tr>
                 <th>Curr price</th>

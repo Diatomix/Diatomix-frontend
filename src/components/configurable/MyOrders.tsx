@@ -1,4 +1,5 @@
 import Panel from '../Panel';
+import { ScrollPanel } from 'primereact/scrollpanel';
 import i18n from 'i18next';
 import { Trans } from 'react-i18next';
 import { order_by } from '../../gqty';
@@ -40,7 +41,7 @@ export default function MyOrders(props: MyOrdersProps) {
       return (
         <>
           <Panel header={i18n.t('Layout.EditProperties')}>
-            <div className="field my-2">
+            <div className="field my-2" data-bs-spy="scroll">
               <span className="p-float-label">
                 <InputText id="header" name="header" value={props.config.quote} onChange={event => handleUpdate({ ...props.config, quote: event.target.value })} />
                 <label htmlFor="header">{i18n.t('Layout.PropertyHeader')}</label>
@@ -87,7 +88,6 @@ export default function MyOrders(props: MyOrdersProps) {
     //       </DataTable>
     //   </div>
     // </div>
-
       <tr key={id}>
         <td style={{ color: "white"}}>{price}</td>
         <td style={{ color: 'white' }}>{amount}</td>
@@ -100,7 +100,13 @@ export default function MyOrders(props: MyOrdersProps) {
     try {
       return (
         <Panel header={i18n.t('MyOrders.Title')}>
-           <table className="table table-hover scrollable" style={{  overflow: "scroll" }}>
+           <ScrollPanel style={{ width: '100%', height: '200px' }} className="custombar1">
+          <div className="card-dark"  style={{ height: 'auto' }}>
+          {/* <div className="card-header">
+              Orders
+          </div> */}
+          <div className="card-body" data-bs-spy="scroll">
+           <table className="table table-hover" data-bs-spy="scroll">
             <thead>
               <tr>
                 <th scope='col' style={{ color: 'white' }}>Price</th>
@@ -108,7 +114,7 @@ export default function MyOrders(props: MyOrdersProps) {
                 <th scope='col' style={{ color: 'white' }}>Time</th>
               </tr>
             </thead>
-            <tbody style={{ color: "white", overflow: "scroll" }}>{bestOffers}</tbody>
+            <tbody  style={{ height: '50px', overflow: 'scroll' }}>{bestOffers}</tbody>
             {/* <thead>
               <tr>
                 <th>Curr price</th>
@@ -123,8 +129,12 @@ export default function MyOrders(props: MyOrdersProps) {
               </tr>
             </thead> */}
           </table>
+          </div>
+    </div>
+    </ScrollPanel>
           {/* <p>Todo</p> */}
         </Panel>
+
       );
     } catch (error) {
       return <ErrorHandler error={error} />;
