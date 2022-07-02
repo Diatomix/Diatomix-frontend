@@ -6,7 +6,7 @@ import Panel from '../components/configurable/Panel';
 import Chart from '../components/configurable/Chart';
 import MyOrders from '../components/configurable/MyOrders';
 import OrderBook from '../components/configurable/OrderBook';
-import PlaceOrder from '../components/configurable/PlaceOrder';
+import PlaceOrder from './configurable/PlaceOrder/PlaceOrder';
 import Trades from '../components/configurable/Trades';
 import Timeline from '../components/configurable/Timeline';
 import { createId } from './tradingview/Utils';

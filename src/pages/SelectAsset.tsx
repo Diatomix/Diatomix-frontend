@@ -6,7 +6,7 @@ import NavBar from '../components/NavBar';
 import { AppContext } from '../contexts/app-context';
 import GridLayout from '../components/GridLayout';
 import Header from '../components/Header';
-import PlaceOrder from '../components/configurable/PlaceOrder';
+import PlaceOrder from '../components/configurable/PlaceOrder/PlaceOrder';
 import { Link, useParams } from 'react-router-dom';
 import { Card } from 'primereact/card';
 

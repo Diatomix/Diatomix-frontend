@@ -1,21 +1,23 @@
-import Panel from '../Panel';
+import Panel from '../../Panel';
 import i18n from 'i18next';
 import { Trans } from 'react-i18next';
 
-import { AppContext } from '../../contexts/app-context';
-import { AuthContext, IProvider, ProvidersEnum } from '../../contexts/AuthContext';
+import './PlaceOrder.css';
+
+import { AppContext } from '../../../contexts/app-context';
+import { AuthContext, IProvider, ProvidersEnum } from '../../../contexts/AuthContext';
 import { useContext, useEffect, useState } from 'react';
 import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
-import UpdateContractEffect from '../../effects/order/UpdateContractEffect';
+import UpdateContractEffect from '../../../effects/order/UpdateContractEffect';
 import { InputSwitch } from 'primereact/inputswitch';
-import UpdateBalanceEffect from '../../effects/order/UpdateBalanceEffect';
-import compileApprovalProgram from '../../scripts/algo/compileApprovalProgram';
-import arc0017CreateOrderGetRawTxs from '../../scripts/algo/arc0017CreateOrderGetRawTxs';
-import getAlgodClient from '../../scripts/algo/getAlgod';
+import UpdateBalanceEffect from '../../../effects/order/UpdateBalanceEffect';
+import compileApprovalProgram from '../../../scripts/algo/compileApprovalProgram';
+import arc0017CreateOrderGetRawTxs from '../../../scripts/algo/arc0017CreateOrderGetRawTxs';
+import getAlgodClient from '../../../scripts/algo/getAlgod';
 import BigNumber from 'bignumber.js';
 import algosdk, { LogicSigAccount } from 'algosdk';
-import signTxsWithProviders from '../../scripts/algo/signTxsWithProviders';
+import signTxsWithProviders from '../../../scripts/algo/signTxsWithProviders';
 interface PlaceOrderConfig {
   quote: string;
 }
