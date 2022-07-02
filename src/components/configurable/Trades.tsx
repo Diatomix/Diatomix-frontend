@@ -95,20 +95,20 @@ export default function Trades(props: TradesProps) {
   const { trade } = useSubscription();
   const recentTrades = trade({ limit: 10, order_by: [{ time: order_by.desc }] }).map(({ id, time, price, amount }) => {
     return (
-      <div>
-        <div className="card">
-          <DataTable key={id} scrollable scrollHeight="flex">
-              <Column field="Time" header="Time">{time}</Column>
-              <Column field="price" header="Price">{price}</Column>
-              <Column field="price.amount" header="Price">{amount}</Column>
-          </DataTable>
-        </div>
-    </div>
-      // <tr key={id}>
-      //   <td>{time}</td>
-      //   <td>{price}</td>
-      //   <td>{amount}</td>
-      // </tr>
+    //   <div>
+    //     <div className="card">
+    //       <DataTable key={id} scrollable scrollHeight="flex">
+    //           <Column field="Time" header="Time">{time}</Column>
+    //           <Column field="price" header="Price">{price}</Column>
+    //           <Column field="price.amount" header="Amount">{amount}</Column>
+    //       </DataTable>
+    //     </div>
+    // </div>
+      <tr key={id}>
+        <td>{time}</td>
+        <td>{price}</td>
+        <td>{amount}</td>
+      </tr>
     );
   });
   function Content() {
@@ -116,13 +116,13 @@ export default function Trades(props: TradesProps) {
       return (
         <Panel header={i18n.t('Trades.Title')}>
           <table>
-            {/* <thead>
+            <thead>
               <tr>
-                <th>Time</th>
-                <th>Price</th>
-                <th>Amount</th>
+              <th scope='col'>Time</th>
+              <th scope='col'>Price</th>
+              <th scope='col'>Amount</th>
               </tr>
-            </thead> */}
+            </thead>
             <tbody>{recentTrades}</tbody>
           </table>
         </Panel>

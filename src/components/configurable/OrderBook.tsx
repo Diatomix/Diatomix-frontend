@@ -58,52 +58,52 @@ export default function OrderBook(props: OrderBookProps) {
   const { bids } = useSubscription();
   const bestBids = bids({ limit: 10, order_by: [{ price: order_by.desc }] }).map(({ id, price, amount }) => {
     return (
-      <div>
-            <div className="card" style={{ height: 'calc(100vh - 145px)' }}>
-                <DataTable key={id} scrollable scrollHeight="flex">
-                    <Column field="Price" header="Price">{price}</Column>
-                    <Column field="price.amount" header="Amount">{amount}</Column>
-                </DataTable>
-            </div>
-        </div>
-      // <tr key={id}>
-      //   <td>{price}</td>
-      //   <td>{amount}</td>
-      // </tr>
+      // <div>
+      //       <div className="card">
+      //           <DataTable key={id} scrollable scrollHeight="flex">
+      //               <Column field="Price" header="Price">{price}</Column>
+      //               <Column field="amount.price" header="Amount">{amount}</Column>
+      //           </DataTable>
+      //       </div>
+      //   </div>
+      <tr key={id}>
+        <td>{price}</td>
+        <td>{amount}</td>
+      </tr>
     );
   });
 
-  const { offers } = useSubscription();
-  const bestOffers = offers({ limit: 10, order_by: [{ price: order_by.desc }] }).map(({ id, price, amount }) => {
-    return (
-    <div>
-      <div className="card" >
-          <DataTable key={id} scrollable scrollHeight="flex">
-              <Column field="Price" header="Price">{price}</Column>
-              <Column field="price.amount" header="Amount">{amount}</Column>
-          </DataTable>
-      </div>
-  </div>
+  // const { offers } = useSubscription();
+  // const bestOffers = offers({ limit: 10, order_by: [{ price: order_by.desc }] }).map(({ id, price, amount }) => {
+  //   return (
+  //   <div>
+  //     <div className="card" >
+  //         <DataTable key={id} scrollable scrollHeight="flex">
+  //             <Column field="price" header="Price">{price}</Column>
+  //             <Column field="amount.price" header="Amount">{amount}</Column>
+  //         </DataTable>
+  //     </div>
+  // </div>
 
-      // <tr key={id}>
-      //   <td>{price}</td>
-      //   <td>{amount}</td>
-      // </tr>
-    );
-  });
+  //     // <tr key={id}>
+  //     //   <td>{price}</td>
+  //     //   <td>{amount}</td>
+  //     // </tr>
+  //   );
+  // });
 
   function Content() {
     try {
       return (
         <Panel header={i18n.t('OrderBook.Title')}>
           <table>
-            {/* <thead>
+            <thead>
               <tr>
-                <th>Price</th>
-                <th>Amount</th>
+              <th scope='col'>Price</th>
+              <th scope='col'>Amount</th>
               </tr>
-            </thead> */}
-            <tbody>{bestOffers}</tbody>
+            </thead>
+            {/* <tbody>{bestOffers}</tbody> */}
             {/* <thead>
               <tr>
                 <th>Curr price</th>

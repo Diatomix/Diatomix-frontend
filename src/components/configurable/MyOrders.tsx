@@ -54,43 +54,45 @@ export default function MyOrders(props: MyOrdersProps) {
     }
   }
 
-  // const { bids } = useSubscription();
-  // const bestBids = bids({ limit: 10, order_by: [{ price: order_by.desc }] }).map(({ id, price, amount }) => {
-  //   return (
-  //     <div>
-  //           <div className="card">
-  //               <DataTable key={id} scrollable scrollHeight="flex">
-  //                   <Column field="Price" header="Price">{price}</Column>
-  //                   <Column field="price.amount" header="Amount">{amount}</Column>
-  //               </DataTable>
-  //           </div>
-  //       </div>
-  //     // <tr key={id}>
-  //     //   <td>{price}</td>
-  //     //   <td>{amount}</td>
-  //     // </tr>
-  //   );
-  // });
+  const { bids } = useSubscription();
+  const bestBids = bids({ limit: 10, order_by: [{ price: order_by.desc }] }).map(({ id, price, amount, created_at }) => {
+    return (
+      // <div>
+      //       <div className="card">
+      //           <DataTable key={id} scrollable scrollHeight="flex">
+      //               <Column field="Price" header="Price">{price}</Column>
+      //               <Column field="price.amount" header="Amount">{amount}</Column>
+      //           </DataTable>
+      //       </div>
+      //  </div>
+      <tr key={id}>
+        <td>{price}</td>
+        <td>{amount}</td>
+        <td>{created_at}</td>
+      </tr>
+    );
+  });
 
 
   const { offers } = useSubscription();
   const bestOffers = offers({ limit: 10, order_by: [{ price: order_by.desc }] }).map(({ id, price, amount, created_at }) => {
     return (
-    <div>
-      <div className="card">
-          <DataTable key={id} scrollable scrollHeight="flex">
-              {/* <Column field="Time" header="Time">{time}</Column> */}
-              <Column field="Price" header="Price">{price}</Column>
-              <Column field="price.amount" header="Amount">{amount}</Column>
-              <Column field="price.created_at" header="Date">{created_at}</Column>
-          </DataTable>
-      </div>
-    </div>
+    // <div>
+    //   <div className="card">
+    //       <DataTable key={id} scrollable scrollHeight="flex">
+    //           {/* <Column field="Time" header="Time">{time}</Column> */}
+    //           <Column field="Price" header="Price">{price}</Column>
+    //           <Column field="amount.price" header="Amount">{amount}</Column>
+    //           <Column field="created.price" header="Time">{created_at}</Column>
+    //       </DataTable>
+    //   </div>
+    // </div>
 
-      // <tr key={id}>
-      //   <td>{price}</td>
-      //   <td>{amount}</td>
-      // </tr>
+      <tr key={id}>
+        <td>{price}</td>
+        <td>{amount}</td>
+        <td>{created_at}</td>
+      </tr>
     );
   });
 
@@ -99,12 +101,13 @@ export default function MyOrders(props: MyOrdersProps) {
       return (
         <Panel header={i18n.t('MyOrders.Title')}>
            <table>
-            {/* <thead>
+            <thead>
               <tr>
-                <th>Price</th>
-                <th>Amount</th>
+                <th scope='col'>Price</th>
+                <th scope='col'>Amount</th>
+                <th scope='col'>Time</th>
               </tr>
-            </thead> */}
+            </thead>
             <tbody>{bestOffers}</tbody>
             {/* <thead>
               <tr>
@@ -112,7 +115,7 @@ export default function MyOrders(props: MyOrdersProps) {
                 <th>Amount</th>
               </tr>
             </thead> */}
-            {/* <tbody>{bestBids}</tbody> */}
+            <tbody>{bestBids}</tbody>
             {/* <thead>
               <tr>
                 <th>Price</th>
