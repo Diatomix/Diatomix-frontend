@@ -5,8 +5,8 @@ import { order_by } from '../../gqty';
 import { useSubscription } from '../../gqty';
 
 import { InputText } from 'primereact/inputtext';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
+// import { DataTable } from 'primereact/datatable';
+// import { Column } from 'primereact/column';
 
 interface MyOrdersConfig {
   quote: string;
@@ -65,8 +65,8 @@ export default function MyOrders(props: MyOrdersProps) {
       //           </DataTable>
       //       </div>
       //  </div>
-      <tr key={id}>
-        <td>{price}</td>
+      <tr key={id} >
+        <td >{price}</td>
         <td>{amount}</td>
         <td>{created_at}</td>
       </tr>
@@ -89,9 +89,9 @@ export default function MyOrders(props: MyOrdersProps) {
     // </div>
 
       <tr key={id}>
-        <td>{price}</td>
-        <td>{amount}</td>
-        <td>{created_at}</td>
+        <td style={{ color: "white"}}>{price}</td>
+        <td style={{ color: 'white' }}>{amount}</td>
+        <td style={{ color: 'white' }}>{created_at}</td>
       </tr>
     );
   });
@@ -100,22 +100,22 @@ export default function MyOrders(props: MyOrdersProps) {
     try {
       return (
         <Panel header={i18n.t('MyOrders.Title')}>
-           <table>
+           <table className="table table-hover scrollable" style={{  overflow: "scroll" }}>
             <thead>
               <tr>
-                <th scope='col'>Price</th>
-                <th scope='col'>Amount</th>
-                <th scope='col'>Time</th>
+                <th scope='col' style={{ color: 'white' }}>Price</th>
+                <th scope='col' style={{ color: 'white' }}>Amount</th>
+                <th scope='col' style={{ color: 'white' }}>Time</th>
               </tr>
             </thead>
-            <tbody>{bestOffers}</tbody>
+            <tbody style={{ color: "white", overflow: "scroll" }}>{bestOffers}</tbody>
             {/* <thead>
               <tr>
                 <th>Curr price</th>
                 <th>Amount</th>
               </tr>
             </thead> */}
-            <tbody>{bestBids}</tbody>
+            {/* <tbody>{bestBids}</tbody> */}
             {/* <thead>
               <tr>
                 <th>Price</th>

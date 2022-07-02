@@ -8,6 +8,9 @@ import { order_by, useSubscription } from '../../gqty';
 import { Suspense, useEffect } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import Moment from 'moment';
+
+const formatDate = Moment().format('DD-MM-YYYY')
 
 interface TradesConfig {
   type: string;
