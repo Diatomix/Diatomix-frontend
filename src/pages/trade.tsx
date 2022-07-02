@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom';
 import arc0017Contract from '../scripts/algo/arc0017Contract';
 import { AuthContext } from '../contexts/AuthContext';
 import Offer from '../components/configurable/Offer';
+import Bid from '../components/configurable/Bid';
 
 export default function Home() {
   const appData = useContext(AppContext);
@@ -37,6 +38,7 @@ export default function Home() {
         <PlaceOrder className="col m-1"></PlaceOrder>
         <textarea className="col m-2" value={appData.orderTeal}></textarea>
         <textarea className="col m-2" value={JSON.stringify(authContext)}></textarea>
+        <div className="col m-2">{appData.asa1 && appData.asa2 && <Bid assetBuy={appData.asa1} assetSell={appData.asa2}></Bid>}</div>
         <div className="col m-2">{appData.asa1 && appData.asa2 && <Offer assetBuy={appData.asa1} assetSell={appData.asa2}></Offer>}</div>
       </div>
     </>
