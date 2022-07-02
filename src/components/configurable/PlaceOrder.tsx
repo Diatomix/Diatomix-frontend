@@ -127,6 +127,22 @@ export default function PlaceOrder(props: PlaceOrderProps) {
         });
     });
   };
+
+  const getAsa1UnitName = () => {
+    if (appData.asa1Config && appData.asa1Config.asset && appData.asa1Config.asset.params) {
+      return appData.asa1Config.asset.params['unit-name'] ? appData.asa1Config.asset.params['unit-name'] : appData.asa1Config.asset.params.name;
+    }
+    return '?';
+  };
+  const getAsa2UnitName = () => {
+    if (appData.asa2Config && appData.asa2Config.asset && appData.asa2Config.asset.params) {
+      return appData.asa2Config.asset.params['unit-name'] ? appData.asa2Config.asset.params['unit-name'] : appData.asa2Config.asset.params.name;
+    }
+    return '?';
+  };
+  const getAsasName = () => {
+    return getAsa1UnitName() + ' / ' + getAsa2UnitName();
+  };
   return (
     <>
       <UpdateContractEffect />
@@ -143,9 +159,7 @@ export default function PlaceOrder(props: PlaceOrderProps) {
             </div>
           </div>
           <div className=" col-12 md:col-3">
-            <label htmlFor="price">
-              Price {appData.asa1}/{appData.asa2}
-            </label>
+            <label htmlFor="price">Price {getAsasName()}</label>
             <InputNumber
               inputId="price"
               value={price}
@@ -157,7 +171,7 @@ export default function PlaceOrder(props: PlaceOrderProps) {
               incrementButtonClassName="p-button-success"
               incrementButtonIcon="pi pi-plus"
               decrementButtonIcon="pi pi-minus"
-              suffix=" asa1/asa2"
+              suffix={' ' + getAsasName()}
             />
           </div>
           <div className=" col-12 md:col-3">
@@ -174,7 +188,7 @@ export default function PlaceOrder(props: PlaceOrderProps) {
               incrementButtonClassName="p-button-success"
               incrementButtonIcon="pi pi-plus"
               decrementButtonIcon="pi pi-minus"
-              suffix=" asa2"
+              suffix={' ' + getAsa2UnitName()}
             />
           </div>
         </div>

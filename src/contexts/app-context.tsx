@@ -18,11 +18,13 @@ export interface IState {
   language: string;
   layoutAddNew?: string;
   asa1?: number;
+  asa1Config?: any;
   asa1SellBigInt?: string;
   asa1Balance?: number;
   asa2?: number;
   asa2SellBigInt?: string;
   asa2Balance?: number;
+  asa2Config?: any;
   orderTeal?: string;
   orderCompiled?: ApprovalProgramProvider;
   isDark: boolean;
