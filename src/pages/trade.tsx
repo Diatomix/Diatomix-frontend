@@ -16,6 +16,7 @@ import LoadAssetInfoEffect from '../effects/asset/LoadAssetInfoEffect';
 import './trade.css';
 import OrderBook from '../components/configurable/OrderBook/OrderBook';
 import MyOrders from '../components/configurable/MyOrders/MyOrders';
+import MyTrades from '../components/configurable/MyTrades/MyTrades';
 
 export default function Home() {
   const appData = useContext(AppContext);
@@ -39,20 +40,23 @@ export default function Home() {
       <Header />
       <div className="grid-container">
         <LoadAssetInfoEffect />
-        <PlaceOrder className="m-2"></PlaceOrder>
+        <div>
+          <PlaceOrder className="m-2"></PlaceOrder>
+        </div>
         {appData.asa1 && appData.asa2 && (
           <>
             <div className="col m-2 p-0">
-              <MyOrders assetBuy={appData.asa1} assetSell={appData.asa2} localOrdersCount={appData.localOrdersCount}></MyOrders>
+              <MyTrades assetBuy={appData.asa1} assetSell={appData.asa2} />
+              <MyOrders assetBuy={appData.asa1} assetSell={appData.asa2} localOrdersCount={appData.localOrdersCount} />
             </div>
             <div className="col m-2 p-0">
-              <Bid assetBuy={appData.asa1} assetSell={appData.asa2}></Bid>
+              <Bid assetBuy={appData.asa1} assetSell={appData.asa2} />
             </div>
             <div className="col m-2 p-0">
-              <Offer assetBuy={appData.asa1} assetSell={appData.asa2}></Offer>
+              <Offer assetBuy={appData.asa1} assetSell={appData.asa2} />
             </div>
             <div className="col m-2 p-0">
-              <OrderBook assetBuy={appData.asa1} assetSell={appData.asa2}></OrderBook>
+              <OrderBook assetBuy={appData.asa1} assetSell={appData.asa2} />
             </div>
           </>
         )}

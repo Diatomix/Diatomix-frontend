@@ -1,6 +1,5 @@
 import Panel from '../../Panel';
 import { Trans } from 'react-i18next';
-import './Bid.css';
 import { gql, useSubscription } from '@apollo/client';
 import getUnitName from '../../../scripts/algo/getUnitName';
 import { useContext } from 'react';
@@ -67,7 +66,7 @@ export default function Bid(props: BidProps) {
   function Content() {
     try {
       return (
-        <Panel header="Top 10 bids">
+        <Panel header="TOP 10 BIDS">
           <table className="table table-borderless p-datatable p-component p-datatable-responsive-scroll" data-bs-spy="scroll">
             <thead className="p-datatable-thead">
               <tr>
