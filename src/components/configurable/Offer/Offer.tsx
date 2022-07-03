@@ -13,7 +13,7 @@ interface OfferProps {
 
 const query = gql`
   subscription offer($assetBuy: bigint!, $assetSell: bigint!) {
-    offer(where: { assetBuy: { _eq: $assetBuy }, assetSell: { _eq: $assetSell } }, limit: 10, order_by: { price: desc }) {
+    offer(where: { assetBuy: { _eq: $assetBuy }, assetSell: { _eq: $assetSell } }, limit: 10, order_by: { price: asc }) {
       id
       owner
       price
@@ -43,7 +43,9 @@ export default function Offer(props: OfferProps) {
   const bestOffers = data.offer.map(({ id, price, volume }) => {
     return (
       <tr key={id}>
-        <td style={{ color: '#b23639', borderBottom: '0', paddingTop: 0, paddingBottom: 0 }}>{price}</td>
+        <td style={{ color: '#b23639', borderBottom: '0', paddingTop: 0, paddingBottom: 0 }} className="number">
+          {price}
+        </td>
         <td style={{ borderBottom: '0', paddingTop: 0, paddingBottom: 0 }}>{new BigNumber(volume).dividedBy(1000000).toFixed(6, 0)}</td>{' '}
       </tr>
     );
@@ -65,6 +67,12 @@ export default function Offer(props: OfferProps) {
       return (
         <Panel header="Offers">
           <table className="table table-borderless p-datatable p-component p-datatable-responsive-scroll" data-bs-spy="scroll">
+            <thead className="p-datatable-thead">
+              <tr>
+                <th scope="col number">Price</th>
+                <th scope="col">Amount</th>
+              </tr>
+            </thead>
             <tbody className="p-datatable-tbody">{bestOffers}</tbody>
           </table>
         </Panel>

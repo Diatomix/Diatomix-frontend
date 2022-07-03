@@ -28,6 +28,8 @@ export interface IState {
   orderTeal?: string;
   orderCompiled?: ApprovalProgramProvider;
   isDark: boolean;
+
+  localOrdersCount: number;
   setAppData?: (data: IState) => void;
 }
 
@@ -40,6 +42,7 @@ export const defaultAppData: IState = {
   layoutAddNew: '',
   isDark: false,
   environment: 'testnet-v1.0',
+  localOrdersCount: 0,
 };
 
 export const AppContext = createContext<IState>(defaultAppData);

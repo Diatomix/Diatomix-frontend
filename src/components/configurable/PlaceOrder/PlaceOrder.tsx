@@ -6,7 +6,7 @@ import './PlaceOrder.css';
 
 import { AppContext } from '../../../contexts/app-context';
 import { AuthContext, IProvider, ProvidersEnum } from '../../../contexts/AuthContext';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
 import UpdateContractEffect from '../../../effects/order/UpdateContractEffect';
@@ -21,6 +21,10 @@ import signTxsWithProviders from '../../../scripts/algo/signTxsWithProviders';
 import { Tooltip } from 'primereact/tooltip';
 
 import { BigNumbify } from '../../../helpers/BigNum';
+import addOrderToLocalStorage from '../../../scripts/algo/addOrderToLocalStorage';
+import { Offer_Min_Fields } from '../../../generated/graphql';
+import { Toast } from 'primereact/toast';
+import moment from 'moment';
 
 interface PlaceOrderConfig {
   quote: string;
@@ -33,6 +37,7 @@ interface PlaceOrderProps {
 }
 export default function PlaceOrder(props: PlaceOrderProps) {
   const { config, children, className } = props;
+  const toast = useRef(null);
   const buttonOptions = ['BUY', 'SELL'];
   const appData = useContext(AppContext);
   const authContext = useContext(AuthContext);
@@ -92,7 +97,7 @@ export default function PlaceOrder(props: PlaceOrderProps) {
     }
   }
 
-  const compile = () => {
+  const submitOrder = () => {
     compileApprovalProgram(appData.orderTeal).then(ret => {
       appData.orderCompiled = ret;
       console.log('appData.orderCompiled', appData.orderCompiled);
@@ -122,15 +127,28 @@ export default function PlaceOrder(props: PlaceOrderProps) {
           );
 
           signTxsWithProviders(txs, providers).then(r => {
-            console.log('signed txs', r);
-            const algodClient = getAlgodClient(appData.appConfiguration);
-
-            algodClient
-              .sendRawTransaction(r)
-              .do()
-              .then(sent => {
-                console.log('sent', sent);
-              });
+            try {
+              console.log('signed txs', r);
+              const algodClient = getAlgodClient(appData.appConfiguration);
+              const order: Offer_Min_Fields = {
+                id: lsig.address(),
+                assetSell: appData.isSellOrder ? appData.asa2 : appData.asa1,
+                assetBuy: appData.isSellOrder ? appData.asa1 : appData.asa2,
+                updated_at: moment().toISOString(),
+              };
+              appData.localOrdersCount = addOrderToLocalStorage(order);
+              appData.setAppData({ ...appData });
+              algodClient
+                .sendRawTransaction(r)
+                .do()
+                .then(sent => {
+                  toast.current.show({ severity: 'success', summary: 'Order submitted', detail: 'Your order has been submitted to the blockchain', life: 3000 });
+                  console.log('sent', sent);
+                });
+            } catch (e) {
+              console.error(e);
+              toast.current.show({ severity: 'error', summary: 'Order error', detail: 'Error occured: ' + JSON.stringify(e), life: 3000 });
+            }
           });
         });
     });
@@ -155,6 +173,8 @@ export default function PlaceOrder(props: PlaceOrderProps) {
     <>
       <UpdateContractEffect />
       <UpdateBalanceEffect />
+      <Toast ref={toast} />
+
       <Panel header={i18n.t('PlaceOrder.Title')} className={className}>
         <div className="button-container">
           <button
@@ -222,7 +242,7 @@ export default function PlaceOrder(props: PlaceOrderProps) {
           </p>
         </div>
 
-        <button className="place-order-button mt-5" style={sideIsSell ? { backgroundColor: '#e53e3e' } : { backgroundColor: '#38a169' }}>
+        <button className="place-order-button mt-5" style={sideIsSell ? { backgroundColor: '#e53e3e' } : { backgroundColor: '#38a169' }} onClick={submitOrder}>
           <b>
             {sideIsSell ? 'SELL' : 'BUY'} {getAsa2UnitName()}
           </b>

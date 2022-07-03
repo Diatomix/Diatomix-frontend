@@ -39,7 +39,9 @@ export default function Bid(props: BidProps) {
   const bestBids = data.bid.map(({ id, price, volume }) => {
     return (
       <tr key={id}>
-        <td style={{ color: '#38a169', borderBottom: '0', paddingTop: 0, paddingBottom: 0 }}>{price}</td>
+        <td style={{ color: '#38a169', borderBottom: '0', paddingTop: 0, paddingBottom: 0 }} className="number">
+          {price}
+        </td>
         <td style={{ borderBottom: '0', paddingTop: 0, paddingBottom: 0 }}>{volume}</td>
       </tr>
     );
@@ -61,14 +63,10 @@ export default function Bid(props: BidProps) {
       return (
         <Panel header="Bids">
           <table className="table table-borderless p-datatable p-component p-datatable-responsive-scroll" data-bs-spy="scroll">
-            <thead>
+            <thead className="p-datatable-thead">
               <tr>
-                <th scope="col" style={{ color: 'white' }}>
-                  Price
-                </th>
-                <th scope="col" style={{ color: 'white' }}>
-                  Amount
-                </th>
+                <th scope="col number">Price</th>
+                <th scope="col">Amount</th>
               </tr>
             </thead>
             <tbody className="p-datatable-tbody">{bestBids}</tbody>

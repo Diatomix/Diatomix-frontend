@@ -43,7 +43,7 @@ export default function Home() {
         {appData.asa1 && appData.asa2 && (
           <>
             <div className="col m-2 p-0">
-              <MyOrders assetBuy={appData.asa1} assetSell={appData.asa2}></MyOrders>
+              <MyOrders assetBuy={appData.asa1} assetSell={appData.asa2} localOrdersCount={appData.localOrdersCount}></MyOrders>
             </div>
             <div className="col m-2 p-0">
               <Bid assetBuy={appData.asa1} assetSell={appData.asa2}></Bid>

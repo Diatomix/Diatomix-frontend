@@ -7,15 +7,19 @@ import { AuthContext, ProvidersEnum } from '../../../contexts/AuthContext';
 import shortenAddress from '../../../scripts/algo/shortenAddress';
 import { AppContext } from '../../../contexts/app-context';
 import moment from 'moment';
+import { Offer_Min_Fields } from '../../../generated/graphql';
+import { ProgressSpinner } from 'primereact/progressspinner';
+
 interface MyOrdersProps {
   className?: string;
   assetBuy: number;
   assetSell: number;
+  localOrdersCount: number;
 }
 
 const query = gql`
   subscription offer($assetBuy: bigint!, $assetSell: bigint!, $owner: String!) {
-    offer(where: { assetBuy: { _eq: $assetBuy }, assetSell: { _eq: $assetSell }, owner: { _eq: $owner } }, order_by: { price: desc }) {
+    offer(where: { assetBuy: { _eq: $assetBuy }, assetSell: { _eq: $assetSell }, owner: { _eq: $owner } }) {
       id
       price
       volume
@@ -29,7 +33,7 @@ const query = gql`
 
 const query2 = gql`
   subscription offer($assetBuy: bigint!, $assetSell: bigint!, $owner: String!) {
-    offer(where: { assetBuy: { _eq: $assetBuy }, assetSell: { _eq: $assetSell }, owner: { _eq: $owner } }, order_by: { price: desc }) {
+    offer(where: { assetBuy: { _eq: $assetBuy }, assetSell: { _eq: $assetSell }, owner: { _eq: $owner } }) {
       id
       price
       volume
@@ -105,7 +109,32 @@ export default function MyOrders(props: MyOrdersProps) {
       return 1;
     }
   };
-  const orders = sub1.data.offer.concat(sub2.data.offer).map(({ id, price, volume, assetBuy, assetSell, updated_at }) => {
+
+  const mergeData = () => {
+    const ret = sub1.data.offer.concat(sub2.data.offer);
+    const localOrders = localStorage.getItem('orders');
+    if (!localOrders) return ret;
+    const localArray: Array<Offer_Min_Fields> = JSON.parse(localOrders);
+    for (let order of localArray) {
+      if (!ret.find((o: Offer_Min_Fields) => o.id == order.id)) {
+        ret.push(order);
+      }
+    }
+
+    ret.sort(compare);
+    return ret;
+  };
+  function compare(a, b) {
+    if (a.updated_at < b.updated_at) {
+      return 1;
+    }
+    if (a.updated_at > b.updated_at) {
+      return -1;
+    }
+    return 0;
+  }
+
+  const orders = mergeData().map(({ id, price, volume, assetBuy, assetSell, updated_at }) => {
     return (
       <tr key={id}>
         <td>
@@ -114,15 +143,31 @@ export default function MyOrders(props: MyOrdersProps) {
           </a>
         </td>
         <td>
-          <span className="shortAddress">
-            Sell {volume / getDecimalsMultiplier(assetSell)} {getUnitName(assetSell)} -&gt; Get {(volume * price) / getDecimalsMultiplier(assetBuy)} {getUnitName(assetBuy)}
-          </span>
+          {volume ? (
+            <span className="shortAddress">
+              Sell {volume / getDecimalsMultiplier(assetSell)} {getUnitName(assetSell)} -&gt; Get {(volume * price) / getDecimalsMultiplier(assetBuy)} {getUnitName(assetBuy)}
+            </span>
+          ) : (
+            <ProgressSpinner className="smallSpinner" />
+          )}
         </td>
         <td className="number">
-          {price} {getUnitName(assetBuy)}/{getUnitName(assetSell)}
+          {price ? (
+            <>
+              {price} {getUnitName(assetBuy)}/{getUnitName(assetSell)}
+            </>
+          ) : (
+            <ProgressSpinner className="smallSpinner" />
+          )}
         </td>
         <td className="number">
-          {volume / getDecimalsMultiplier(assetSell)} {getUnitName(assetSell)}
+          {volume ? (
+            <>
+              {volume / getDecimalsMultiplier(assetSell)} {getUnitName(assetSell)}
+            </>
+          ) : (
+            <ProgressSpinner className="smallSpinner" />
+          )}
         </td>
         <td>{moment(updated_at).format('LLL')}</td>
       </tr>

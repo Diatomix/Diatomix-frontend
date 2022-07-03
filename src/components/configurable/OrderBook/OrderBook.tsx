@@ -23,7 +23,7 @@ const bidQuery = gql`
 
 const offerQuery = gql`
   subscription offer($assetBuy: bigint!, $assetSell: bigint!) {
-    offer(where: { assetBuy: { _eq: $assetBuy }, assetSell: { _eq: $assetSell } }, limit: 10, order_by: { price: desc }) {
+    offer(where: { assetBuy: { _eq: $assetBuy }, assetSell: { _eq: $assetSell } }, limit: 10, order_by: { price: asc }) {
       id
       owner
       price
@@ -56,15 +56,15 @@ const OrderBook: FC<OrderBookPropsI> = ({ className, assetBuy, assetSell }) => {
   const bestBids = bidResult.data.bid.map(({ id, price, volume }) => {
     return (
       <div key={id} className="bid-grid">
-        <p className="bid-price">{price}</p>
+        <p className="bid-price number">{price}</p>
         <p className="volume">{new BigNumber(volume).dividedBy(1000000).toFixed(6, 0)}</p>
       </div>
     );
   });
-  const bestOffers = offerResult.data.offer.map(({ id, price, volume }) => {
+  const bestOffers = offerResult.data.offer.reverse().map(({ id, price, volume }) => {
     return (
       <div key={id} className="offer-grid">
-        <p className="offer-price">{price}</p>
+        <p className="offer-price  number">{price}</p>
         <p className="volume">{new BigNumber(volume).dividedBy(1000000).toFixed(6, 0)}</p>
       </div>
     );
@@ -75,9 +75,13 @@ const OrderBook: FC<OrderBookPropsI> = ({ className, assetBuy, assetSell }) => {
         <p>PRICE</p>
         <p style={{ textAlign: 'right' }}>AMOUNT</p>
       </div>
-      {bestBids}
-      <div className="divide"></div>
       {bestOffers}
+      <div className="divide"></div>
+      {bestBids}
+      <div className="headers">
+        <p>PRICE</p>
+        <p style={{ textAlign: 'right' }}>AMOUNT</p>
+      </div>
     </Panel>
   );
 };
