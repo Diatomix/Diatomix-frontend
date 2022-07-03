@@ -59,7 +59,7 @@ export default function Bid(props: BidProps) {
   function Content() {
     try {
       return (
-        <Panel header="ORDERBOOK">
+        <Panel header="Bids">
           <table className="table table-borderless p-datatable p-component p-datatable-responsive-scroll" data-bs-spy="scroll">
             <thead>
               <tr>

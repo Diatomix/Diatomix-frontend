@@ -8,3 +8,10 @@
 .clickable{
   cursor: pointer;
 }
+
+.shortAddress{
+  font-family: 'Courier New', Courier, monospace;
+}
+.number{
+  text-align: right !important;
+}

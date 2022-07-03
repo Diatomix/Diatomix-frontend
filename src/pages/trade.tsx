@@ -15,6 +15,7 @@ import Bid from '../components/configurable/Bid/Bid';
 import LoadAssetInfoEffect from '../effects/asset/LoadAssetInfoEffect';
 import './trade.css';
 import OrderBook from '../components/configurable/OrderBook/OrderBook';
+import MyOrders from '../components/configurable/MyOrders/MyOrders';
 
 export default function Home() {
   const appData = useContext(AppContext);
@@ -39,11 +40,25 @@ export default function Home() {
       <div className="grid-container">
         <LoadAssetInfoEffect />
         <PlaceOrder className="m-2"></PlaceOrder>
-        <OrderBook className="m-2" assetBuy={appData.asa1} assetSell={appData.asa2}></OrderBook>
+        {appData.asa1 && appData.asa2 && (
+          <>
+            <div className="col m-2 p-0">
+              <MyOrders assetBuy={appData.asa1} assetSell={appData.asa2}></MyOrders>
+            </div>
+            <div className="col m-2 p-0">
+              <Bid assetBuy={appData.asa1} assetSell={appData.asa2}></Bid>
+            </div>
+            <div className="col m-2 p-0">
+              <Offer assetBuy={appData.asa1} assetSell={appData.asa2}></Offer>
+            </div>
+            <div className="col m-2 p-0">
+              <OrderBook assetBuy={appData.asa1} assetSell={appData.asa2}></OrderBook>
+            </div>
+          </>
+        )}
+        {/* 
         <textarea className="col m-2" value={appData.orderTeal}></textarea>
-        <textarea className="col m-2" value={JSON.stringify(appData.asa2Config)}></textarea>
-        {/* <div className="col m-2 p-0">{appData.asa1 && appData.asa2 && <Bid assetBuy={appData.asa1} assetSell={appData.asa2}></Bid>}</div>
-        <div className="col m-2 p-0">{appData.asa1 && appData.asa2 && <Offer assetBuy={appData.asa1} assetSell={appData.asa2}></Offer>}</div> */}
+        <textarea className="col m-2" value={JSON.stringify(appData.asa2Config)}></textarea> */}
       </div>
     </>
   );

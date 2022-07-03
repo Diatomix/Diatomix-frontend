@@ -63,7 +63,7 @@ export default function Offer(props: OfferProps) {
   function Content() {
     try {
       return (
-        <Panel>
+        <Panel header="Offers">
           <table className="table table-borderless p-datatable p-component p-datatable-responsive-scroll" data-bs-spy="scroll">
             <tbody className="p-datatable-tbody">{bestOffers}</tbody>
           </table>
