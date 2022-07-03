@@ -25,6 +25,8 @@ import addOrderToLocalStorage from '../../../scripts/algo/addOrderToLocalStorage
 import { Offer_Min_Fields } from '../../../generated/graphql';
 import { Toast } from 'primereact/toast';
 import moment from 'moment';
+import formatPrice from '../../../scripts/algo/formatPrice';
+import formatAsaAmount from '../../../scripts/algo/formatAsaAmount';
 
 interface PlaceOrderConfig {
   quote: string;
@@ -62,6 +64,20 @@ export default function PlaceOrder(props: PlaceOrderProps) {
     appData.price = price;
     appData.setAppData({ ...appData });
   }, [price]);
+
+  useEffect(() => {
+    if (price != appData.price) {
+      setPrice(appData.price);
+    }
+  }, [appData.price]);
+
+  useEffect(() => {
+    const quantityFloat = appData.quantity;
+    if (quantity != quantityFloat) {
+      setQuantity(quantityFloat);
+    }
+  }, [appData.quantity]);
+  /**/
 
   useEffect(() => {
     appData.isSellOrder = sideIsSell;
@@ -216,6 +232,7 @@ export default function PlaceOrder(props: PlaceOrderProps) {
           step={0.01}
           showButtons
           inputId="price"
+          value={price}
           onValueChange={e => setPrice(e.value)}
           suffix={' ' + getAsasName()}
           className="custom-input mb-4"
@@ -226,6 +243,7 @@ export default function PlaceOrder(props: PlaceOrderProps) {
           step={0.01}
           showButtons
           inputId="price"
+          value={quantity}
           onValueChange={e => setQuantity(e.value)}
           suffix={' ' + getAsa2UnitName()}
           className="custom-input"
@@ -238,7 +256,7 @@ export default function PlaceOrder(props: PlaceOrderProps) {
             <span>
               <b>{appData.isSellOrder ? <span className="sell">SELLING</span> : <span className="buy">BUYING</span>}</b>
             </span>{' '}
-            {quantity} {getAsa2UnitName()} for a rate of {price} {getAsasName()}
+            {formatAsaAmount(quantity * 1000000, appData.asa2, appData)} for a rate of {formatPrice(price, appData)} {getAsasName()}
           </p>
         </div>
 

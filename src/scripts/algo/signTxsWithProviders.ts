@@ -2,6 +2,7 @@ import algosdk from 'algosdk';
 import { IProvider, ProvidersEnum } from '../../contexts/AuthContext';
 import signTxsWithAlgoSigner from './providers/signTxsWithAlgoSigner';
 import signTxsWithApprovalProgram from './providers/signTxsWithApprovalProgram';
+import signTxsWithLogicSigAccount from './providers/signTxsWithLogicSigAccount';
 import signTxsWithMnemonics from './providers/signTxsWithMnemonics';
 import signTxsWithMyAlgoConnect from './providers/signTxsWithMyAlgoConnect';
 import signTxWithWalletConnect from './providers/signTxsWithWalletConnect';
@@ -36,6 +37,11 @@ const signTxsWithProviders = async (txns: algosdk.Transaction[], providers: IPro
         break;
       case ProvidersEnum.ApprovalProgram:
         for (const signed of signTxsWithApprovalProgram(addr2txs[addr], provider.provider)) {
+          ret.push(signed);
+        }
+        break;
+      case ProvidersEnum.LogicSigAccount:
+        for (const signed of signTxsWithLogicSigAccount(addr2txs[addr], provider.provider)) {
           ret.push(signed);
         }
         break;

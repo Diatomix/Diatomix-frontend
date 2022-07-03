@@ -20,3 +20,10 @@
   width:20px;
   height: 20px;
 }
+
+.order-row:hover{
+  background-color: #333 !important;
+}
+.nowrap{
+  white-space: nowrap;
+}

@@ -23,7 +23,7 @@ interface MyOrdersProps {
 
 const query = gql`
   subscription offer($assetBuy: bigint!, $assetSell: bigint!, $owner: String!) {
-    offer(where: { assetBuy: { _eq: $assetBuy }, assetSell: { _eq: $assetSell }, owner: { _eq: $owner } }) {
+    offer(where: { assetBuy: { _eq: $assetBuy }, assetSell: { _eq: $assetSell }, owner: { _eq: $owner }, volume: { _gt: 0 } }) {
       id
       price
       volume
@@ -37,7 +37,7 @@ const query = gql`
 
 const query2 = gql`
   subscription offer($assetBuy: bigint!, $assetSell: bigint!, $owner: String!) {
-    offer(where: { assetBuy: { _eq: $assetBuy }, assetSell: { _eq: $assetSell }, owner: { _eq: $owner } }) {
+    offer(where: { assetBuy: { _eq: $assetBuy }, assetSell: { _eq: $assetSell }, owner: { _eq: $owner }, volume: { _gt: 0 } }) {
       id
       price
       volume

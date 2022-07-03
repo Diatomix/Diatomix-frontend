@@ -7,6 +7,7 @@ export enum ProvidersEnum {
   AlgoSigner,
   Mnemonics,
   ApprovalProgram,
+  LogicSigAccount,
 }
 export interface IProvider {
   type: ProvidersEnum;

@@ -16,6 +16,7 @@ import LoadAssetInfoEffect from '../effects/asset/LoadAssetInfoEffect';
 import './trade.css';
 import OrderBook from '../components/configurable/OrderBook/OrderBook';
 import MyOrders from '../components/configurable/MyOrders/MyOrders';
+import { ScrollPanel } from 'primereact/scrollpanel';
 
 export default function Home() {
   const appData = useContext(AppContext);
@@ -37,26 +38,28 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div className="grid-container">
-        <LoadAssetInfoEffect />
-        <PlaceOrder className="m-2"></PlaceOrder>
+      <LoadAssetInfoEffect />
+      <div className="flex flex-row">
+        <PlaceOrder className="flex m-2"></PlaceOrder>
         {appData.asa1 && appData.asa2 && (
           <>
-            <div className="col m-2 p-0">
-              <MyOrders assetBuy={appData.asa1} assetSell={appData.asa2} localOrdersCount={appData.localOrdersCount}></MyOrders>
-            </div>
-            <div className="col m-2 p-0">
+            <div className="flex m-2 p-0">
               <Bid assetBuy={appData.asa1} assetSell={appData.asa2}></Bid>
             </div>
-            <div className="col m-2 p-0">
+            <div className="flex m-2 p-0">
               <Offer assetBuy={appData.asa1} assetSell={appData.asa2}></Offer>
             </div>
-            <div className="col m-2 p-0">
-              <OrderBook assetBuy={appData.asa1} assetSell={appData.asa2}></OrderBook>
+            <div className="flex flex-grow-1 m-2 p-0 h-100">
+              <ScrollPanel style={{ height: '800px' }}>
+                <MyOrders assetBuy={appData.asa1} assetSell={appData.asa2} localOrdersCount={appData.localOrdersCount}></MyOrders>
+              </ScrollPanel>
             </div>
           </>
         )}
         {/* 
+            <div className="flex  m-2 p-0">
+              <OrderBook assetBuy={appData.asa1} assetSell={appData.asa2}></OrderBook>
+            </div>
         <textarea className="col m-2" value={appData.orderTeal}></textarea>
         <textarea className="col m-2" value={JSON.stringify(appData.asa2Config)}></textarea> */}
       </div>

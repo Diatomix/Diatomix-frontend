@@ -30,6 +30,7 @@ gtxn 2 RekeyTo
 global ZeroAddress
 ==
 assert
+
 global GroupSize
 intc 7 //3
 ==
@@ -38,6 +39,7 @@ gtxn 3 RekeyTo
 global ZeroAddress
 ==
 assert
+
 global GroupSize
 intc 8 //4
 ==
@@ -47,6 +49,7 @@ gtxn 4 RekeyTo
 global ZeroAddress
 ==
 assert
+
 global GroupSize
 intc 9 //5
 ==
@@ -112,6 +115,8 @@ bnz Ok // taker is {{seller}}
 global GroupSize
 int 2
 ==
+assert
+
 // protect escrow owner so that he is not paid too less
 // protect escrow executer so that he does not pay too much
 // example sell 100000,000000 VoteCoin for 100,000000 USDC
@@ -119,7 +124,7 @@ int 2
 // intc 1 = 1
 // intc 2 = 1000
 
-gtxn 0 AssetAmount // 50000,000000
+gtxn 0 AssetAmount // 50000,000000   //
 intc 0 // {{price}} // 1
 mulw   // 50000,000000 .. returns two ints to stack high and low
 store 2 // 50000,000000
@@ -132,7 +137,7 @@ store 3
 load 1
 load 3
 ==
-&&
+assert
 load 2
 load 4
 ==
@@ -141,51 +146,61 @@ assert
 gtxn 0 XferAsset
 intc 2 // asa 1 from escrow to buyer
 ==
-&&
+assert
+
 gtxn 1 XferAsset
 intc 3 // asa 2 from buyer to {{seller}}
 ==
-&&
+assert
+
 gtxn 1 AssetReceiver
 bytec_1 // receiver is {{seller}}
 ==
-&&
+assert
+
 gtxn 0 AssetReceiver // check if buyer paid from his account
 gtxn 1 Sender
 ==
-&&
+assert
+
 gtxn 0 TypeEnum
 intc 8 // 4 // 4	axfer	AssetTransfer
 ==
-&&
+assert
+
 gtxn 0 Fee
 intc 4 // 0
 ==
-&&
+assert
+
 gtxn 1 TypeEnum
 intc 8 // 4 // 4	axfer	AssetTransfer
 ==
-&&
+assert
+
 gtxn 0 CloseRemainderTo
 global ZeroAddress
 ==
-&&
+assert
+
 gtxn 0 AssetCloseTo
 global ZeroAddress
 ==
-&&
+assert
+
 gtxn 1 CloseRemainderTo
 global ZeroAddress
 ==
-&&
+assert
+
 gtxn 1 AssetCloseTo
 global ZeroAddress
 ==
-&&
+assert
+
 gtxn 1 Fee
 intc 10 // 10000
 <=
-&&
 bnz Ok
 
 
@@ -194,5 +209,5 @@ err
 
 Ok:
 int 1
-return`
-export default asa2asaV1
+return`;
+export default asa2asaV1;
