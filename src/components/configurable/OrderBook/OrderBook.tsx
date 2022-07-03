@@ -1,8 +1,12 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { gql, useSubscription } from '@apollo/client';
 import Panel from '../../Panel';
 import './OrderBook.css';
 import BigNumber from 'bignumber.js';
+import formatAsaAmount from '../../../scripts/algo/formatAsaAmount';
+import { AppContext } from '../../../contexts/app-context';
+import formatPrice from '../../../scripts/algo/formatPrice';
+import getUnitName from '../../../scripts/algo/getUnitName';
 
 interface OrderBookPropsI {
   className?: string;
@@ -33,6 +37,8 @@ const offerQuery = gql`
 `;
 
 const OrderBook: FC<OrderBookPropsI> = ({ className, assetBuy, assetSell }) => {
+  const appData = useContext(AppContext);
+
   const bidResult = useSubscription(bidQuery, {
     variables: {
       assetBuy: assetBuy,
@@ -56,30 +62,34 @@ const OrderBook: FC<OrderBookPropsI> = ({ className, assetBuy, assetSell }) => {
   const bestBids = bidResult.data.bid.map(({ id, price, volume }) => {
     return (
       <div key={id} className="bid-grid">
-        <p className="bid-price number">{price}</p>
-        <p className="volume">{new BigNumber(volume).dividedBy(1000000).toFixed(6, 0)}</p>
+        <p className="bid-price number">{formatPrice(price, appData)}</p>
+        <p className="volume">{formatAsaAmount(volume, assetSell, appData)}</p>
       </div>
     );
   });
   const bestOffers = offerResult.data.offer.reverse().map(({ id, price, volume }) => {
     return (
       <div key={id} className="offer-grid">
-        <p className="offer-price  number">{price}</p>
-        <p className="volume">{new BigNumber(volume).dividedBy(1000000).toFixed(6, 0)}</p>
+        <p className="offer-price  number">{formatPrice(price, appData)}</p>
+        <p className="volume">{formatAsaAmount(volume, assetSell, appData)}</p>
       </div>
     );
   });
   return (
     <Panel header="ORDER BOOK" className={className}>
       <div className="headers">
-        <p>PRICE</p>
+        <p>
+          PRICE {getUnitName(assetBuy, appData)}/{getUnitName(assetSell, appData)}
+        </p>
         <p style={{ textAlign: 'right' }}>AMOUNT</p>
       </div>
       {bestOffers}
       <div className="divide"></div>
       {bestBids}
       <div className="headers">
-        <p>PRICE</p>
+        <p>
+          PRICE {getUnitName(assetBuy, appData)}/{getUnitName(assetSell, appData)}
+        </p>
         <p style={{ textAlign: 'right' }}>AMOUNT</p>
       </div>
     </Panel>

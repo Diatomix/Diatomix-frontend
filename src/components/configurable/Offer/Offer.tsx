@@ -6,6 +6,11 @@ import { order_by } from '../../../gqty';
 import './Offer.css';
 import { gql, useSubscription } from '@apollo/client';
 import BigNumber from 'bignumber.js';
+import formatAsaAmount from '../../../scripts/algo/formatAsaAmount';
+import { useContext } from 'react';
+import { AppContext } from '../../../contexts/app-context';
+import formatPrice from '../../../scripts/algo/formatPrice';
+import getUnitName from '../../../scripts/algo/getUnitName';
 interface OfferProps {
   assetBuy: number;
   assetSell: number;
@@ -24,6 +29,7 @@ const query = gql`
 
 export default function Offer(props: OfferProps) {
   const { assetBuy, assetSell } = props;
+  const appData = useContext(AppContext);
   const { data, loading, error } = useSubscription(query, {
     variables: {
       assetBuy: assetBuy,
@@ -44,9 +50,9 @@ export default function Offer(props: OfferProps) {
     return (
       <tr key={id}>
         <td style={{ color: '#b23639', borderBottom: '0', paddingTop: 0, paddingBottom: 0 }} className="number">
-          {price}
+          {formatPrice(price, appData)}
         </td>
-        <td style={{ borderBottom: '0', paddingTop: 0, paddingBottom: 0 }}>{new BigNumber(volume).dividedBy(1000000).toFixed(6, 0)}</td>{' '}
+        <td style={{ borderBottom: '0', paddingTop: 0, paddingBottom: 0 }}>{formatAsaAmount(volume, assetSell, appData)}</td>{' '}
       </tr>
     );
   });
@@ -65,11 +71,15 @@ export default function Offer(props: OfferProps) {
   function Content() {
     try {
       return (
-        <Panel header="Offers">
+        <Panel header="Top 10 offers">
           <table className="table table-borderless p-datatable p-component p-datatable-responsive-scroll" data-bs-spy="scroll">
             <thead className="p-datatable-thead">
               <tr>
-                <th scope="col number">Price</th>
+                <th scope="col">
+                  <div className="number">
+                    Price {getUnitName(assetBuy, appData)}/{getUnitName(assetSell, appData)}
+                  </div>
+                </th>
                 <th scope="col">Amount</th>
               </tr>
             </thead>

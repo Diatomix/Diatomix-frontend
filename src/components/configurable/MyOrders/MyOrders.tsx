@@ -9,6 +9,10 @@ import { AppContext } from '../../../contexts/app-context';
 import moment from 'moment';
 import { Offer_Min_Fields } from '../../../generated/graphql';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import getDecimalsMultiplier from '../../../scripts/algo/getDecimalsMultiplier';
+import getUnitName from '../../../scripts/algo/getUnitName';
+import formatAsaAmount from '../../../scripts/algo/formatAsaAmount';
+import formatPrice from '../../../scripts/algo/formatPrice';
 
 interface MyOrdersProps {
   className?: string;
@@ -56,7 +60,7 @@ export default function MyOrders(props: MyOrdersProps) {
       owner: authContext.authAddress,
     },
   });
-  const sub2 = useSubscription(query, {
+  const sub2 = useSubscription(query2, {
     variables: {
       assetBuy: assetSell,
       assetSell: assetBuy,
@@ -79,37 +83,6 @@ export default function MyOrders(props: MyOrdersProps) {
     return <Panel>Error... {JSON.stringify(sub2.error)}</Panel>;
   }
 
-  const getAsa1UnitName = () => {
-    if (appData.asa1Config && appData.asa1Config.asset && appData.asa1Config.asset.params) {
-      return appData.asa1Config.asset.params['unit-name'] ? appData.asa1Config.asset.params['unit-name'] : appData.asa1Config.asset.params.name;
-    }
-    return '?';
-  };
-  const getAsa2UnitName = () => {
-    if (appData.asa2Config && appData.asa2Config.asset && appData.asa2Config.asset.params) {
-      return appData.asa2Config.asset.params['unit-name'] ? appData.asa2Config.asset.params['unit-name'] : appData.asa2Config.asset.params.name;
-    }
-    return '?';
-  };
-  const getUnitName = (asa: number) => {
-    if (appData.asa1Config && appData.asa1Config.asset && asa == appData.asa1Config.asset.index) {
-      return getAsa1UnitName();
-    } else if (appData.asa2Config && appData.asa2Config.asset && asa == appData.asa2Config.asset.index) {
-      return getAsa2UnitName();
-    } else {
-      return JSON.stringify(asa);
-    }
-  };
-  const getDecimalsMultiplier = (asa: number) => {
-    if (appData.asa1Config && appData.asa1Config.asset && asa == appData.asa1Config.asset.index) {
-      return 10 ** appData.asa1Config.asset.params.decimals;
-    } else if (appData.asa2Config && appData.asa2Config.asset && asa == appData.asa2Config.asset.index) {
-      return 10 ** appData.asa2Config.asset.params.decimals;
-    } else {
-      return 1;
-    }
-  };
-
   const mergeData = () => {
     const ret = sub1.data.offer.concat(sub2.data.offer);
     const localOrders = localStorage.getItem('orders');
@@ -120,7 +93,6 @@ export default function MyOrders(props: MyOrdersProps) {
         ret.push(order);
       }
     }
-
     ret.sort(compare);
     return ret;
   };
@@ -145,7 +117,7 @@ export default function MyOrders(props: MyOrdersProps) {
         <td>
           {volume ? (
             <span className="shortAddress">
-              Sell {volume / getDecimalsMultiplier(assetSell)} {getUnitName(assetSell)} -&gt; Get {(volume * price) / getDecimalsMultiplier(assetBuy)} {getUnitName(assetBuy)}
+              Sell {formatAsaAmount(volume, assetSell, appData)} -&gt; Get {formatAsaAmount(volume * price, assetBuy, appData)}
             </span>
           ) : (
             <ProgressSpinner className="smallSpinner" />
@@ -154,21 +126,13 @@ export default function MyOrders(props: MyOrdersProps) {
         <td className="number">
           {price ? (
             <>
-              {price} {getUnitName(assetBuy)}/{getUnitName(assetSell)}
+              {formatPrice(price, appData)} {getUnitName(assetBuy, appData)}/{getUnitName(assetSell, appData)}
             </>
           ) : (
             <ProgressSpinner className="smallSpinner" />
           )}
         </td>
-        <td className="number">
-          {volume ? (
-            <>
-              {volume / getDecimalsMultiplier(assetSell)} {getUnitName(assetSell)}
-            </>
-          ) : (
-            <ProgressSpinner className="smallSpinner" />
-          )}
-        </td>
+        <td className="number">{volume ? <>{formatAsaAmount(volume, assetSell, appData)}</> : <ProgressSpinner className="smallSpinner" />}</td>
         <td>{moment(updated_at).format('LLL')}</td>
       </tr>
     );

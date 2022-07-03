@@ -2,6 +2,11 @@ import Panel from '../../Panel';
 import { Trans } from 'react-i18next';
 import './Bid.css';
 import { gql, useSubscription } from '@apollo/client';
+import getUnitName from '../../../scripts/algo/getUnitName';
+import { useContext } from 'react';
+import { AppContext } from '../../../contexts/app-context';
+import formatAsaAmount from '../../../scripts/algo/formatAsaAmount';
+import formatPrice from '../../../scripts/algo/formatPrice';
 interface BidProps {
   assetBuy: number;
   assetSell: number;
@@ -20,6 +25,7 @@ const query = gql`
 
 export default function Bid(props: BidProps) {
   const { assetBuy, assetSell } = props;
+  const appData = useContext(AppContext);
   const { data, loading, error } = useSubscription(query, {
     variables: {
       assetBuy: assetBuy,
@@ -40,9 +46,9 @@ export default function Bid(props: BidProps) {
     return (
       <tr key={id}>
         <td style={{ color: '#38a169', borderBottom: '0', paddingTop: 0, paddingBottom: 0 }} className="number">
-          {price}
+          {formatPrice(price, appData)}
         </td>
-        <td style={{ borderBottom: '0', paddingTop: 0, paddingBottom: 0 }}>{volume}</td>
+        <td style={{ borderBottom: '0', paddingTop: 0, paddingBottom: 0 }}>{formatAsaAmount(volume, assetSell, appData)}</td>
       </tr>
     );
   });
@@ -61,11 +67,15 @@ export default function Bid(props: BidProps) {
   function Content() {
     try {
       return (
-        <Panel header="Bids">
+        <Panel header="Top 10 bids">
           <table className="table table-borderless p-datatable p-component p-datatable-responsive-scroll" data-bs-spy="scroll">
             <thead className="p-datatable-thead">
               <tr>
-                <th scope="col number">Price</th>
+                <th scope="col ">
+                  <div className="number">
+                    Price {getUnitName(assetBuy, appData)}/{getUnitName(assetSell, appData)}
+                  </div>
+                </th>
                 <th scope="col">Amount</th>
               </tr>
             </thead>
