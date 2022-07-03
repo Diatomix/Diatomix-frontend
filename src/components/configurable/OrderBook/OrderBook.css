@@ -22,7 +22,7 @@
 .offer-grid:hover {
   background-color: #38242e;
   cursor: pointer;
-  transition: 0.3s ease-in-out;
+  transition: 250ms ease-in-out;
 }
 
 .bid-grid:hover > p.volume {

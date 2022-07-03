@@ -3,9 +3,7 @@ import i18n from 'i18next';
 import { Trans } from 'react-i18next';
 
 import { order_by } from '../../../gqty';
-import './Offer.css';
 import { gql, useSubscription } from '@apollo/client';
-import BigNumber from 'bignumber.js';
 import formatAsaAmount from '../../../scripts/algo/formatAsaAmount';
 import { useContext } from 'react';
 import { AppContext } from '../../../contexts/app-context';
@@ -71,7 +69,7 @@ export default function Offer(props: OfferProps) {
   function Content() {
     try {
       return (
-        <Panel header="Top 10 offers">
+        <Panel header="TOP 10 OFFERS">
           <table className="table table-borderless p-datatable p-component p-datatable-responsive-scroll" data-bs-spy="scroll">
             <thead className="p-datatable-thead">
               <tr>
