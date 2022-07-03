@@ -10,9 +10,11 @@ import PlaceOrder from '../components/configurable/PlaceOrder/PlaceOrder';
 import { useParams } from 'react-router-dom';
 import arc0017Contract from '../scripts/algo/arc0017Contract';
 import { AuthContext } from '../contexts/AuthContext';
-import Offer from '../components/configurable/Offer';
-import Bid from '../components/configurable/Bid';
+import Offer from '../components/configurable/Offer/Offer';
+import Bid from '../components/configurable/Bid/Bid';
 import LoadAssetInfoEffect from '../effects/asset/LoadAssetInfoEffect';
+import './trade.css';
+import OrderBook from '../components/configurable/OrderBook/OrderBook';
 
 export default function Home() {
   const appData = useContext(AppContext);
@@ -34,13 +36,14 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div className="flex flex-row">
+      <div className="grid-container">
         <LoadAssetInfoEffect />
         <PlaceOrder className="m-2"></PlaceOrder>
+        <OrderBook className="m-2" assetBuy={appData.asa1} assetSell={appData.asa2}></OrderBook>
         <textarea className="col m-2" value={appData.orderTeal}></textarea>
         <textarea className="col m-2" value={JSON.stringify(appData.asa2Config)}></textarea>
-        <div className="col m-2">{appData.asa1 && appData.asa2 && <Bid assetBuy={appData.asa1} assetSell={appData.asa2}></Bid>}</div>
-        <div className="col m-2">{appData.asa1 && appData.asa2 && <Offer assetBuy={appData.asa1} assetSell={appData.asa2}></Offer>}</div>
+        {/* <div className="col m-2 p-0">{appData.asa1 && appData.asa2 && <Bid assetBuy={appData.asa1} assetSell={appData.asa2}></Bid>}</div>
+        <div className="col m-2 p-0">{appData.asa1 && appData.asa2 && <Offer assetBuy={appData.asa1} assetSell={appData.asa2}></Offer>}</div> */}
       </div>
     </>
   );

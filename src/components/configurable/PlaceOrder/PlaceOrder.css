@@ -17,6 +17,7 @@
   border-bottom-left-radius: 6px;
 }
 
+
 .sell-button {
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
@@ -62,3 +63,18 @@ label {
   margin-bottom: 0.2rem;
 }
 
+.custom-input .p-inputnumber-input {
+  background-color: #181818;
+}
+
+.p-inputnumber-input::placeholder {
+  font-size: 14px;
+}
+
+.buy {
+  color: green;
+}
+
+.sell {
+  color: red;
+}

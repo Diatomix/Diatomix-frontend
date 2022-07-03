@@ -1,17 +1,19 @@
-import Panel from '../Panel';
+import Panel from '../../Panel';
 import i18n from 'i18next';
 import { Trans } from 'react-i18next';
 
-import { order_by } from '../../gqty';
+import { order_by } from '../../../gqty';
+import './Offer.css';
 import { gql, useSubscription } from '@apollo/client';
-interface BidProps {
+import BigNumber from 'bignumber.js';
+interface OfferProps {
   assetBuy: number;
   assetSell: number;
 }
 
 const query = gql`
-  subscription bid($assetBuy: bigint!, $assetSell: bigint!) {
-    bid(where: { assetBuy: { _eq: $assetBuy }, assetSell: { _eq: $assetSell } }, limit: 10, order_by: { price: desc }) {
+  subscription offer($assetBuy: bigint!, $assetSell: bigint!) {
+    offer(where: { assetBuy: { _eq: $assetBuy }, assetSell: { _eq: $assetSell } }, limit: 10, order_by: { price: desc }) {
       id
       owner
       price
@@ -20,7 +22,7 @@ const query = gql`
   }
 `;
 
-export default function Bid(props: BidProps) {
+export default function Offer(props: OfferProps) {
   const { assetBuy, assetSell } = props;
   const { data, loading, error } = useSubscription(query, {
     variables: {
@@ -35,14 +37,14 @@ export default function Bid(props: BidProps) {
     return <Panel>Error... {JSON.stringify(error)}</Panel>;
   }
 
-  if (!data.bid || data.bid.length <= 0) {
-    return <Panel>No bids</Panel>;
+  if (!data.offer || data.offer.length <= 0) {
+    return <Panel>No offers</Panel>;
   }
-  const bestBids = data.bid.map(({ id, price, volume }) => {
+  const bestOffers = data.offer.map(({ id, price, volume }) => {
     return (
       <tr key={id}>
-        <td>{price}</td>
-        <td>{volume}</td>
+        <td style={{ color: '#b23639', borderBottom: '0', paddingTop: 0, paddingBottom: 0 }}>{price}</td>
+        <td style={{ borderBottom: '0', paddingTop: 0, paddingBottom: 0 }}>{new BigNumber(volume).dividedBy(1000000).toFixed(6, 0)}</td>{' '}
       </tr>
     );
   });
@@ -61,19 +63,9 @@ export default function Bid(props: BidProps) {
   function Content() {
     try {
       return (
-        <Panel header="Bids">
-          <table className="table  table-borderless table-hover p-datatable p-component p-datatable-responsive-scroll" data-bs-spy="scroll">
-            <thead>
-              <tr>
-                <th scope="col" style={{ color: 'white' }}>
-                  Price
-                </th>
-                <th scope="col" style={{ color: 'white' }}>
-                  Amount
-                </th>
-              </tr>
-            </thead>
-            <tbody className="p-datatable-tbody">{bestBids}</tbody>
+        <Panel>
+          <table className="table table-borderless p-datatable p-component p-datatable-responsive-scroll" data-bs-spy="scroll">
+            <tbody className="p-datatable-tbody">{bestOffers}</tbody>
           </table>
         </Panel>
       );

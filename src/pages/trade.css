@@ -1,0 +1,8 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 0.75fr auto repeat(2, 1fr);
+}
+
+.divider {
+  border-bottom: 1px solid rgb(160, 160, 160);
+}

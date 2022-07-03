@@ -37,12 +37,12 @@ export default function PlaceOrder(props: PlaceOrderProps) {
   const appData = useContext(AppContext);
   const authContext = useContext(AuthContext);
   const [sideIsSell, setSideIsSell] = useState<boolean>(false);
-  const [price, setPrice] = useState<number>(1);
-  const [quantity, setQuantity] = useState<number>(1);
-  const [buttonState, setButtonState] = useState<string>(buttonOptions[0]);
+  const [price, setPrice] = useState<number>(0);
+  const [quantity, setQuantity] = useState<number>(0);
   function handleUpdate(newConfig) {
     props.onContentUpdate(newConfig);
   }
+
   useEffect(() => {
     appData.quantity = quantity;
     if (sideIsSell) {
@@ -159,14 +159,14 @@ export default function PlaceOrder(props: PlaceOrderProps) {
         <div className="button-container">
           <button
             className="buy-button"
-            style={sideIsSell ? { backgroundColor: 'gray' } : { backgroundColor: 'green', border: '3px solid darkgreen', borderRadius: '6px' }}
+            style={sideIsSell ? { backgroundColor: 'gray' } : { backgroundColor: '#38a169', border: '3px solid #407056', borderRadius: '6px' }}
             onClick={() => setSideIsSell(false)}
           >
             <b>BUY</b>
           </button>
           <button
             className="sell-button"
-            style={sideIsSell ? { backgroundColor: 'red', border: '3px solid darkred', borderRadius: '6px' } : { backgroundColor: 'gray' }}
+            style={sideIsSell ? { backgroundColor: '#e53e3e', border: '3px solid #b23639', borderRadius: '6px' } : { backgroundColor: 'gray' }}
             onClick={() => setSideIsSell(true)}
           >
             <b>SELL</b>
@@ -192,110 +192,42 @@ export default function PlaceOrder(props: PlaceOrderProps) {
           <p className="asa-value">{BigNumbify(appData.asa2Balance)}</p>
         </div>
         <div className="divider mb-4" />
-        <label htmlFor="price">Price {getAsasName()}</label>
         <InputNumber
-          inputId="price"
-          value={price}
-          onValueChange={e => setPrice(e.value)}
-          showButtons
-          buttonLayout="horizontal"
           step={0.25}
-          decrementButtonClassName="p-button-danger"
-          incrementButtonClassName="p-button-success"
-          incrementButtonIcon="pi pi-plus"
-          decrementButtonIcon="pi pi-minus"
+          showButtons
+          inputId="price"
+          onValueChange={e => setPrice(e.value)}
           suffix={' ' + getAsasName()}
+          className="custom-input mb-4"
+          placeholder={`Price (${getAsasName()})`}
+          min={0}
         />
-        <div className="quantity-input">
-          <label htmlFor="quantity">Quantity</label>
-          <InputNumber
-            className=""
-            inputId="quantity"
-            value={quantity}
-            onValueChange={e => setQuantity(e.value)}
-            showButtons
-            buttonLayout="horizontal"
-            step={0.25}
-            decrementButtonClassName="p-button-danger"
-            incrementButtonClassName="p-button-success"
-            incrementButtonIcon="pi pi-plus"
-            decrementButtonIcon="pi pi-minus"
-            suffix={' ' + getAsa2UnitName()}
-          />
+        <InputNumber
+          step={0.25}
+          showButtons
+          inputId="price"
+          onValueChange={e => setQuantity(e.value)}
+          suffix={' ' + getAsa2UnitName()}
+          className="custom-input"
+          placeholder={`Quantity (${getAsa2UnitName()})`}
+          min={0}
+        />
+        <div className="inline-block mt-3">
+          <p className="custom-text">
+            ORDER SUMMARY:{' '}
+            <span>
+              <b>{appData.isSellOrder ? <span className="sell">SELLING</span> : <span className="buy">BUYING</span>}</b>
+            </span>{' '}
+            {quantity} {getAsa2UnitName()} for a rate of {price} {getAsasName()}
+          </p>
         </div>
 
-        <button className="place-order-button mt-5" style={sideIsSell ? { backgroundColor: 'red' } : { backgroundColor: 'green' }}>
+        <button className="place-order-button mt-5" style={sideIsSell ? { backgroundColor: '#e53e3e' } : { backgroundColor: '#38a169' }}>
           <b>
             {sideIsSell ? 'SELL' : 'BUY'} {getAsa2UnitName()}
           </b>
         </button>
       </Panel>
-      {/* <Panel header={i18n.t('PlaceOrder.Title')} className={className}>
-        <div className="grid p-fluid">
-          <div className="flex flex-row flex-grow-1 w-100">
-            <div className="m-2 clickable" style={sideIsSell ? { color: 'gray' } : { color: 'green' }} onClick={() => setSideIsSell(false)}>
-              Buy
-            </div>
-            <InputSwitch className={sideIsSell ? 'm-2 tosell' : 'm-2 tobuy'} checked={sideIsSell} onChange={e => setSideIsSell(e.value)} />
-            <div className="m-2 clickable" style={sideIsSell ? { color: 'red' } : { color: 'gray' }} onClick={() => setSideIsSell(true)}>
-              Sell
-            </div>
-          </div>
-          <div className=" col-12 md:col-3">
-            <label htmlFor="price">Price {getAsasName()}</label>
-            <InputNumber
-              inputId="price"
-              value={price}
-              onValueChange={e => setPrice(e.value)}
-              showButtons
-              buttonLayout="horizontal"
-              step={0.25}
-              decrementButtonClassName="p-button-danger"
-              incrementButtonClassName="p-button-success"
-              incrementButtonIcon="pi pi-plus"
-              decrementButtonIcon="pi pi-minus"
-              suffix={' ' + getAsasName()}
-            />
-          </div>
-          <div className=" col-12 md:col-3">
-            <label htmlFor="quantity">Quantity</label>
-            <InputNumber
-              className=""
-              inputId="quantity"
-              value={quantity}
-              onValueChange={e => setQuantity(e.value)}
-              showButtons
-              buttonLayout="horizontal"
-              step={0.25}
-              decrementButtonClassName="p-button-danger"
-              incrementButtonClassName="p-button-success"
-              incrementButtonIcon="pi pi-plus"
-              decrementButtonIcon="pi pi-minus"
-              suffix={' ' + getAsa2UnitName()}
-            />
-          </div>
-        </div>
-        {authContext.authToken && <p>{authContext.authAddress.substring(0, 10) + '..'}</p>}
-
-        {appData.asa1Balance && (
-          <p>
-            Balance {appData.asa1}: {appData.asa1Balance}
-          </p>
-        )}
-        {appData.asa2Balance && (
-          <p>
-            Balance {appData.asa2}: {appData.asa2Balance}
-          </p>
-        )}
-        <p>
-          asa1SellBigInt {appData.asa2}: {appData.asa1SellBigInt}
-        </p>
-        <p>
-          asa2SellBigInt {appData.asa2}: {appData.asa2SellBigInt}
-        </p>
-
-        <Button onClick={() => compile()}>Place order</Button>
-      </Panel> */}
     </>
   );
 }
