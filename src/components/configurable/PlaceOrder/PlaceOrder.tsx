@@ -53,7 +53,7 @@ export default function PlaceOrder(props: PlaceOrderProps) {
     if (sideIsSell) {
       appData.asa2SellBigInt = new BigNumber(quantity).multipliedBy(1000000).toFixed(0, 1);
     } else {
-      appData.asa1SellBigInt = new BigNumber(quantity).multipliedBy(appData.price * 1000000).toFixed(0, 1);
+      appData.asa1SellBigInt = new BigNumber(quantity).multipliedBy((1 / appData.price) * 1000000).toFixed(0, 1);
     }
     appData.setAppData({ ...appData });
   }, [quantity, sideIsSell, price]);
@@ -213,7 +213,7 @@ export default function PlaceOrder(props: PlaceOrderProps) {
         </div>
         <div className="divider mb-4" />
         <InputNumber
-          step={0.25}
+          step={0.01}
           showButtons
           inputId="price"
           onValueChange={e => setPrice(e.value)}
@@ -223,7 +223,7 @@ export default function PlaceOrder(props: PlaceOrderProps) {
           min={0}
         />
         <InputNumber
-          step={0.25}
+          step={0.01}
           showButtons
           inputId="price"
           onValueChange={e => setQuantity(e.value)}
