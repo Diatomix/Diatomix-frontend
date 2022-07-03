@@ -1,6 +1,5 @@
 import Panel from '../../Panel';
 import { Trans } from 'react-i18next';
-import './Bid.css';
 import { gql, useSubscription } from '@apollo/client';
 import getUnitName from '../../../scripts/algo/getUnitName';
 import { useContext, useRef, useState } from 'react';

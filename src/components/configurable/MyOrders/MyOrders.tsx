@@ -155,7 +155,7 @@ export default function MyOrders(props: MyOrdersProps) {
   function Content() {
     try {
       return (
-        <Panel header="My orders">
+        <Panel header="MY ORDERS">
           <table className="table table-borderless p-datatable p-component p-datatable-responsive-scroll" data-bs-spy="scroll">
             <thead className="p-datatable-thead">
               <tr>

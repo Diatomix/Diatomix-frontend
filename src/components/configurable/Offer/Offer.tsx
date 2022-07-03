@@ -3,9 +3,7 @@ import i18n from 'i18next';
 import { Trans } from 'react-i18next';
 
 import { order_by } from '../../../gqty';
-import './Offer.css';
 import { gql, useSubscription } from '@apollo/client';
-import BigNumber from 'bignumber.js';
 import formatAsaAmount from '../../../scripts/algo/formatAsaAmount';
 import { useContext, useRef, useState } from 'react';
 import { AppContext } from '../../../contexts/app-context';
