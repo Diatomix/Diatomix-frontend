@@ -17,6 +17,9 @@ import './trade.css';
 import OrderBook from '../components/configurable/OrderBook/OrderBook';
 import MyOrders from '../components/configurable/MyOrders/MyOrders';
 import { ScrollPanel } from 'primereact/scrollpanel';
+import Trades from '../components/configurable/Trades';
+import MyTrades from '../components/configurable/MyTrades/MyTrades';
+import AllTrades from '../components/configurable/AllTrades/AllTrades';
 
 export default function Home() {
   const appData = useContext(AppContext);
@@ -43,14 +46,24 @@ export default function Home() {
         <PlaceOrder className="flex m-2"></PlaceOrder>
         {appData.asa1 && appData.asa2 && (
           <>
-            <div className="flex m-2 p-0">
-              <Bid assetBuy={appData.asa1} assetSell={appData.asa2}></Bid>
+            <div className="flex m-0 p-0 flex flex-column">
+              <div className="flex m-0 p-0">
+                <div className="flex m-2 p-0">
+                  <Bid assetBuy={appData.asa1} assetSell={appData.asa2}></Bid>
+                </div>
+                <div className="flex m-2 p-0">
+                  <Offer assetBuy={appData.asa1} assetSell={appData.asa2}></Offer>
+                </div>
+              </div>
+              <div className="flex m-2 p-0">
+                <AllTrades assetBuy={appData.asa1} assetSell={appData.asa2}></AllTrades>
+              </div>
             </div>
-            <div className="flex m-2 p-0">
-              <Offer assetBuy={appData.asa1} assetSell={appData.asa2}></Offer>
-            </div>
-            <div className="flex flex-grow-1 m-2 p-0 h-100">
-              <ScrollPanel style={{ height: '800px' }}>
+            <div className="flex flex-grow-1 m-2 p-0 h-100 flex-column">
+              <ScrollPanel style={{ height: '300px' }}>
+                <MyTrades assetBuy={appData.asa1} assetSell={appData.asa2}></MyTrades>
+              </ScrollPanel>
+              <ScrollPanel style={{ height: '500px' }}>
                 <MyOrders assetBuy={appData.asa1} assetSell={appData.asa2} localOrdersCount={appData.localOrdersCount}></MyOrders>
               </ScrollPanel>
             </div>

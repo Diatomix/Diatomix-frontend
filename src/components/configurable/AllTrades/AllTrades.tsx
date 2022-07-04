@@ -11,41 +11,31 @@ import getUnitName from '../../../scripts/algo/getUnitName';
 import formatAsaAmount from '../../../scripts/algo/formatAsaAmount';
 import formatPrice from '../../../scripts/algo/formatPrice';
 
-interface MyTradesPropsI {
+interface AllTradesPropsI {
   assetBuy: number;
   assetSell: number;
 }
 
 const query = gql`
-  subscription trade($assetBuy: bigint!, $assetSell: bigint!, $address: String!) {
-    trade(
-      where: {
-        _and: [
-          { _or: [{ seller: { _eq: $address } }, { buyer: { _eq: $address } }] }
-          { _or: [{ _and: { assetBuy: { _eq: $assetBuy }, assetSell: { _eq: $assetSell } } }, { _and: { assetBuy: { _eq: $assetSell }, assetSell: { _eq: $assetBuy } } }] }
-        ]
-      }
-    ) {
-      seller
-      sellQuantity
-      created_at
-      amount
-      assetBuy
-      assetSell
-      buyer
+  subscription trade($assetBuy: bigint!, $assetSell: bigint!) {
+    trade(where: { _and: [{ _or: [{ _and: { assetBuy: { _eq: $assetBuy }, assetSell: { _eq: $assetSell } } }, { _and: { assetBuy: { _eq: $assetSell }, assetSell: { _eq: $assetBuy } } }] }] }) {
       price
+      assetSell
+      assetBuy
+      seller
+      buyer
+      sellQuantity
       buyQuantity
     }
   }
 `;
 
-const MyTrades: FC<MyTradesPropsI> = ({ assetBuy, assetSell }) => {
+const AllTrades: FC<AllTradesPropsI> = ({ assetBuy, assetSell }) => {
   const appData = useContext(AppContext);
   const authData = useContext(AuthContext);
 
   const gqlVars = {
     variables: {
-      address: authData.authAddress ? authData.authAddress : '',
       assetBuy,
       assetSell,
     },
@@ -61,7 +51,7 @@ const MyTrades: FC<MyTradesPropsI> = ({ assetBuy, assetSell }) => {
   }
   const userSells = () => {
     const userBuys = queryResult.data.trade.map(e => ({
-      action: 'BUY',
+      action: e.assetSell == appData.asa1 ? 'BUY' : 'SELL',
       sellQuantity: formatAsaAmount(e.sellQuantity, e.assetSell, appData),
       buyQuantity: formatAsaAmount(e.buyQuantity, e.assetBuy, appData),
       price: `${formatPrice(e.price, appData)} ${getUnitName(assetBuy, appData)}/${getUnitName(assetSell, appData)}`,
@@ -82,18 +72,15 @@ const MyTrades: FC<MyTradesPropsI> = ({ assetBuy, assetSell }) => {
     const trades = userBuys;
     return (
       <DataTable value={trades} paginator={trades.length > 10 ? true : false} rows={10} stripedRows>
-        <Column field="action" header="ACTION" sortable></Column>
         <Column field="price" header="PRICE" sortable align="right"></Column>
-        <Column field="seller" header="SELLER" sortable filter></Column>
-        <Column field="buyer" header="BUYER" sortable filter></Column>
-        <Column field="createdAt" header="CREATED AT" sortable></Column>
         <Column field="sellQuantity" header="SELL QUANTITY" sortable align="right"></Column>
         <Column field="buyQuantity" header="BUY QUANTITY" sortable align="right"></Column>
+        <Column field="createdAt" header="CREATED AT" sortable></Column>
       </DataTable>
     );
   };
 
-  return <Panel header="MY TRADES">{userSells()}</Panel>;
+  return <Panel header="TRADES">{userSells()}</Panel>;
 };
 
-export default MyTrades;
+export default AllTrades;
