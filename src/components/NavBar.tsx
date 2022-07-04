@@ -8,7 +8,7 @@ export default function NavBar() {
   const authContext = useContext(AuthContext);
 
   return (
-    <nav className="navbar bg-white">
+    <nav className="navbar p-menubar">
       <div className="container-fluid">
         <a className="navbar-brand ms-3">
           {/* <img src={Logo} width={100} /> */}
