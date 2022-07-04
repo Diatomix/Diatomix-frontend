@@ -130,11 +130,7 @@ export default function Bid(props: BidProps) {
           console.log('sent', sent);
         })
         .catch(e => {
-          if (e.message && e.message.indexOf('pc=182')) {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: e.message, life: 3000 });
-          } else {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: e.message, life: 3000 });
-          }
+          toast.current.show({ severity: 'error', summary: 'Error', detail: 'Error occured. Check your balance', life: 3000 });
         });
     };
     exec().catch(console.error);
@@ -175,11 +171,7 @@ export default function Bid(props: BidProps) {
           console.log('sent', sent);
         })
         .catch(e => {
-          if (e.message && e.message.indexOf('pc=182')) {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Wrong rounding', life: 3000 });
-          } else {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: e.message, life: 3000 });
-          }
+          toast.current.show({ severity: 'error', summary: 'Error', detail: 'Error occured. Check your balance', life: 3000 });
         });
 
       console.log('suggestedParams,escrow,signed', suggestedParams, escrow, signedTxs);
