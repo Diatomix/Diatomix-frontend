@@ -89,8 +89,10 @@ export default function MyOrders(props: MyOrdersProps) {
     if (!localOrders) return ret;
     const localArray: Array<Offer_Min_Fields> = JSON.parse(localOrders);
     for (let order of localArray) {
-      if (!ret.find((o: Offer_Min_Fields) => o.id == order.id)) {
-        ret.push(order);
+      if (moment(order.updated_at) > moment().add(-1, 'minute')) {
+        if (!ret.find((o: Offer_Min_Fields) => o.id == order.id)) {
+          ret.push(order);
+        }
       }
     }
     ret.sort(compare);
