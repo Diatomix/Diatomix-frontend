@@ -23,6 +23,7 @@
 
 .order-row:hover{
   background-color: #333 !important;
+  color: #eee !important;
 }
 .nowrap{
   white-space: nowrap;
