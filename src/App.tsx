@@ -9,8 +9,8 @@ import { Routes, Route } from 'react-router-dom';
 
 import { AppContext, defaultAppData, IState } from './contexts/app-context';
 
-import 'primereact/resources/primereact.min.css'; //core css
-import 'primeicons/primeicons.css'; //icons
+//import 'primereact/resources/primereact.min.css'; //core css
+//import 'primeicons/primeicons.css'; //icons
 
 import 'primeflex/primeflex.css';
 import './index.css';
