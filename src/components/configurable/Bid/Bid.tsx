@@ -16,6 +16,7 @@ import getOfferById from '../../../scripts/graphql/getOfferById';
 import { LogicSigAccount } from 'algosdk';
 import signTxsWithProviders from '../../../scripts/algo/signTxsWithProviders';
 import { Toast } from 'primereact/toast';
+import arc0017CancelOrderWithAssetGetRawTxs from '../../../scripts/algo/arc0017CancelOrderWithAssetGetRawTxs';
 
 interface BidProps {
   assetBuy: number;
@@ -69,13 +70,19 @@ export default function Bid(props: BidProps) {
     setToExecute(id);
     setConfirmVisible(true);
   }
-  const bestBids = data.bid.map(({ id, price, volume }) => {
+  const bestBids = data.bid.map(({ id, price, volume, owner }) => {
     return (
       <tr key={id} className="order-row">
         <td style={{ borderBottom: '0', paddingTop: 1, paddingBottom: 0 }}>
-          <Button className="px-2 my-0 p-0" style={{ textAlign: 'center' }} onClick={() => trade(id)}>
-            Trade
-          </Button>
+          {owner == authContext.authAddress ? (
+            <Button className="px-2 my-0 p-0" style={{ textAlign: 'center' }} onClick={() => cancelOrder(id)}>
+              Cancel
+            </Button>
+          ) : (
+            <Button className="px-2 my-0 p-0" style={{ textAlign: 'center' }} onClick={() => trade(id)}>
+              Trade
+            </Button>
+          )}
         </td>
         <td style={{ color: '#38a169', borderBottom: '0', paddingTop: 0, paddingBottom: 0 }} className="align-middle number clickable" onClick={() => selectPrice(price)}>
           {formatPrice(price, appData)}
@@ -97,6 +104,41 @@ export default function Bid(props: BidProps) {
       </div>
     );
   }
+  const cancelOrder = (id: string) => {
+    const exec = async () => {
+      console.log('canceling ' + id);
+      const escrow = await getEscrowById(id, authContext);
+      const algodClient = getAlgodClient(appData.appConfiguration);
+      const suggestedParams = await algodClient.getTransactionParams().do();
+      const txs = arc0017CancelOrderWithAssetGetRawTxs(appData, authContext, suggestedParams, escrow);
+      console.log('txs', txs);
+      const program = new Uint8Array(Buffer.from(escrow.lsig, 'hex'));
+      const lsig = new LogicSigAccount(program);
+      const tealProvider: IProvider = {
+        address: lsig.address(),
+        provider: lsig,
+        type: ProvidersEnum.LogicSigAccount,
+      };
+      const providers = [authContext.provider, tealProvider];
+      const signedTxs = await signTxsWithProviders(txs, providers);
+
+      algodClient
+        .sendRawTransaction(signedTxs)
+        .do()
+        .then(sent => {
+          toast.current.show({ severity: 'success', summary: 'Order canceled', detail: 'Your order has been canceled', life: 3000 });
+          console.log('sent', sent);
+        })
+        .catch(e => {
+          if (e.message && e.message.indexOf('pc=182')) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: e.message, life: 3000 });
+          } else {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: e.message, life: 3000 });
+          }
+        });
+    };
+    exec().catch(console.error);
+  };
   const accept = () => {
     const exec = async () => {
       console.log(`executing ${toExecute}`);
