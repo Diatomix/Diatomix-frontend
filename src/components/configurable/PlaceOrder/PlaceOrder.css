@@ -63,9 +63,6 @@ label {
   margin-bottom: 0.2rem;
 }
 
-.custom-input .p-inputnumber-input {
-  background-color: #181818;
-}
 
 .p-inputnumber-input::placeholder {
   font-size: 14px;
