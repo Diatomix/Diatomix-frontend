@@ -29,5 +29,20 @@
     "PropertyHeader":"Property header",
     "PropertyContent":"Property content",
     "NotConfigurable":"This panel is not configurable"
+  },
+  "Common":{
+    "ErrorOccured":"An error occurred"
+  },
+  "MyOrders":{
+    "Title":"My orders"
+  },
+  "OrderBook":{
+    "Title":"Order book"
+  },
+  "PlaceOrder":{
+    "Title":"PLACE ORDER"
+  },
+  "Trades":{
+    "Title":"Trades"
   }
 }

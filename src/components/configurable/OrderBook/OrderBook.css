@@ -1,0 +1,60 @@
+.headers {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 0.25rem;
+  margin: 1rem 0 2rem 0;
+}
+
+.bid-grid, .offer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 0.25rem;
+  font-size: 14px;
+  /* margin-bottom: 6px; */
+}
+
+.bid-grid:hover {
+  background-color: #1e3335;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.offer-grid:hover {
+  background-color: #38242e;
+  cursor: pointer;
+  transition: 250ms ease-in-out;
+}
+
+.bid-grid:hover > p.volume {
+  color: white;
+}
+
+.offer-grid:hover > p.volume {
+  color: white;
+}
+
+.headers > p {
+  font-size: 12px;
+}
+
+.bid-price {
+  color: #38a169;
+}
+
+.offer-price {
+  color: #e53e3e;
+}
+
+.divide {
+  border-bottom: 1px solid rgb(160, 160, 160);
+  margin: 1rem 0;
+}
+
+p {
+  margin: 0;
+}
+
+.volume {
+  color: rgb(160, 160, 160);
+  text-align: right;
+}

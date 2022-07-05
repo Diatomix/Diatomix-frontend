@@ -3,6 +3,11 @@ import { Menubar } from 'primereact/menubar';
 import React, { Suspense } from 'react';
 import { AppContext, IState } from '../contexts/app-context';
 import { useNavigate } from 'react-router-dom';
+import Authenticate from './Authenticate';
+import { Button } from 'primereact/button';
+import { AuthContext, IAuthState } from '../contexts/AuthContext';
+import RoundComponent from './basic/RoundComponent';
+import { Tag } from 'primereact/tag';
 
 function Header() {
   let navigate = useNavigate();
@@ -31,6 +36,24 @@ function Header() {
             label: i18n.t('Nav.Home'),
             command: () => {
               routeTo('/');
+            },
+          },
+          {
+            label: i18n.t('Nav.Assets'),
+            command: () => {
+              routeTo('/assets');
+            },
+          },
+          {
+            label: i18n.t('Nav.Trade'),
+            command: () => {
+              routeTo('/trade');
+            },
+          },
+          {
+            label: i18n.t('Nav.Trading'),
+            command: () => {
+              routeTo('/trading');
             },
           },
           {
@@ -88,6 +111,12 @@ function Header() {
             },
           },
           {
+            label: 'Toggle expert mode',
+            command: () => {
+              appData.setAppData({ ...appData, editingExpertMode: !appData.editingExpertMode });
+            },
+          },
+          {
             label: 'Reset layout',
             command: () => {
               appData.setAppData({ ...appData, resetLayout: true });
@@ -117,6 +146,24 @@ function Header() {
                   appData.setAppData({ ...appData, layoutAddNew: 'Chart' });
                 },
               },
+              {
+                label: 'Order Book',
+                command: () => {
+                  appData.setAppData({ ...appData, layoutAddNew: 'OrderBook' });
+                },
+              },
+              {
+                label: 'Place order',
+                command: () => {
+                  appData.setAppData({ ...appData, layoutAddNew: 'PlaceOrder' });
+                },
+              },
+              {
+                label: 'Trades',
+                command: () => {
+                  appData.setAppData({ ...appData, layoutAddNew: 'Trades' });
+                },
+              },
             ],
           },
         ],
@@ -140,13 +187,35 @@ function Header() {
       },
     ];
   }
+  const logout = (authContext: IAuthState) => {
+    authContext.authAddress = null;
+    authContext.authToken = null;
+    authContext.authTx = null;
+    authContext.setAuthContext({ ...authContext });
+  };
   return (
     <Suspense fallback="loading">
       <AppContext.Consumer>
         {appData => (
-          <>
-            <Menubar className="m-2" model={getItems(appData)} />
-          </>
+          <AuthContext.Consumer>
+            {authContext => (
+              <>
+                <div className="flex flex-row">
+                  <Menubar className="m-2 flex-grow-1" model={getItems(appData)} />
+                  <Tag severity="warning" className="m-2">
+                    <RoundComponent></RoundComponent>
+                  </Tag>
+                  {authContext.authAddress ? (
+                    <Button onClick={() => logout(authContext)} className="m-2">
+                      Logout
+                    </Button>
+                  ) : (
+                    <Authenticate buttonIcon="pi pi-external-link" buttonClassName="m-2" />
+                  )}
+                </div>
+              </>
+            )}
+          </AuthContext.Consumer>
         )}
       </AppContext.Consumer>
     </Suspense>

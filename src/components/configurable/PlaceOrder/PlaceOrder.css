@@ -1,0 +1,77 @@
+.button-container {
+  margin: 1rem 0 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buy-button, .sell-button {
+  padding: 0.5rem 0;
+  border: 0;
+  color: white;
+  width: 100%;
+}
+
+.buy-button {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+
+.sell-button {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.custom-text {
+  font-size: 11px;
+  color: rgb(160, 160, 160);
+  margin: 0;
+}
+
+.asa-balance-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.asa-name {
+  font-size: 14px;
+}
+
+.asa-value {
+  font-size: 14px;
+}
+
+.divider {
+  border-bottom: 1px solid rgb(160, 160, 160);
+}
+
+.place-order-button {
+  padding: 0.8rem 0;
+  color: white;
+  border-radius: 6px;
+  border: 0;
+}
+
+.quantity-input {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+label {
+  margin-bottom: 0.2rem;
+}
+
+
+.p-inputnumber-input::placeholder {
+  font-size: 14px;
+}
+
+.buy {
+  color: green;
+}
+
+.sell {
+  color: red;
+}

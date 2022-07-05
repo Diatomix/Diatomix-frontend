@@ -1,0 +1,30 @@
+.tobuy .p-inputswitch-slider{
+  background-color: green !important;
+}
+.tosell .p-inputswitch-slider{
+  background-color: red !important;
+}
+
+.clickable{
+  cursor: pointer;
+}
+
+.shortAddress{
+  font-family: 'Courier New', Courier, monospace;
+}
+.number{
+  text-align: right !important;
+}
+
+.smallSpinner{
+  width:20px;
+  height: 20px;
+}
+
+.order-row:hover{
+  background-color: #333 !important;
+  color: #eee !important;
+}
+.nowrap{
+  white-space: nowrap;
+}

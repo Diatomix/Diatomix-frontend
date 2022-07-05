@@ -21,10 +21,10 @@ const Widget: React.FC<WidgetProps> = ({ scriptHTML, scriptSRC, container, type 
       script.src = scriptSRC;
       script.async = true;
       script.type = 'text/javascript';
-      scriptHTML.datafeed = new Datafeeds.UDFCompatibleDatafeed('https://demo-feed-data.tradingview.com');
+      scriptHTML.datafeed = new Datafeeds.GraphQLDatafeed('https://demo-feed-data.tradingview.com');
 
       if (type === 'Widget' || type === 'MediumWidget') {
-        if (typeof TradingView !== undefined) {
+        if (!!TradingView) {
           script.onload = () => {
             script.innerHTML = JSON.stringify(type === 'Widget' ? new TradingView.widget(scriptHTML) : type === 'MediumWidget' ? new TradingView.MediumWidget(scriptHTML) : undefined);
             console.log('script.innerHTML', script.innerHTML);
@@ -44,7 +44,7 @@ const Widget: React.FC<WidgetProps> = ({ scriptHTML, scriptSRC, container, type 
         }
       }
     };
-  }, [ref, scriptHTML]);
+  }, [ref, scriptHTML, scriptSRC, type]);
 
   return <div ref={ref} id={container} className="flex flex-column flex-grow-0 flex-grow-1" />;
 };

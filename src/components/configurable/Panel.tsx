@@ -1,11 +1,17 @@
 import Panel from '../Panel';
 import i18n from 'i18next';
+import { Trans } from 'react-i18next';
+
 import { InputText } from 'primereact/inputtext';
 
+interface ConfigurablePanelConfig {
+  header: string;
+  content: string;
+}
 interface ConfigurablePanelProps {
   editingLayout: boolean;
   editingComponents: boolean;
-  config?: any;
+  config?: ConfigurablePanelConfig;
   header: string;
   content?: string;
   children?: React.ReactNode;
@@ -16,9 +22,21 @@ export default function ConfigurablePanel(props: ConfigurablePanelProps) {
   function handleUpdate(newConfig) {
     props.onContentUpdate(newConfig);
   }
-  return (
-    <>
-      {props.editingComponents ? (
+
+  function ErrorHandler({ error }) {
+    return (
+      <div role="alert">
+        <p>
+          <Trans i18nKey="Common.ErrorOccured">An error occurred</Trans>:
+        </p>
+        <pre>{error.message}</pre>
+      </div>
+    );
+  }
+
+  function Config() {
+    try {
+      return (
         <>
           {!props.config || !props.config.header ? (
             <div>Config error</div>
@@ -26,7 +44,7 @@ export default function ConfigurablePanel(props: ConfigurablePanelProps) {
             <Panel header={i18n.t('Layout.EditProperties')}>
               <div className="field my-2">
                 <span className="p-float-label">
-                  <InputText id="header" name="header" value={props.config.header} onChange={event => handleUpdate({ ...props.config, header: event.target.value })} autoFocus />
+                  <InputText id="header" name="header" value={props.config.header} onChange={event => handleUpdate({ ...props.config, header: event.target.value })} />
                   <label htmlFor="header">{i18n.t('Layout.PropertyHeader')}</label>
                 </span>
               </div>
@@ -47,11 +65,21 @@ export default function ConfigurablePanel(props: ConfigurablePanelProps) {
             </Panel>
           )}
         </>
-      ) : (
+      );
+    } catch (error) {
+      return <ErrorHandler error={error} />;
+    }
+  }
+  function Content() {
+    try {
+      return (
         <Panel header={i18n.t(props.header)}>
           <p>{i18n.t(`${props.content}`)}</p>
         </Panel>
-      )}
-    </>
-  );
+      );
+    } catch (error) {
+      return <ErrorHandler error={error} />;
+    }
+  }
+  return <>{props.editingComponents ? <Config /> : <Content />}</>;
 }

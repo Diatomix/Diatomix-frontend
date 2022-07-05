@@ -6,10 +6,12 @@ import Panel from '../components/configurable/Panel';
 import Chart from '../components/configurable/Chart';
 import MyOrders from '../components/configurable/MyOrders';
 import OrderBook from '../components/configurable/OrderBook';
-import PlaceOrder from '../components/configurable/PlaceOrder';
+import PlaceOrder from './configurable/PlaceOrder/PlaceOrder';
 import Trades from '../components/configurable/Trades';
 import Timeline from '../components/configurable/Timeline';
 import { createId } from './tradingview/Utils';
+import { InputTextarea } from 'primereact/inputtextarea';
+import { Button } from 'primereact/button';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -42,6 +44,7 @@ export default function ResponsiveLocalStorageLayout(props: LayoutProps) {
   const [layout, setLayout] = useState<Layout>([]);
   const [layouts, setLayouts] = useState<Layouts>({});
   const [config, setConfig] = useState({});
+  const [layoutText, setLayoutText] = useState<string>('');
 
   useEffect(() => {
     const layoutId = `layouts-${props.layout}`;
@@ -72,6 +75,32 @@ export default function ResponsiveLocalStorageLayout(props: LayoutProps) {
 
     console.log('layout init', layout, layouts);
   }, []);
+  useEffect(() => {
+    setLayoutText(JSON.stringify(layouts));
+  }, [layouts]);
+
+  function saveLayoutsTextToLayouts() {
+    console.log('saving ', layoutText);
+    const newLayouts: Layouts = JSON.parse(layoutText);
+
+    const firstKey = Object.keys(newLayouts)[0];
+    const firstLayout = newLayouts[firstKey];
+    setLayout(firstLayout);
+    const config = {};
+    firstLayout.forEach(element => {
+      if (element.c) {
+        config[element.i] = element.c;
+      }
+    });
+
+    setLayouts(newLayouts);
+    if (appData.setAppData) {
+      const newAppData: IState = { ...appData, editingExpertMode: false };
+      console.log('setting newAppData', newAppData);
+      appData.setAppData(newAppData);
+    }
+  }
+
   /// reset
   useEffect(() => {
     console.log('appData.editingLayout', appData.editingLayout);
@@ -245,79 +274,61 @@ export default function ResponsiveLocalStorageLayout(props: LayoutProps) {
       <AppContext.Consumer>
         {appData => (
           <>
-            {appData && appData.editingLayout ? (
+            {appData.editingExpertMode ? (
               <>
-                {/*}
-                      {appData.editingLayout === 'reset' ? resetLayout(appData, setAppData) : ''}
-                      {appData.layoutAddNew ? addItemToLayout(appData.layoutAddNew, appData, setAppData) : ''}
-                      <div>{appData.editingLayout}</div>
-                      <div>
-                        <Button className="m-2" onClick={() => setAppData({ editingLayout: false })}>
-                          Finish editing layout
-                        </Button>
-                        {appData.editingLayout === 'edit' ? (
-                          <Button className="m-2" onClick={() => setAppData({ editingLayout: 'layout' })}>
-                            Edit Layout
-                          </Button>
-                        ) : (
-                          <Button className="m-2" onClick={() => setAppData({ editingLayout: 'edit' })}>
-                            Edit properties
-                          </Button>
-                        )}
-                        <Button className="m-2" onClick={() => resetLayout(appData, setAppData)}>
-                          Reset Layout
-                        </Button>
-                      </div>
-                      {/*/}
+                <InputTextarea className="flex flex-grow-0 flex-grow-1 m-2" value={layoutText} onChange={event => setLayoutText(event.target.value)} rows={10}></InputTextarea>
+                <Button className="m-2" onClick={saveLayoutsTextToLayouts}>
+                  Save
+                </Button>
               </>
             ) : (
-              <></>
+              <ResponsiveReactGridLayout
+                className="layout"
+                cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+                rowHeight={30}
+                isDraggable={appData ? appData.editingLayout : false}
+                isResizable={appData ? appData.editingLayout : false}
+                autoSize={true}
+                layouts={layouts}
+                onLayoutChange={(layout, layouts) => onLayoutChange(layout, layouts)}
+              >
+                {layout.map(v => (
+                  <div className="flex flex-column" key={v.i} data-grid={v}>
+                    {!v.c ? (
+                      <Panel editingLayout={appData.editingLayout} key={v.i} editingComponents={appData.editingComponents} className="flex-grow-0 flex-grow-1 flex flex-column" header="Header 1">
+                        {v.i} {JSON.stringify(v)}
+                      </Panel>
+                    ) : v.c.type === 'Panel' ? (
+                      <Panel
+                        editingLayout={appData.editingLayout}
+                        editingComponents={appData.editingComponents}
+                        config={v.c}
+                        header={v.c.header}
+                        content={v.c.content}
+                        onContentUpdate={value => handleContentUpdate(v, value)}
+                        key={v.i}
+                      ></Panel>
+                    ) : v.c.type === 'Chart' ? (
+                      <Chart key={v.i} editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></Chart>
+                    ) : v.c.type === 'Timeline' ? (
+                      <Timeline key={v.i} editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></Timeline>
+                    ) : v.c.type === 'MyOrders' ? (
+                      <MyOrders key={v.i} editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></MyOrders>
+                    ) : v.c.type === 'OrderBook' ? (
+                      <OrderBook key={v.i} editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></OrderBook>
+                    ) : v.c.type === 'PlaceOrder' ? (
+                      <PlaceOrder config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></PlaceOrder>
+                    ) : v.c.type === 'Trades' ? (
+                      <Trades key={v.i} editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></Trades>
+                    ) : (
+                      <Panel key={v.i} editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} className="flex-grow-0 flex-grow-1 flex flex-column" header="Header 1">
+                        {v.i} {JSON.stringify(v)} {JSON.stringify(v.c.type === 'MyOrders')}
+                      </Panel>
+                    )}
+                  </div>
+                ))}
+              </ResponsiveReactGridLayout>
             )}
-            <ResponsiveReactGridLayout
-              className="layout"
-              cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-              rowHeight={30}
-              isDraggable={appData ? appData.editingLayout : false}
-              isResizable={appData ? appData.editingLayout : false}
-              autoSize={true}
-              layouts={layouts}
-              onLayoutChange={(layout, layouts) => onLayoutChange(layout, layouts)}
-            >
-              {layout.map(v => (
-                <div className="flex flex-column" key={v.i} data-grid={v}>
-                  {!v.c ? (
-                    <Panel editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} className="flex-grow-0 flex-grow-1 flex flex-column" header="Header 1">
-                      {v.i} {JSON.stringify(v)}
-                    </Panel>
-                  ) : v.c.type === 'Panel' ? (
-                    <Panel
-                      editingLayout={appData.editingLayout}
-                      editingComponents={appData.editingComponents}
-                      config={v.c}
-                      header={v.c.header}
-                      content={v.c.content}
-                      onContentUpdate={value => handleContentUpdate(v, value)}
-                    ></Panel>
-                  ) : v.c.type === 'Chart' ? (
-                    <Chart editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></Chart>
-                  ) : v.c.type === 'Timeline' ? (
-                    <Timeline editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></Timeline>
-                  ) : v.c.type === 'MyOrders' ? (
-                    <MyOrders editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></MyOrders>
-                  ) : v.c.type === 'OrderBook' ? (
-                    <OrderBook editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></OrderBook>
-                  ) : v.c.type === 'PlaceOrder' ? (
-                    <PlaceOrder editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} config={v.c} onContentUpdate={value => handleContentUpdate(v, value)}></PlaceOrder>
-                  ) : v.c.type === 'Trades' ? (
-                    <Trades editingLayout={appData.editingLayout} editingComponents={appData.editingComponents}></Trades>
-                  ) : (
-                    <Panel editingLayout={appData.editingLayout} editingComponents={appData.editingComponents} className="flex-grow-0 flex-grow-1 flex flex-column" header="Header 1">
-                      {v.i} {JSON.stringify(v)} {JSON.stringify(v.c.type === 'MyOrders')}
-                    </Panel>
-                  )}
-                </div>
-              ))}
-            </ResponsiveReactGridLayout>
           </>
         )}
       </AppContext.Consumer>
