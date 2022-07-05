@@ -66,14 +66,15 @@ export default function PlaceOrder(props: PlaceOrderProps) {
   }, [price]);
 
   useEffect(() => {
-    if (price != appData.price) {
-      setPrice(appData.price);
+    const priceFloat = parseFloat(appData.price.toFixed(6));
+    if (price.toFixed(6) != priceFloat.toFixed(6)) {
+      setPrice(priceFloat);
     }
   }, [appData.price]);
 
   useEffect(() => {
-    const quantityFloat = appData.quantity;
-    if (quantity != quantityFloat) {
+    const quantityFloat = parseFloat(appData.quantity.toFixed(6));
+    if (quantity.toFixed(6) != quantityFloat.toFixed(6)) {
       setQuantity(quantityFloat);
     }
   }, [appData.quantity]);
@@ -228,28 +229,31 @@ export default function PlaceOrder(props: PlaceOrderProps) {
           <p className="asa-value">{BigNumbify(appData.asa2Balance)}</p>
         </div>
         <div className="divider mb-4" />
-        <InputNumber
-          step={0.01}
-          showButtons
-          inputId="price"
-          value={price}
-          onValueChange={e => setPrice(e.value)}
-          suffix={' ' + getAsasName()}
-          className="custom-input mb-4"
-          placeholder={`Price (${getAsasName()})`}
-          min={0}
-        />
-        <InputNumber
-          step={0.01}
-          showButtons
-          inputId="price"
-          value={quantity}
-          onValueChange={e => setQuantity(e.value)}
-          suffix={' ' + getAsa2UnitName()}
-          className="custom-input"
-          placeholder={`Quantity (${getAsa2UnitName()})`}
-          min={0}
-        />
+        <div className="input-group mb-2">
+          <input
+            min={0}
+            step={0.01}
+            value={price}
+            onChange={e => setPrice(parseFloat(e.target.value))}
+            type="number"
+            className="form-control p-inputtext p-component p-filled p-inputnumber-input w-50"
+            aria-label={`Price in ${getAsasName()}`}
+          />
+          <span className="input-group-text p-inputtext p-component p-filled p-inputnumber-input w-50">{getAsasName()}</span>
+        </div>
+        <div className="input-group mb-2">
+          <input
+            min={0}
+            step={0.01}
+            value={quantity}
+            onChange={e => setQuantity(parseFloat(e.target.value))}
+            type="number"
+            className="form-control p-inputtext p-component p-filled p-inputnumber-input  w-50"
+            aria-label={`Quantity in ${getAsa2UnitName()}`}
+          />
+          <span className="w-50 input-group-text p-inputtext p-component p-filled p-inputnumber-input">{getAsa2UnitName()}</span>
+        </div>
+
         <div className="inline-block mt-3">
           <p className="custom-text">
             ORDER SUMMARY:{' '}
