@@ -1,3 +1,8 @@
 body {
   background-color: #111;
 }
+
+.order-row:hover{
+  background-color: #eee !important;
+  color: #111 !important;
+}
