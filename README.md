@@ -1,4 +1,15 @@
-# Getting Started with Create React App
+# DiatomiX
+
+DEX on Algorand using ARC 0014 standard orders
+
+**Demo**: https://beta.k8s.diatomix.xyz
+
+Source code: 
+
+- [Web App](https://github.com/Diatomix/Diatomix-frontend/tree/beta)
+- [ARC 0017 Indexer](https://github.com/scholtz/arc0017-indexer)
+- [Charting Data](https://github.com/scholtz/AsaCharts)
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
