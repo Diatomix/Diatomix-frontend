@@ -3,7 +3,7 @@
 DEX on Algorand using ARC 0014 standard orders
 
 - **Demo**: https://beta.k8s.diatomix.xyz
-- **User documentation**: [GitBook](https://ludovit-scholtz.gitbook.io/diatomix/)
+- **User documentation**: [GitBook](https://docs.diatomix.xyz/)
 
 Source code: 
 
